@@ -1,0 +1,17 @@
+
+
+{
+  "manifest_version": 2,
+
+  "name": "Todo-list-chrome-plugin",
+  "description": "This extension was target to be a chrome toto-list plugin for people who's surfing the Internet and can't keep up their goals.",
+  "version": "0.1",
+
+  "permissions": [
+    "https://secure.flickr.com/"
+  ],
+  "browser_action": {
+    "default_icon": "icon.ico",
+    "default_popup": "index.html"
+  }
+}
