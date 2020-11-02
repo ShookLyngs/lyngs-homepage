@@ -12,6 +12,9 @@
     .ls-flex-auto();
     width: initial;
   }
+  &:last-child {
+    margin-bottom: 0;
+  }
 }
 
 .ls-grid-column {
@@ -28,6 +31,7 @@
 
 // generate percentage-type of width/height for grid
 .generate-grid-spans(@prefix: "", @length, @index: 0) when (@index <= @length) {
+  // widths
   .ls-@{prefix}width-@{index} {
     width: 0% + (100 / @length * @index);
   }
@@ -37,6 +41,7 @@
   .ls-@{prefix}max-width-@{index} {
     max-width: 0% + (100 / @length * @index);
   }
+  // heights
   .ls-@{prefix}height-@{index} {
     height: 0% + (100 / @length * @index);
   }
@@ -45,6 +50,13 @@
   }
   .ls-@{prefix}max-height-@{index} {
     max-height: 0% + (100 / @length * @index);
+  }
+  // offsets
+  .ls-@{prefix}offset-top-@{index} {
+    margin-top: 0% + (100 / @length * @index);
+  }
+  .ls-@{prefix}offset-left-@{index} {
+    margin-left: 0% + (100 / @length * @index);
   }
 
   .generate-grid-spans(@prefix, @length, @index + 1);

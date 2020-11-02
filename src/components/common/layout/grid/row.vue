@@ -97,13 +97,13 @@
 
         // gutters
         if (!props.columnGutter && !props.rowGutter && props.gutter) {
-          list.push(`ls-padding-${props.gutter}`);
+          list.push(`ls-padding-half-${props.gutter}`);
         }
         if (props.columnGutter) {
-          list.push(`ls-padding-column-${props.columnGutter}`);
+          list.push(`ls-padding-half-column-${props.columnGutter}`);
         }
         if (props.rowGutter) {
-          list.push(`ls-padding-row-${props.rowGutter}`);
+          list.push(`ls-padding-half-row-${props.rowGutter}`);
         }
 
         // displays
