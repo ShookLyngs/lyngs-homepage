@@ -1,5 +1,5 @@
 <script>
-  import { computed } from 'vue';
+  import { computed, provide } from 'vue';
 
   export default {
     name: "ls-row",
@@ -49,7 +49,7 @@
       },
     },
     setup(props) {
-      // computed
+      // active methods
       /**
        * if span is a percentage-value, then return a class-style string;
        * else return null;
@@ -72,6 +72,21 @@
         }
         return null;
       };
+
+      // computed
+      /**
+       * return merged gutters.
+       */
+      const gutters = computed(() => {
+        const gutter = props.gutter,
+              row    = props.rowGutter,
+              column = props.column;
+
+        return {
+          row: row ?? gutter,
+          column: column ?? gutter,
+        };
+      });
       /**
        * return an array that contains class-style strings.
        */
@@ -96,14 +111,11 @@
         }
 
         // gutters
-        if (!props.columnGutter && !props.rowGutter && props.gutter) {
-          list.push(`ls-padding-half-${props.gutter}`);
-        }
-        if (props.columnGutter) {
-          list.push(`ls-padding-half-column-${props.columnGutter}`);
-        }
-        if (props.rowGutter) {
-          list.push(`ls-padding-half-row-${props.rowGutter}`);
+        /*if (gutters.value.row) {
+          list.push(`ls-margin-reverse-row-half-${gutters.value.row}`);
+        }*/
+        if (gutters.value.column) {
+          list.push(`ls-margin-column-${gutters.value.column}`);
         }
 
         // displays
@@ -114,7 +126,8 @@
         return list.filter(item => item);
       });
 
-      // active functions
+      // provides
+      provide('gutters', gutters);
 
       return {
         classes,

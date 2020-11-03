@@ -1,0 +1,22 @@
+// view/home/search
+
+@import "../index";
+
+@main-search-bar-height: 80px;
+.ls-view-home-search {
+  position: sticky;
+  top: 75px;
+
+  &__container {
+    .ls-flex();
+    height: @main-search-bar-height;
+    background-color: @weak[strongest];
+  }
+  &__item {
+    .ls-flex-combo();
+
+    &.is-static {
+      .ls-flex-static();
+    }
+  }
+}

@@ -4,13 +4,19 @@
 
 .ls-grid-row {
   .ls-flex();
+  position: relative;
+  box-sizing: border-box;
 
   .ls-grid-row-container {
     .ls-flex-combo();
+    flex-wrap: wrap;
   }
   &.is-flex {
     .ls-flex-auto();
     width: initial;
+  }
+  &:first-child {
+    margin-top: 0;
   }
   &:last-child {
     margin-bottom: 0;
@@ -18,7 +24,8 @@
 }
 
 .ls-grid-column {
-  .ls-flex-column();
+  .ls-flex-static-combo-column();
+  box-sizing: border-box;
 
   .ls-grid-row-container {
     .ls-flex-combo();
@@ -67,12 +74,12 @@
 .generate-grid-spans("", 100);
 
 // big screen
-@media screen and (min-width:1200px) {
+@media screen and (min-width:1300px) {
   .generate-grid-spans(grid-big-, @grid-length);
   .generate-grid-spans(big-, 100);
 }
 // middle screen
-@media screen and (min-width: 768px) and (max-width:1199px) {
+@media screen and (min-width: 768px) and (max-width:1299px) {
   .generate-grid-spans(grid-middle-, @grid-length);
   .generate-grid-spans(middle-, 100);
 }
@@ -83,6 +90,6 @@
 }
 // smaller screen
 @media screen and (max-width: 479px) {
-  .generate-grid-spans(grid-smaller, @grid-length);
+  .generate-grid-spans(grid-smaller-, @grid-length);
   .generate-grid-spans(smaller-, 100);
 }

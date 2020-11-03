@@ -1,16 +1,19 @@
 <template>
-  <div class="ls-page-layout">
-    <ls-row>
-      <ls-column span="12">
-        <ls-row>
-          <ls-column span="12"><div>home-page1</div></ls-column>
-          <ls-column span="12"><div>home-page1</div></ls-column>
-        </ls-row>
-      </ls-column>
-      <ls-column span="12">
-        <div>home-page2</div>
-      </ls-column>
-    </ls-row>
+  <div class="ls-view-home-layout">
+    <div class="ls-view-home-container">
+      <ls-row row-gutter="bigger">
+        <ls-column span="6" small="24" smaller="24">
+          <div class="ls-view-home-card" style="height: 2000px;">left</div>
+        </ls-column>
+        <ls-column span="12" small="24" smaller="24">
+          <search></search>
+          <div class="ls-view-home-card">center</div>
+        </ls-column>
+        <ls-column span="6" small="24" smaller="24">
+          <div class="ls-view-home-card">right</div>
+        </ls-column>
+      </ls-row>
+    </div>
   </div>
 </template>
 
@@ -24,6 +27,8 @@ export default {
     // public-components
     LsRow: defineAsyncComponent(() => import('<components>/common/layout/grid/row.vue')),
     LsColumn: defineAsyncComponent(() => import('<components>/common/layout/grid/column.vue')),
+    // parts
+    Search: defineAsyncComponent(() => import('./parts/search')),
   },
 }
 </script>

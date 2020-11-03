@@ -1,5 +1,5 @@
 <script>
-  import { computed } from 'vue';
+  import { computed, inject } from 'vue';
 
   export default {
     name: "ls-column",
@@ -50,7 +50,10 @@
       },
     },
     setup(props) {
-      // computed
+      // injects
+      const parentGutters = inject('gutters');
+
+      // active methods
       /**
        * if span is a percentage-value, then return a class-style string;
        * else return null;
@@ -73,6 +76,8 @@
         }
         return null;
       };
+
+      // computed
       /**
        * return an array that contains class-style strings.
        */
@@ -84,27 +89,21 @@
           list.push(spanToClass(props.span));
         }
         if (props.big) {
-          list.push(spanToClass(props.span, 'big'));
+          list.push(spanToClass(props.big, 'big'));
         }
         if (props.middle) {
-          list.push(spanToClass(props.span, 'middle'));
+          list.push(spanToClass(props.middle, 'middle'));
         }
         if (props.small) {
-          list.push(spanToClass(props.span, 'small'));
+          list.push(spanToClass(props.small, 'small'));
         }
         if (props.smaller) {
-          list.push(spanToClass(props.span, 'smaller'));
+          list.push(spanToClass(props.smaller, 'smaller'));
         }
 
         // gutters
-        if (!props.columnGutter && !props.rowGutter && props.gutter) {
-          list.push(`ls-padding-${props.gutter}`);
-        }
-        if (props.columnGutter) {
-          list.push(`ls-padding-column-${props.columnGutter}`);
-        }
-        if (props.rowGutter) {
-          list.push(`ls-padding-row-${props.rowGutter}`);
+        if (parentGutters?.value?.row) {
+          list.push(`ls-padding-row-half-${parentGutters.value.row}`);
         }
 
         // displays
@@ -114,8 +113,6 @@
 
         return list.filter(item => item);
       });
-
-      // active functions
 
       return {
         classes,
