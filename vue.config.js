@@ -9,6 +9,8 @@ module.exports = {
       .set('@', resolve('src'))
       .set('<src>', resolve('src'))
       .set('<assets>', resolve('src/assets'))
+      .set('<scripts>', resolve('src/assets/scripts'))
+      .set('<util>', resolve('src/assets/scripts/util'))
       .set('<components>', resolve('src/components'))
       .set('<provides>', resolve('src/provides'))
       .set('<views>', resolve('src/views'))

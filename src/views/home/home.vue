@@ -25,8 +25,8 @@ export default {
   name: 'Home',
   components: {
     // public-components
-    LsRow: defineAsyncComponent(() => import('<components>/common/layout/grid/row.vue')),
-    LsColumn: defineAsyncComponent(() => import('<components>/common/layout/grid/column.vue')),
+    LsRow: defineAsyncComponent(() => import('<components>/grid/row')),
+    LsColumn: defineAsyncComponent(() => import('<components>/grid/column')),
     // parts
     Search: defineAsyncComponent(() => import('./parts/search')),
   },

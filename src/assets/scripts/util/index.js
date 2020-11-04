@@ -1,1 +1,3 @@
-// index file of util methods
+// assets/scripts/util
+
+export * as common from './common';
