@@ -12,18 +12,24 @@
 </template>
 
 <script>
-// services
-// todo: import(resize-observer-polyfill) package
-// todo: add(resize-observer) component
-// todo: add(affix) component
-
 import { defineAsyncComponent } from 'vue';
-
+import { chain } from '<assets>/scripts/chain-request';
 export default {
   name: 'home-search-search-bar',
   description: 'the main search-bar.',
   components: {
     LsAffix: defineAsyncComponent(() => import('<components>/container/affix')),
   },
+  mounted() {
+    console.log(
+      chain(this)
+        .use(context => {
+          context.name = 'shook';
+        })
+        .use(context => {
+          context.age = 16;
+        })
+    );
+  }
 }
 </script>

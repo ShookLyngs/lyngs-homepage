@@ -1,0 +1,18 @@
+{
+  "root": true,
+  "env": {
+    "node": true
+  },
+  "extends": [
+    "plugin:vue/vue3-essential",
+    "eslint:recommended"
+  ],
+  "parserOptions": {
+    "parser": "babel-eslint"
+  }
+  /*"rules": {
+    "vue/attribute-hyphenation": "error",
+    "vue/component-definition-name-casing": [ "error", "kebab-case" ],
+    "vue/html-quotes": [ "error", "double", { "avoidEscape": false } ],
+  }*/
+}

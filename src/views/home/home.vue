@@ -20,7 +20,6 @@
 <script>
 // services
 import { defineAsyncComponent } from 'vue';
-
 export default {
   name: 'Home',
   components: {

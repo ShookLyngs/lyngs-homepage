@@ -1,29 +1,57 @@
 <script>
-  import LsResizeObserver from '<components>/container/resize-observer';
+  import { defineAsyncComponent } from 'vue';
+  //import { getTargetRect } from '<util>/common/dom';
+
+  const AffixStatus = {
+    None: Symbol(),
+    Ready: Symbol(),
+  };
+
   export default {
     name: "ls-affix",
     components: {
-      LsResizeObserver
+      LsResizeObserver: defineAsyncComponent(() => import('<components>/container/resize-observer'))
     },
     props: {
-
+      offsetTop: {
+        type: [ Number, String ],
+        default: void 0,
+      },
+      offsetBottom: {
+        type: [ Number, String ],
+        default: void 0,
+      },
     },
-    setup() {
-      const onResize = size => {
-        console.log(size);
-      };
-
+    data() {
       return {
-        onResize,
+        status: AffixStatus.None,
+        containerStyles: {},
+        fixedStyles: {},
       };
+    },
+    methods: {
+      readyUpdate() {
+
+      },
+      updateStyles() {
+
+      },
+      onResize(sizes) {
+        console.log('text', sizes);
+      },
+    },
+    beforeMount() {
+
     },
   }
 </script>
 
 <template>
   <ls-resize-observer @resize="onResize">
-    <div>
-      <slot></slot>
+    <div :style="containerStyles" ref="container">
+      <div :style="fixedStyles" ref="fixed">
+        <slot/>
+      </div>
     </div>
   </ls-resize-observer>
 </template>
