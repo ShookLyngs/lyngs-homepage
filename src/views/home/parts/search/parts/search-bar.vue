@@ -22,7 +22,7 @@ export default {
   },
   mounted() {
     console.log(
-      chain(this)
+      chain(this, { name: 'shook' }, { age: 16 })
         .use(context => {
           context.name = 'shook';
         })

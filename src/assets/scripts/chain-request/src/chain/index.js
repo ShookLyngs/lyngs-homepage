@@ -1,5 +1,7 @@
 // module(chain-request): main properties
 
+import { merge } from '../modules/merge';
+
 const ChainBaseComponent = () => {
   return {
     context: (context = {}, ...params) => Object.assign(context, ...params),
@@ -12,6 +14,19 @@ const ChainBaseComponent = () => {
     chain(caller, ...params) {
       const context = this.context({ caller }, ...params),
             self    = this;
+
+      console.log(merge({ caller }, {
+        name: 'shook',
+        list: [
+          { name: 'shook' },
+        ],
+      }, {
+        name:'oral',
+        list: [
+          { age: 16 },
+          { name: 'oral' },
+        ],
+      }));
 
       return {
         context(...params) {
@@ -31,5 +46,7 @@ const ChainBaseComponent = () => {
   };
 };
 const main = new ChainBaseComponent();
+
+
 
 export const chain = main.chain.bind(main);
