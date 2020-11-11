@@ -4,6 +4,8 @@ import { createApp } from 'vue';
 import App from '<views>/layout/app';
 const app = createApp(App);
 
+import '<assets>/scripts/util';
+
 // import(ls-ui-styles): styles of the project
 import '<assets>/styles/index.less';
 
