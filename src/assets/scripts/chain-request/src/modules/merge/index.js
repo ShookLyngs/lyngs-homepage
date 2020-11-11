@@ -31,7 +31,7 @@ const mergeObject = (...objects) => {
       merged[key] = mergeProperty(merged[key], object[key]);
       return merged;
     }, collection);
-  }, {});
+  });
 };
 // merge Arrays
 const mergeArray = (...arrays) => {

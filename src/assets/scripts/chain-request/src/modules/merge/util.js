@@ -1,5 +1,8 @@
 // check-is(Object)
-export const isObject = target => Object.prototype.toString.call(target) === '[object Object]';
+export const isObject = target => {
+  console.log(target, isProxy(target));
+  return Object.prototype.toString.call(target) === '[object Object]' && !isProxy(target);
+}
 
 // check-is(Array)
 export const isArray = target => Array.isArray(target);
@@ -9,6 +12,16 @@ export const isSet = target => target instanceof Set;
 
 // check-is(Map)
 export const isMap = target => target instanceof Map;
+
+// check-is(Proxy)
+export const isProxy = target => {
+  try {
+    postMessage(target, "*");
+  } catch (error) {
+    return error && error.code === 25; // DATA_CLONE_ERR
+  }
+  return false;
+}
 
 // check is certain type
 export const isType = (target, type) => {

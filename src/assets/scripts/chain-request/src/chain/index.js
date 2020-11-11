@@ -2,9 +2,9 @@
 
 import { merge } from '../modules/merge';
 
-const ChainBaseComponent = () => {
+/*const ChainBaseComponent = () => {
   return {
-    context: (context = {}, ...params) => Object.assign(context, ...params),
+    context: (...params) => merge(...params),
     use(context, injection) {
       if (typeof injection !== 'function') {
         throw new Error('injection must be an instance of Function');
@@ -12,25 +12,12 @@ const ChainBaseComponent = () => {
       injection(context);
     },
     chain(caller, ...params) {
-      const context = this.context({ caller }, ...params),
-            self    = this;
-
-      console.log(merge({ caller }, {
-        name: 'shook',
-        list: [
-          { name: 'shook' },
-        ],
-      }, {
-        name:'oral',
-        list: [
-          { age: 16 },
-          { name: 'oral' },
-        ],
-      }));
+      let   context = merge({ caller }, ...params);
+      const self    = this;
 
       return {
         context(...params) {
-          self.context(context, params);
+          context = merge(context, params);
           return this;
         },
         use(injection) {
@@ -45,8 +32,48 @@ const ChainBaseComponent = () => {
     }
   };
 };
-const main = new ChainBaseComponent();
+const main = new ChainBaseComponent();*/
 
+const initializeContext = (...params) => {
+  const context = {
+    caller: null,
+    custom: {},
+  };
+  return params.length ? merge(context, ...params) : context;
+};
 
+const use = (context, injection) => {
+  if (typeof injection !== 'function') {
+    throw new Error('injection must be an instance of Function');
+  }
+  injection(context);
+};
 
-export const chain = main.chain.bind(main);
+const chain = (caller, ...params) => {
+  // initialize context
+  let context = initializeContext({ caller });
+  merge(context.custom, ...params);
+
+  return {
+    context(...params) {
+      merge(context.custom, ...params);
+      return this;
+    },
+    use(injection) {
+      use(context.custom, injection);
+      return this;
+    },
+    next(method) {
+      method.call(this);
+      return this;
+    },
+    start() {
+
+    }
+  };
+};
+
+export {
+  chain,
+};
+export default chain;
