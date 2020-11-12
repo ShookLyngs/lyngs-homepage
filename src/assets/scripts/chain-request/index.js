@@ -1,4 +1,10 @@
 // module(chain-request): index-file
 
-// 输出 chain-request(main)
-export * from './src/chain';
+// export(module): chain
+export * from './src/framework';
+
+// export(module): request
+export * from './src/wraps/request';
+
+// export(module): middlewares
+export * from './src/middlewares';

@@ -23,7 +23,7 @@
 
 <script>
 import { defineAsyncComponent } from 'vue';
-import { chain } from '<assets>/scripts/chain-request';
+import { createRequest, config } from '<assets>/scripts/chain-request';
 export default {
   name: 'home-search-search-bar',
   description: 'the main search-bar.',
@@ -31,17 +31,42 @@ export default {
     LsAffix: defineAsyncComponent(() => import('<components>/container/affix')),
   },
   mounted() {
-    console.log(
+    /*console.log(
       chain(this, { name: 'shook' }, { age: 16 })
-        .use(context => {
+        .use(async (context, next) => {
           context.name = 'shook';
+          console.log('1-forward');
+          await next();
+          console.log('1-back');
         })
-        .use(context => {
+        .use(async (context, next) => {
           context.age = 16;
-
-          console.log(context);
+          console.log('2-forward');
+          await next();
+          console.log('2-back');
         })
-    );
+        .use(async (context, next) => {
+          console.log('3-forward');
+          await next(false);
+          console.log('3-back');
+        })
+        .use(async (context, next) => {
+          console.log('4-forward');
+          await next();
+          console.log('4-back');
+        })
+        .start()
+    );*/
+
+    createRequest()
+      .use(config({
+        url: 'get/something',
+        method: 'get',
+        params: {
+          _version: Date.now(),
+        },
+      }))
+      .start();
   }
 }
 </script>

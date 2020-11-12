@@ -10,6 +10,7 @@
   "dependencies": {
     "axios": "^0.21.0",
     "core-js": "^3.6.5",
+    "is-proxy": "^1.0.4",
     "path": "^0.12.7",
     "resize-observer-polyfill": "^1.5.1",
     "vue": "^3.0.0",
