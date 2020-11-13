@@ -24,6 +24,7 @@
 <script>
 import { defineAsyncComponent } from 'vue';
 import { createRequest, config } from '<assets>/scripts/chain-request';
+import { digger } from '<assets>/scripts/chain-request/src/modules/digger';
 export default {
   name: 'home-search-search-bar',
   description: 'the main search-bar.',
@@ -58,15 +59,24 @@ export default {
         .start()
     );*/
 
-    createRequest()
+    createRequest(this)
       .use(config({
-        url: 'get/something',
+        url: 'test',
         method: 'get',
         params: {
-          _version: Date.now(),
+          version: Date.now(),
         },
       }))
       .start();
+
+    const object = {
+      data: {
+        people: [
+          { name: 'shook' },
+        ],
+      },
+    };
+    console.log(digger(object, 'data.people[1]', { name: 'oral' }, { extend: true }), object);
   }
 }
 </script>

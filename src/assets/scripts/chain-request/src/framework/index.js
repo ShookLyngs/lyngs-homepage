@@ -8,7 +8,13 @@ import {
 const chain = (...params) => new ChainBuilder(...params);
 
 export {
-  chain,
+  // symbols
   ChainStatus,
+
+  // methods
+  chain,
+  initializeContext,
+  useMiddleware,
+  createNext,
 };
 export default chain;

@@ -1,7 +1,5 @@
-// chain-request(middleware): send-request;
-// this middleware will send request using context.http;
-
-import { merge } from '../../modules/merge';
+// chain-request(middleware): merge context.request entirely;
+import { merge } from '../../../../modules/merge';
 
 export default (options) => {
   return async function config(context, next) {

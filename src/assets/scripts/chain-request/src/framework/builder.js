@@ -1,6 +1,6 @@
 // chain-request(framework): builder
 
-import { generate } from "<assets>/scripts/chain-request/src/modules/token";
+import { generateToken } from "<assets>/scripts/chain-request/src/modules/token";
 import { merge } from "<assets>/scripts/chain-request/src/modules/merge";
 
 const ChainStatus = {
@@ -12,10 +12,10 @@ const ChainStatus = {
 
 const initializeContext = (...params) => {
   const context = {
-    token: generate(),
-    caller: null,
+    token: generateToken(),
     queue: [],
     data: {
+      caller: null,
       status: ChainStatus.Ready,
     },
   };
@@ -73,12 +73,17 @@ class ChainBuilder {
     merge(this._context.data, ...params);
     return this;
   }
+  hack(hacker) {
+    hackContext(this._context, hacker);
+    return this;
+  }
   use(injection) {
     useMiddleware(
       this._context,
       injection,
       createNext(this._context.queue, this._context)
     );
+    console.log(this._context, [].concat(this._context.queue));
     return this;
   }
   async start() {
@@ -88,10 +93,6 @@ class ChainBuilder {
   }
   cancel() {
     this._context.data.status = ChainStatus.Canceled;
-    return this;
-  }
-  hack(hacker) {
-    hackContext(this._context, hacker);
     return this;
   }
 }

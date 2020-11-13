@@ -3,8 +3,5 @@
 // export(module): chain
 export * from './src/framework';
 
-// export(module): request
+// export(wrap): request, middlewares of request
 export * from './src/wraps/request';
-
-// export(module): middlewares
-export * from './src/middlewares';
