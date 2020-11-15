@@ -1,27 +1,73 @@
 // find or update property inside of a object/array
 
-// symbol(empty-update)
+// symbols
+
+/**
+ * this symbol represents the default state of param 'update' inside of function digger().
+ * @type {symbol}
+ */
 const EmptyUpdate = Symbol('empty-update');
 
-// check if target is empty
+// checkers
+
+/**
+ * check if the target is empty.
+ * @param target {any} any value that needs to be check.
+ * @returns {boolean}
+ */
 const isEmpty = target => target === void 0 || target === null;
 
-// check(is-string-quoted)
+/**
+ * check if the target is quoted by double-quotes or single-quotes.
+ * @param target {string} string type value that needs to be check.
+ * @returns {boolean}
+ */
 const isQuoted = target => /^('.+'|".+")$/g.test(target);
 
-// check(is-target-number)
+/**
+ * check if the target is a number type value.
+ * @param target {string|number} string or number type value that needs to be check.
+ * @returns {boolean}
+ */
 const isNumber = target => !Number.isNaN(+target) && Number.isFinite(+target);
 
-// filter(split-finder)
-const splitFinder = find => find.split(/(?:\\]\[|\]\.|\.|\[|\])+?/g);
+// filters
 
-// filter(exclude-empty-item-in-array)
+/**
+ * find matches out of string.
+ * @param target {string} - target string like `object.people[0]['name']`.
+ * @returns {string[]} - string array, like [ 'object', 'people', '0', "'name'" ]
+ */
+const splitFinder = target => target.split(/(?:\]\[|\]\.|\.|\[|\])+?/g);
+
+/**
+ * filter an array, return an array with no empty value inside.
+ * @param array {any[]}
+ * @returns {any[]}
+ */
 const removeEmptyInArray = array => array.filter(value => !!value);
 
-// filter(remove-quotes-inside-of-string)
+/**
+ * remove quotes that are aside the string.
+ * @param string {string}
+ * @returns {string}
+ */
 const removeQuotesInString = string => string.replace(/(['"])/g, '');
 
-export const digger = (
+// main function
+
+/**
+ * dig value in any level.
+ * example: digger({ people: [ { name: 'shook' } ] }, 'people[0].name');
+ * result: 'shook';
+ * @param caller {object|*[]}
+ * @param find {string}
+ * @param [update] {*}
+ * @param [untie] {boolean}
+ * @param [extend] {boolean}
+ * @returns {*}
+ */
+const digger = (
   caller,
   find,
   update = EmptyUpdate,
@@ -30,8 +76,6 @@ export const digger = (
     extend = false,
   } = {}
 ) => {
-  // when empty-error has triggered,
-  // return undefined to stand the result;
   if (isEmpty(caller) || isEmpty(find)) return void 0;
 
   const classified = removeEmptyInArray(splitFinder(find));
@@ -63,3 +107,8 @@ export const digger = (
 
   return index === classified.length ? stand : void 0;
 };
+
+export {
+  digger,
+};
+export default digger;

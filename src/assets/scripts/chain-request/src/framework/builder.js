@@ -1,7 +1,7 @@
 // chain-request(framework): builder
 
 import { generateToken } from "<assets>/scripts/chain-request/src/modules/token";
-import { merge } from "<assets>/scripts/chain-request/src/modules/merge";
+import { merge } from "@lyngs/merge";
 
 const ChainStatus = {
   Ready:    Symbol('ready'),

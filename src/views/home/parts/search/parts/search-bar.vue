@@ -24,7 +24,8 @@
 <script>
 import { defineAsyncComponent } from 'vue';
 import { createRequest, config } from '<assets>/scripts/chain-request';
-import { digger } from '<assets>/scripts/chain-request/src/modules/digger';
+import { digger } from '@lyngs/digger';
+import { merge } from '<assets>/scripts/chain-request/src/modules/merge';
 export default {
   name: 'home-search-search-bar',
   description: 'the main search-bar.',
@@ -71,12 +72,15 @@ export default {
 
     const object = {
       data: {
+        current: 0,
         people: [
           { name: 'shook' },
         ],
       },
     };
-    console.log(digger(object, 'data.people[1]', { name: 'oral' }, { extend: true }), object);
+    console.log(digger(object, `data['people'][0]['name']`));
+
+    console.log(merge(new Set([ 1, 2, 3 ]), new Set([ 2, 3, 4, 5 ])));
   }
 }
 </script>

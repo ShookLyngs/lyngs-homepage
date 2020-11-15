@@ -1,4 +1,4 @@
-import { isProxy as checkIsProxy } from 'is-proxy';
+import * as checkIsProxy from 'is-proxy';
 
 // check-is(Object)
 export const isObject = target => Object.prototype.toString.call(target) === '[object Object]' && !isProxy(target);
@@ -13,9 +13,9 @@ export const isSet = target => target instanceof Set;
 export const isMap = target => target instanceof Map;
 
 // check-is(Proxy)
-export const isProxy = checkIsProxy;
+export const isProxy = checkIsProxy.isProxy;
 
-// check is certain type
+// check if is certain type
 export const isType = (target, type) => {
   return {
     object: isObject,
@@ -26,7 +26,7 @@ export const isType = (target, type) => {
   }?.[type]?.(target) ?? false;
 };
 
-// upper-case the first letter of type string
+// upper-case the first letter of string
 export const formatType = (type) => {
   const array = type.split('');
   array[0] = array[0].toUpperCase();
