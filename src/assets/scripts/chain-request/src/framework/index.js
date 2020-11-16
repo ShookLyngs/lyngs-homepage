@@ -1,20 +1,28 @@
 // module(chain-request): main properties
 
 import {
-  ChainStatus, ChainBuilder,
-  initializeContext, useMiddleware, createNext,
+  ChainBuilder,
 } from './builder';
 
 const chain = (...params) => new ChainBuilder(...params);
 
+export default chain;
+export {
+  chain,
+  ChainBuilder,
+};
 export {
   // symbols
   ChainStatus,
-
-  // methods
-  chain,
+  // original-methods
   initializeContext,
   useMiddleware,
   createNext,
-};
-export default chain;
+  cancelProgress,
+  hackContext,
+  registerHook,
+  registerHooks,
+  useHook,
+  removeHook,
+  triggerHook,
+} from './builder';

@@ -80,7 +80,7 @@ const filter = function(files, config = defaultFilterOptions()) {
     const name = filterMapName(path);
     map = digger(map, name.digger, files(path));
   });
-  console.log(map);
+
   return map;
 };
 

@@ -23,7 +23,7 @@
 
 <script>
 import { defineAsyncComponent } from 'vue';
-import { createRequest, config } from '<assets>/scripts/chain-request';
+import { chain } from '<assets>/scripts/chain-request';
 import { digger } from '@lyngs/digger';
 import { merge } from '<assets>/scripts/chain-request/src/modules/merge';
 export default {
@@ -60,14 +60,26 @@ export default {
         .start()
     );*/
 
-    createRequest(this)
-      .use(config({
-        url: 'test',
-        method: 'get',
-        params: {
-          version: Date.now(),
-        },
-      }))
+    const instance = chain({ caller: this });
+    instance
+      .use(async (context, next) => {
+        await next();
+        console.log('finished 3');
+      })
+      .use(async (context, next) => {
+        await instance.cancel();
+        await instance.hack(root => {
+          console.log(root);
+          return root;
+        });
+        await next();
+        console.log('finished 2');
+      })
+      .use(async (context, next) => {
+        console.log('next');
+        await next();
+        console.log('finished 1');
+      })
       .start();
 
     const object = {
