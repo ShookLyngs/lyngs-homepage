@@ -1,28 +1,3 @@
-// module(chain-request): main properties
+// chain(entry): index file
 
-import {
-  ChainBuilder,
-} from './builder';
-
-const chain = (...params) => new ChainBuilder(...params);
-
-export default chain;
-export {
-  chain,
-  ChainBuilder,
-};
-export {
-  // symbols
-  ChainStatus,
-  // original-methods
-  initializeContext,
-  useMiddleware,
-  createNext,
-  cancelProgress,
-  hackContext,
-  registerHook,
-  registerHooks,
-  useHook,
-  removeHook,
-  triggerHook,
-} from './builder';
+export * from './wrap';
