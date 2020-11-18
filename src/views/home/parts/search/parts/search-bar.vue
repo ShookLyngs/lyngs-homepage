@@ -33,52 +33,34 @@ export default {
     LsAffix: defineAsyncComponent(() => import('<components>/container/affix')),
   },
   mounted() {
-    /*console.log(
-      chain(this, { name: 'shook' }, { age: 16 })
-        .use(async (context, next) => {
-          context.name = 'shook';
-          console.log('1-forward');
-          await next();
-          console.log('1-back');
-        })
-        .use(async (context, next) => {
-          context.age = 16;
-          console.log('2-forward');
-          await next();
-          console.log('2-back');
-        })
-        .use(async (context, next) => {
-          console.log('3-forward');
-          await next(false);
-          console.log('3-back');
-        })
-        .use(async (context, next) => {
-          console.log('4-forward');
-          await next();
-          console.log('4-back');
-        })
-        .start()
-    );*/
-
     const instance = chain({ caller: this });
     instance
       .use(async (context, next) => {
+        console.log('progress 1');
         await next();
         console.log('finished 3');
       })
       .use(async (context, next) => {
-        await instance.cancel();
-        await instance.hack(root => {
-          console.log(root);
-          return root;
-        });
+        console.log('progress 2');
         await next();
         console.log('finished 2');
       })
       .use(async (context, next) => {
-        console.log('next');
+        console.log('progress 3');
         await next();
         console.log('finished 1');
+      })
+      .useHook('onStart', (context) => {
+        console.log('on-start', context);
+      })
+      .useHook('onProgress', (context) => {
+        console.log('on-progress', context);
+      })
+      .useHook('onCanceled', (context) => {
+        console.log('on-cancel', context);
+      })
+      .useHook('onFinish', (context) => {
+        console.log('on-finish', context);
       })
       .start();
 

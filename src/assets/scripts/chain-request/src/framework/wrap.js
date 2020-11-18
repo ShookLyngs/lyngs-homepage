@@ -9,10 +9,9 @@ import {
   initializeContext,
   useMiddleware,
   createNext,
+  startProgress,
   cancelProgress,
   hackContext,
-  registerHook,
-  registerHooks,
   useHook,
   removeHook,
   triggerHook,
@@ -26,12 +25,10 @@ class ChainBuilder {
     this._context = initializeContext();
     merge(this._context.data, ...params);
 
-    // register hooks
-    registerHooks(this._context, [ 'onFinish', 'onCancel' ]);
-
     return this;
   }
 
+  // context
   context(...params) {
     merge(this._context.data, ...params);
     return this;
@@ -40,31 +37,28 @@ class ChainBuilder {
     hackContext(this._context, injection);
     return this;
   }
+
+  // middleware
   use(injection) {
     useMiddleware(
       this._context,
       injection,
-      createNext(this._context.queue, this._context)
+      createNext(this._context)
     );
     return this;
   }
-  async start() {
-    this._context.data.status = ChainStatus.Progress;
-    try {
-      await createNext(this._context.queue, this._context)();
-    } catch(error) {
-      if (error.status !== ChainStatus.Canceled) {
-        throw error;
-      }
-    }
+  start() {
+    startProgress(this._context)();
     return this;
   }
   cancel() {
     cancelProgress(this._context);
     return this;
   }
+
+  // hooks
   useHook(type, callback, getToken) {
-    const token = useHook(this._context, type, callback);
+    const token = useHook(this._context, () => this._context.data, type, callback);
     if (typeof token === 'function') {
       getToken(token);
     }
@@ -74,12 +68,38 @@ class ChainBuilder {
     removeHook(this._context, token);
     return this;
   }
-  registerHook(type) {
-    registerHooks(this._context, type);
-    return this;
-  }
   triggerHook(type) {
     triggerHook(this._context, type);
+    return this;
+  }
+
+  // life-circle-hooks
+  onStart(callback, getToken) {
+    this.useHook('onStart', callback, getToken);
+    return this;
+  }
+  onProgress(callback, getToken) {
+    this.useHook('onProgress', callback, getToken);
+    return this;
+  }
+  onBeforeCancel(callback, getToken) {
+    this.useHook('onBeforeCancel', callback, getToken);
+    return this;
+  }
+  onCanceled(callback, getToken) {
+    this.useHook('onCanceled', callback, getToken);
+    return this;
+  }
+  onFinish(callback, getToken) {
+    this.useHook('onFinish', callback, getToken);
+    return this;
+  }
+  onBeforeHack(callback, getToken) {
+    this.useHook('onBeforeHack', callback, getToken);
+    return this;
+  }
+  onHacked(callback, getToken) {
+    this.useHook('onHacked', callback, getToken);
     return this;
   }
 }
@@ -88,7 +108,7 @@ const chain = (...params) => new ChainBuilder(...params);
 
 export default ChainBuilder;
 export {
-  // symbols
+  // enum
   ChainStatus,
 
   // original-methods
@@ -97,8 +117,6 @@ export {
   createNext,
   cancelProgress,
   hackContext,
-  registerHook,
-  registerHooks,
   useHook,
   removeHook,
   triggerHook,

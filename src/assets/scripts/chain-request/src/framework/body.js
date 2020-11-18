@@ -20,7 +20,7 @@ const initializeContext = (...params) => {
       status: ChainStatus.Ready,
     },
   };
-  return merge({}, context, ...params);
+  return merge(context, ...params);
 };
 
 const useMiddleware = (context, injection, next) => {
@@ -34,7 +34,8 @@ const useMiddleware = (context, injection, next) => {
   });
 };
 
-const createNext = (queue, context) => {
+const createNext = (context) => {
+  const queue = context.queue;
   return async (forward = true) => {
     if (!forward) {
       cancelProgress(context);
@@ -45,7 +46,9 @@ const createNext = (queue, context) => {
 
     if (queue.length) {
       const task = queue.shift();
-      await task.action(context, createNext(queue, context.data));
+      triggerHook(context, 'onProgress', task);
+
+      await task.action(context, createNext(context));
     } else {
       context.data.status = ChainStatus.Finished;
       triggerHook(context, 'onFinish');
@@ -53,56 +56,63 @@ const createNext = (queue, context) => {
   };
 };
 
+const startProgress = (context) => {
+  return async () => {
+    triggerHook(context, 'onStart');
+
+    context.data.status = ChainStatus.Progress;
+    try {
+      await createNext(context)();
+    } catch(error) {
+      if (error.status === ChainStatus.Canceled) {
+        triggerHook(context, 'onCanceled');
+      } else {
+        throw error;
+      }
+    }
+  };
+};
+
 const cancelProgress = (context) => {
+  triggerHook(context, 'onBeforeCancel');
   context.data.status = ChainStatus.Canceled;
-  triggerHook(context, 'oncCancel');
 };
 
 const hackContext = (context, injection) => {
+  triggerHook(context, 'onBeforeHack');
+
   if (typeof injection !== 'function') {
     throw new Error('injection must be an instance of Function');
   }
   context = injection(context);
+
+  triggerHook(context, 'onHacked');
   return context;
 };
 
-const registerHook = (context, type) => {
-  if (!context.hooks) {
-    context.hooks = {};
+const useHook = (context, getData, type, callback) => {
+  if (typeof getData !== 'function') {
+    throw new Error(`Param 'getData' must be an instance of Function`);
+  }
+  if (typeof callback !== 'function') {
+    throw new Error(`Param 'callback' must be an instance of Function`);
+  }
+  if (!type) {
+    throw new Error(`Can't find param 'type'`);
   }
   if (!context.hooks[type]) {
     context.hooks[type] = [];
-  } else {
-    console.warn(`Hook ${type} has been registered before`);
-  }
-};
-
-const registerHooks = (context, types) => {
-  if (!Array.isArray(types)) {
-    types = [ types ];
-  }
-  [ ...(new Set(types)) ].forEach((type) => {
-    registerHook(context, type);
-  });
-};
-
-const useHook = (context, type, callback) => {
-  // callback type-error
-  if (typeof callback !== 'function') {
-    throw new Error(`callback must be an instance of Function`);
   }
 
-  // check type's type-check and push it to list
-  if (context.hooks[type] !== void 0) {
-    const token = generateToken();
-    context.hooks[type].push({ token, callback });
-    return token;
-  } else {
-    throw new Error(`can't find hook type: ${type}`);
-  }
+  const token = generateToken();
+  context.hooks[type].push({ token, getData, callback });
+  return token;
 };
 
 const removeHook = (context, token) => {
+  if (!token) {
+    throw new Error(`can't find param 'token'`);
+  }
   const hooks = context.hooks;
   for (let key in hooks) {
     if (!Object.prototype.hasOwnProperty.call(hooks, key)) continue;
@@ -111,11 +121,15 @@ const removeHook = (context, token) => {
   }
 };
 
-const triggerHook = (context, type) => {
+const triggerHook = (context, type, ...params) => {
+  if (!type) {
+    throw new Error(`can't find param 'type'`);
+  }
+
   const hooks = context?.hooks?.[type];
-  if (hooks?.length || hooks?.length === 0) {
+  if (hooks && hooks?.length) {
     hooks.forEach((hook) => {
-      hook.callback(context);
+      hook.callback(hook.getData(), ...params);
     });
     return true;
   } else {
@@ -131,10 +145,9 @@ export {
   initializeContext,
   useMiddleware,
   createNext,
+  startProgress,
   cancelProgress,
   hackContext,
-  registerHook,
-  registerHooks,
   useHook,
   removeHook,
   triggerHook,
