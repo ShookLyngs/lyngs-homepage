@@ -14,6 +14,7 @@ import {
   hackContext,
   useHook,
   removeHook,
+  removeHooks,
   triggerHook,
 } from './body';
 
@@ -47,8 +48,8 @@ class ChainBuilder {
     );
     return this;
   }
-  start() {
-    startProgress(this._context)();
+  async start() {
+    await startProgress(this._context)();
     return this;
   }
   cancel() {
@@ -57,49 +58,57 @@ class ChainBuilder {
   }
 
   // hooks
-  useHook(type, callback, getToken) {
+  on(type, callback, getToken) {
     const token = useHook(this._context, () => this._context.data, type, callback);
     if (typeof token === 'function') {
       getToken(token);
     }
     return this;
   }
-  removeHook(token) {
-    removeHook(this._context, token);
+  off(target) {
+    if (typeof target === 'function') {
+      removeHook(this._context, target);
+    } else {
+      removeHooks(target);
+    }
     return this;
   }
-  triggerHook(type) {
+  emit(type) {
     triggerHook(this._context, type);
     return this;
   }
 
   // life-circle-hooks
   onStart(callback, getToken) {
-    this.useHook('onStart', callback, getToken);
+    this.on('onStart', callback, getToken);
     return this;
   }
   onProgress(callback, getToken) {
-    this.useHook('onProgress', callback, getToken);
+    this.on('onProgress', callback, getToken);
     return this;
   }
   onBeforeCancel(callback, getToken) {
-    this.useHook('onBeforeCancel', callback, getToken);
+    this.on('onBeforeCancel', callback, getToken);
     return this;
   }
   onCanceled(callback, getToken) {
-    this.useHook('onCanceled', callback, getToken);
+    this.on('onCanceled', callback, getToken);
+    return this;
+  }
+  onPop(callback, getToken) {
+    this.on('onPop', callback, getToken);
     return this;
   }
   onFinish(callback, getToken) {
-    this.useHook('onFinish', callback, getToken);
+    this.on('onFinish', callback, getToken);
     return this;
   }
   onBeforeHack(callback, getToken) {
-    this.useHook('onBeforeHack', callback, getToken);
+    this.on('onBeforeHack', callback, getToken);
     return this;
   }
   onHacked(callback, getToken) {
-    this.useHook('onHacked', callback, getToken);
+    this.on('onHacked', callback, getToken);
     return this;
   }
 }

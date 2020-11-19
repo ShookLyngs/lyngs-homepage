@@ -51,7 +51,7 @@ const createNext = (context) => {
       await task.action(context, createNext(context));
     } else {
       context.data.status = ChainStatus.Finished;
-      triggerHook(context, 'onFinish');
+      triggerHook(context, 'onPop');
     }
   };
 };
@@ -63,6 +63,8 @@ const startProgress = (context) => {
     context.data.status = ChainStatus.Progress;
     try {
       await createNext(context)();
+
+      triggerHook(context, 'onFinish');
     } catch(error) {
       if (error.status === ChainStatus.Canceled) {
         triggerHook(context, 'onCanceled');
@@ -104,21 +106,37 @@ const useHook = (context, getData, type, callback) => {
     context.hooks[type] = [];
   }
 
-  const token = generateToken();
-  context.hooks[type].push({ token, getData, callback });
-  return token;
+  context.hooks[type].push({
+    getData,
+    callback
+  });
 };
 
-const removeHook = (context, token) => {
-  if (!token) {
-    throw new Error(`can't find param 'token'`);
+const removeHook = (context, target) => {
+  if (!target) {
+    throw new Error(`can't find param 'target'`);
   }
+
   const hooks = context.hooks;
+
   for (let key in hooks) {
     if (!Object.prototype.hasOwnProperty.call(hooks, key)) continue;
     if (!hooks[key]?.length) continue;
-    hooks[key] = hooks[key].filter(hook => hook.token !== token);
+
+    hooks[key] = hooks[key].filter(hook => hook.callback !== target);
   }
+};
+
+const removeHooks = (context, type) => {
+  if (!type) {
+    context.hooks = {};
+    return;
+  }
+
+  const types = Array.isArray(type) ? type : type.spilit(' ');
+  types.forEach((type) => {
+    context.hooks[type] = [];
+  });
 };
 
 const triggerHook = (context, type, ...params) => {
@@ -150,5 +168,6 @@ export {
   hackContext,
   useHook,
   removeHook,
+  removeHooks,
   triggerHook,
 };

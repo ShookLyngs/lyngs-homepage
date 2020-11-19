@@ -24,21 +24,19 @@
 <script>
 import { defineAsyncComponent } from 'vue';
 import { chain } from '<assets>/scripts/chain-request';
-import { digger } from '@lyngs/digger';
-import { merge } from '<assets>/scripts/chain-request/src/modules/merge';
 export default {
   name: 'home-search-search-bar',
   description: 'the main search-bar.',
   components: {
     LsAffix: defineAsyncComponent(() => import('<components>/container/affix')),
   },
-  mounted() {
+  async mounted() {
     const instance = chain({ caller: this });
-    instance
+    await instance
       .use(async (context, next) => {
         console.log('progress 1');
         await next();
-        console.log('finished 3');
+        console.log('finished 1');
       })
       .use(async (context, next) => {
         console.log('progress 2');
@@ -48,7 +46,7 @@ export default {
       .use(async (context, next) => {
         console.log('progress 3');
         await next();
-        console.log('finished 1');
+        console.log('finished 3');
       })
       .useHook('onStart', (context) => {
         console.log('on-start', context);
@@ -59,22 +57,15 @@ export default {
       .useHook('onCanceled', (context) => {
         console.log('on-cancel', context);
       })
+      .useHook('onPop', (context) => {
+        console.log('on-pop', context);
+      })
       .useHook('onFinish', (context) => {
         console.log('on-finish', context);
       })
       .start();
 
-    const object = {
-      data: {
-        current: 0,
-        people: [
-          { name: 'shook' },
-        ],
-      },
-    };
-    console.log(digger(object, `data['people'][0]['name']`));
-
-    console.log(merge(new Set([ 1, 2, 3 ]), new Set([ 2, 3, 4, 5 ])));
+    console.log('on-final');
   }
 }
 </script>
