@@ -23,7 +23,7 @@
 
 <script>
 import { defineAsyncComponent } from 'vue';
-import { chain } from '<assets>/scripts/chain-request';
+import { ChainRequest } from '<assets>/scripts/chain-request/src/wraps/request';
 export default {
   name: 'home-search-search-bar',
   description: 'the main search-bar.',
@@ -31,41 +31,15 @@ export default {
     LsAffix: defineAsyncComponent(() => import('<components>/container/affix')),
   },
   async mounted() {
-    const instance = chain({ caller: this });
-    await instance
+    const instance = new ChainRequest({ caller: this });
+    instance
       .use(async (context, next) => {
-        console.log('progress 1');
+        console.log(context);
         await next();
-        console.log('finished 1');
-      })
-      .use(async (context, next) => {
-        console.log('progress 2');
-        await next();
-        console.log('finished 2');
-      })
-      .use(async (context, next) => {
-        console.log('progress 3');
-        await next();
-        console.log('finished 3');
-      })
-      .useHook('onStart', (context) => {
-        console.log('on-start', context);
-      })
-      .useHook('onProgress', (context) => {
-        console.log('on-progress', context);
-      })
-      .useHook('onCanceled', (context) => {
-        console.log('on-cancel', context);
-      })
-      .useHook('onPop', (context) => {
-        console.log('on-pop', context);
-      })
-      .useHook('onFinish', (context) => {
-        console.log('on-finish', context);
       })
       .start();
 
-    console.log('on-final');
+    console.log(instance);
   }
 }
 </script>

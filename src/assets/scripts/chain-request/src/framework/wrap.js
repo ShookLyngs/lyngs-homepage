@@ -58,11 +58,8 @@ class ChainBuilder {
   }
 
   // hooks
-  on(type, callback, getToken) {
-    const token = useHook(this._context, () => this._context.data, type, callback);
-    if (typeof token === 'function') {
-      getToken(token);
-    }
+  on(type, callback) {
+    useHook(this._context, () => this._context.data, type, callback);
     return this;
   }
   off(target) {
@@ -79,36 +76,36 @@ class ChainBuilder {
   }
 
   // life-circle-hooks
-  onStart(callback, getToken) {
-    this.on('onStart', callback, getToken);
+  onStart(callback) {
+    this.on('onStart', callback);
     return this;
   }
-  onProgress(callback, getToken) {
-    this.on('onProgress', callback, getToken);
+  onProgress(callback) {
+    this.on('onProgress', callback);
     return this;
   }
-  onBeforeCancel(callback, getToken) {
-    this.on('onBeforeCancel', callback, getToken);
+  onBeforeCancel(callback) {
+    this.on('onBeforeCancel', callback);
     return this;
   }
-  onCanceled(callback, getToken) {
-    this.on('onCanceled', callback, getToken);
+  onCanceled(callback) {
+    this.on('onCanceled', callback);
     return this;
   }
-  onPop(callback, getToken) {
-    this.on('onPop', callback, getToken);
+  onBubbling(callback) {
+    this.on('onBubbling', callback);
     return this;
   }
-  onFinish(callback, getToken) {
-    this.on('onFinish', callback, getToken);
+  onFinish(callback) {
+    this.on('onFinish', callback);
     return this;
   }
-  onBeforeHack(callback, getToken) {
-    this.on('onBeforeHack', callback, getToken);
+  onBeforeHack(callback) {
+    this.on('onBeforeHack', callback);
     return this;
   }
-  onHacked(callback, getToken) {
-    this.on('onHacked', callback, getToken);
+  onHacked(callback) {
+    this.on('onHacked', callback);
     return this;
   }
 }

@@ -6,6 +6,7 @@ import { generateToken } from "./util";
 const ChainStatus = {
   Ready:    Symbol('ready'),
   Progress: Symbol('progress'),
+  Bubbling:  Symbol('bubbling'),
   Finished: Symbol('finished'),
   Canceled: Symbol('canceled'),
 };
@@ -36,6 +37,7 @@ const useMiddleware = (context, injection, next) => {
 
 const createNext = (context) => {
   const queue = context.queue;
+
   return async (forward = true) => {
     if (!forward) {
       cancelProgress(context);
@@ -50,8 +52,8 @@ const createNext = (context) => {
 
       await task.action(context, createNext(context));
     } else {
-      context.data.status = ChainStatus.Finished;
-      triggerHook(context, 'onPop');
+      context.data.status = ChainStatus.Bubbling;
+      triggerHook(context, 'onBubbling');
     }
   };
 };
@@ -64,6 +66,7 @@ const startProgress = (context) => {
     try {
       await createNext(context)();
 
+      context.data.status = ChainStatus.Finished;
       triggerHook(context, 'onFinish');
     } catch(error) {
       if (error.status === ChainStatus.Canceled) {
