@@ -1,4 +1,4 @@
-import { ChainRequest } from './builder';
+import { ChainRequest } from './wrap';
 
 const createRequest = (...params) => new ChainRequest(...params);
 
