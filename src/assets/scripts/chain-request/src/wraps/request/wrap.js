@@ -43,7 +43,7 @@ class ChainRequest extends ChainBuilder {
         const data = typeof injection === 'function' ?
             injection(super._context.data) : injection;
 
-        super.context(data ? ? {});
+        super.context(data ?? {});
         return this;
     }
 
