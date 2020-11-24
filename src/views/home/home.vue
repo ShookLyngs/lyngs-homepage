@@ -24,8 +24,8 @@ export default {
   name: 'Home',
   components: {
     // public-components
-    LsRow: defineAsyncComponent(() => import('<components>/grid/row')),
-    LsColumn: defineAsyncComponent(() => import('<components>/grid/column')),
+    LsRow: defineAsyncComponent(() => import('<components>/common/row')),
+    LsColumn: defineAsyncComponent(() => import('<components>/common/column')),
     // parts
     Search: defineAsyncComponent(() => import('./parts/search')),
   },

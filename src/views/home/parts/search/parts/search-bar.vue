@@ -1,5 +1,5 @@
 <template>
-  <ls-affix :offset="{ y: '100px' }">
+  <ls-affix :offset-top="50">
     <div class="ls-view-home-search">
       <div class="ls-view-home-search__container">
         <div class="ls-view-home-search__item is-static">
@@ -7,6 +7,7 @@
         </div>
         <div class="ls-view-home-search__item">
           input
+          <a onclick="window.open('tencent://message/?uin=871080');" href="javascript:;"><img src="timg.jpg" /></a>
         </div>
         <div class="ls-view-home-search__item is-static">
           buttons
@@ -23,23 +24,12 @@
 
 <script>
 import { defineAsyncComponent } from 'vue';
-import { ChainRequest } from '<assets>/scripts/chain-request/src/wraps/request';
 export default {
   name: 'home-search-search-bar',
   description: 'the main search-bar.',
   components: {
-    LsAffix: defineAsyncComponent(() => import('<components>/container/affix')),
+    LsAffix: defineAsyncComponent(() => import('<components>/common/affix')),
   },
-  async mounted() {
-    const instance = new ChainRequest({ caller: this });
-    instance
-      .use(async (context, next) => {
-        console.log(context);
-        await next();
-      })
-      .start();
-
-    console.log(instance);
-  }
+  mounted() {}
 }
 </script>

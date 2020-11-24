@@ -1,8 +1,7 @@
 <script>
-  // plugin-modules
   import ResizeObserver from 'resize-observer-polyfill';
-  // util
   import { findDOMNode } from '<util>/common/dom';
+
   export default {
     name: "ls-resize-observer",
     props: {

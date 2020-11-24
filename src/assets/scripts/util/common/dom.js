@@ -20,7 +20,9 @@ export const findDOMNode = (instance) => {
  */
 export const getTargetRect = (target) => {
   if (target !== window) {
-    return target.getBoundingClientRect();
+    return target?.$el?.getBoundingClientRect?.()
+      ?? target?.getBoundingClientRect?.()
+      ?? null;
   } else {
     return {
       top: 0,
@@ -35,24 +37,30 @@ export const getTargetRect = (target) => {
 
 /**
  * add event-listener to a target, then returns an object that contains method to remove-listener
- * @param target - listen target
- * @param type - event type
- * @param callback - trigger method
- * @param options - add listener options
+ * @param target {Object} - listen target
+ * @param type {string} - event type
+ * @param event {Function} - trigger method
+ * @param options {Object} - add listener options
  * @returns {{remove: remove}}
  */
-export const addEventListener = (target, type, callback, options = void 0) => {
+export const on = (target, type, event, options = void 0) => {
   if (!target?.addEventListener) {
     throw Error("target is not a listenable object");
   }
 
-  target.addEventListener(type, callback, options);
+  target.addEventListener(type, event, options);
 
   return {
     remove: () => {
       if (target.removeEventListener) {
-        target.removeEventListener(type, callback);
+        target.removeEventListener(type, event);
       }
     },
   };
+};
+
+export const off = (target, type, event) => {
+  if (target?.removeEventListener) {
+    target.removeEventListener(type, event);
+  }
 };
