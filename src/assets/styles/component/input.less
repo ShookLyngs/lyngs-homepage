@@ -1,0 +1,25 @@
+// component/input
+@import "index";
+
+.ls-input {
+  .ls-flex-auto();
+  padding: 0 @space[middle];
+  width: 100%;
+
+
+  .ls-input-inner {
+    width: 100%;
+    border: none;
+    outline: none;
+    font-size: @size[small];
+  }
+
+  &.is-size-biggest {
+
+
+    .ls-input-inner {
+      font-size: @size[biggest];
+      font-weight: @weight[bold];
+    }
+  }
+}

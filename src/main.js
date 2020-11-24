@@ -4,8 +4,6 @@ import { createApp } from 'vue';
 import App from '<views>/layout/app';
 const app = createApp(App);
 
-import '<assets>/scripts/util';
-
 // import(ls-ui-styles): styles of the project
 import '<assets>/styles/index.less';
 
@@ -16,6 +14,10 @@ app.use(router);
 // import(vuex): vue state controller
 import store from '<provides>/store';
 app.use(store);
+
+// import(components): global components
+import icon from '<components>/common/icon';
+app.use(icon);
 
 // mounting app instance
 app.mount('#app');

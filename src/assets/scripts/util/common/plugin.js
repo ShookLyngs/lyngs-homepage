@@ -7,7 +7,7 @@
  */
 export const defineInstallableComponent = (component) => {
   component.install = (app) => {
-    app.use(component.displayName ?? component.name, component);
+    app.component(component.displayName ?? component.name, component);
   }
   return component;
 };
