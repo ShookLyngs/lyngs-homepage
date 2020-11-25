@@ -24,6 +24,10 @@
         "max": 3,
         "allowFirstLine": false
       }
+    }],
+    // 允许空行
+    "vue/multiline-html-element-content-newline": ["error", {
+      "allowEmptyLines": true
     }]
   }
 }

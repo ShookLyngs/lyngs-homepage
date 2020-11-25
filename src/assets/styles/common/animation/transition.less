@@ -1,0 +1,33 @@
+// animation/transition
+
+@import "index";
+
+.ls-transition-fastest {
+  transition: .1s ease;
+}
+.ls-transition-faster {
+  transition: .2s ease;
+}
+.ls-transition-fast {
+  transition: .3s ease;
+}
+
+
+// transition 组件
+
+
+// fade
+.fade-enter-from,
+.fade-leave-to {
+  .ls-transition-fast();
+  opacity: 0;
+}
+.fade-leave-from,
+.fade-enter-to {
+  .ls-transition-fast();
+  opacity: 1
+}
+.fade-enter-active,
+.fade-leave-active {
+  .ls-transition-fast();
+}

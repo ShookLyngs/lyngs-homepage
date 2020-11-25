@@ -70,6 +70,12 @@
       getTarget() {
         return this.target ?? window;
       },
+      prepare() {
+        this.fixed = false;
+        this.standStyles = {};
+        this.innerStyles = {};
+        this.$forceUpdate();
+      },
       update() {
         const target            = this.getTarget(),
               containerOffset   = getOffset(this.$refs.container, target),
@@ -104,7 +110,6 @@
             this.$emit('change', false);
           }
         }
-
       },
       on(target) {
         on(target ?? this.getTarget(), 'scroll', this.update);
@@ -122,7 +127,7 @@
       // passive
 
       onResize() {
-        this.update();
+        this.prepare();
       },
     },
     watch: {
@@ -133,6 +138,9 @@
     },
     beforeMount() {
       this.update = animationFrameThrottle(this.update);
+    },
+    updated() {
+      this.update();
     },
     mounted() {
       this.on();

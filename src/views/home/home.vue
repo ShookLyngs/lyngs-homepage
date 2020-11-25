@@ -7,6 +7,7 @@
         </ls-column>
         <ls-column span="12" small="24" smaller="24">
           <search></search>
+          <usual-sites></usual-sites>
           <div class="ls-view-home-card">center</div>
         </ls-column>
         <ls-column span="6" small="24" smaller="24">
@@ -26,8 +27,9 @@ export default {
     // public-components
     LsRow: defineAsyncComponent(() => import('<components>/common/row')),
     LsColumn: defineAsyncComponent(() => import('<components>/common/column')),
-    // parts
-    Search: defineAsyncComponent(() => import('./parts/search')),
+    // views
+    Search: defineAsyncComponent(() => import('./views/search/search')),
+    UsualSites: defineAsyncComponent(() => import('./views/usual-sites/usual-sites')),
   },
 }
 </script>

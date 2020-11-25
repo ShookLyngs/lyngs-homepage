@@ -11,6 +11,7 @@ module.exports = {
       .set('<assets>', resolve('src/assets'))
       .set('<scripts>', resolve('src/assets/scripts'))
       .set('<util>', resolve('src/assets/scripts/util'))
+      .set('<hook>', resolve('src/assets/scripts/hook'))
       .set('<components>', resolve('src/components'))
       .set('<provides>', resolve('src/provides'))
       .set('<views>', resolve('src/views'))

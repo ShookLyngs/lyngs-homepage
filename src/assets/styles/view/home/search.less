@@ -1,22 +1,62 @@
 // view/home/search
 
-@import "../index";
+@import "index";
 
-@main-search-bar-height: 80px;
+@view-main-search-bar-height: 80px;
 .ls-view-home-search {
-  position: sticky;
-  top: 75px;
+  position: relative;
 
-  &__container {
+  & &__body {
     .ls-flex();
-    height: @main-search-bar-height;
+
+    height: @view-main-search-bar-height;
     background-color: @weak[strongest];
   }
-  &__item {
+  & &__item {
     .ls-flex-combo();
+    .ls-align-center();
+    padding: @space[middle];
 
+    &:first-child {
+      padding-left: @space[biggest];
+    }
+    &:last-child {
+      padding-right: @space[biggest];
+    }
+
+    // status
     &.is-static {
       .ls-flex-static();
     }
+    &.is-no-space {
+      padding: 0;
+    }
   }
+  & &__type {
+    color: @strong[strong];
+    font-size: @size[huger];
+  }
+  & &__icon-button {
+    color: @strong[strong];
+    font-size: @size[big];
+  }
+
+  & &__popper {
+    position: absolute;
+    width: 100%;
+    left: 0;
+    z-index: 10;
+
+    &__wrap {
+      .ls-transition-fast();
+      overflow: hidden;
+    }
+    &__inner {
+      padding: @space[middle];
+    }
+  }
+}
+
+.ls-view-home-search-list {
+
 }

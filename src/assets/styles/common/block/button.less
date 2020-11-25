@@ -1,0 +1,22 @@
+// block/button
+
+@import "index";
+
+.ls-button-text {
+  .ls-transition-fastest();
+  color: @strong[strong];
+  user-select: none;
+
+  &:hover {
+    opacity: .7;
+    cursor: pointer;
+  }
+  &:active {
+    opacity: .5;
+  }
+  &[disabled],
+  &.is-disabled {
+    opacity: .6;
+    cursor: not-allowed;
+  }
+}

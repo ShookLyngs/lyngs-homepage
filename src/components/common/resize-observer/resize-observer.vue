@@ -1,3 +1,7 @@
+<template ref="target">
+  <slot />
+</template>
+
 <script>
   import ResizeObserver from 'resize-observer-polyfill';
   import { findDOMNode } from '<util>/common/dom';
@@ -18,6 +22,9 @@
         height: 0,
       };
     },
+    emits: [
+      'resize',
+    ],
     methods: {
       onComponentUpdated () {
         if (this.disabled) {
@@ -70,7 +77,3 @@
     },
   }
 </script>
-
-<template>
-  <slot></slot>
-</template>

@@ -2,24 +2,64 @@
 @import "index";
 
 .ls-input {
-  .ls-flex-auto();
+  .ls-flex-combo();
+  .ls-align-center();
   padding: 0 @space[middle];
   width: 100%;
+  height: 100%;
+  color: @strong[strong];
 
+  & &__inner {
+    .ls-flex-combo();
+    height: 100%;
 
-  .ls-input-inner {
-    width: 100%;
-    border: none;
-    outline: none;
-    font-size: @size[small];
+    & > input {
+      width: 100%;
+      height: 100%;
+      border: none;
+      outline: none;
+      font-size: @size[small];
+
+      &::placeholder {
+        color: @strong[placeholder];
+      }
+      &[disabled] {
+        opacity: .7;
+        cursor: not-allowed;
+        background-color: transparent;
+      }
+    }
+  }
+  & &__prefix,
+  & &__suffix {
+    .ls-flex-static-combo();
+    height: 100%;
+  }
+  & &__prefix {
+    padding-right: @space[middle];
+  }
+  & &__suffix {
+    padding-left: @space[middle];
   }
 
+  // sizes
   &.is-size-biggest {
 
+    .ls-input__inner {
 
-    .ls-input-inner {
-      font-size: @size[biggest];
-      font-weight: @weight[bold];
+      & > input {
+        font-size: @size[biggest];
+        font-weight: @weight[bold];
+      }
+    }
+    .ls-input__button {
+      .ls-flex-column();
+      .ls-justify-center();
+      .ls-button-text();
+      padding: 0 @space[middle];
+      height: 100%;
+      color: @strong[default];
+      font-size: @size[big];
     }
   }
 }

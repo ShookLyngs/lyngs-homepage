@@ -1,20 +1,36 @@
 <template>
   <div class="ls-input" :class="classes">
-    <label>
+    <div class="ls-input__prefix" v-if="$slots.prefix">
+      <slot name="prefix" />
+    </div>
+    <label class="ls-input__inner">
       <input
-        class="ls-input-inner"
         ref="input"
         v-bind="$attrs"
         v-model="store.value"
         :type="type"
+        :disabled="disabled"
+        @compositionstart="onCompositionStart"
+        @compositionend="onCompositionEnd"
       >
     </label>
+    <div class="ls-input__suffix" v-if="$slots.suffix || isShowCloseButton">
+      <span class="ls-input__button" @click="onClickClear">
+        <transition name="fade">
+          <ls-icon
+            name="icon-no"
+            v-if="isShowCloseButton"
+          />
+        </transition>
+      </span>
+      <slot name="suffix" />
+    </div>
   </div>
 </template>
 
 <script>
   export default {
-    name: "ls-input",
+    name: 'ls-input',
     props: {
       value: {
         type: String,
@@ -32,9 +48,19 @@
         type: Boolean,
         default: false,
       },
+      clearable: {
+        type: Boolean,
+        default: false,
+      },
+      disabled: {
+        type: Boolean,
+        default: false,
+      },
     },
     emits: [
-      'update:value'
+      'update:value',
+      'composition-start',
+      'composition-end',
     ],
     data: () => ({
       store: {
@@ -48,8 +74,30 @@
         if (this.size) {
           classes.push(`is-size-${this.size}`);
         }
+        if (this.disabled) {
+          classes.push('is-disabled');
+        }
 
         return classes;
+      },
+      isShowCloseButton() {
+        return this.clearable && this.store.value;
+      },
+    },
+    methods: {
+
+      onClickClear() {
+        if (this.clearable) {
+          this.store.value = '';
+        }
+      },
+      onCompositionStart(event) {
+        console.log('start', event);
+        this.$emit('composition-start');
+      },
+      onCompositionEnd(event) {
+        console.log('end', event);
+        this.$emit('composition-end');
       },
     },
     watch: {
@@ -70,7 +118,7 @@
         });
       }
     }
-  }
+  };
 </script>
 
 <style scoped>
