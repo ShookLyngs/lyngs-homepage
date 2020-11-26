@@ -13,16 +13,24 @@
               clearable
               auto-focus
               size="biggest"
+              ref="input"
               placeholder="百度搜索"
               v-model:value="form.search"
+              @focus="onInputFocus"
+              @blur="onInputBlur"
+              @keydown-up="onInputKeyUp"
+              @keydown-down="onInputKeyDown"
             >
               <template #suffix>
                 <transition name="fade" mode="out-in">
-                  <span class="ls-input__button" v-if="isSearchable">
+                  <span class="ls-input__button" v-if="loadings.searchList">
+                    <ls-icon name="icon-loading" />
+                  </span>
+                  <span class="ls-input__button" v-else-if="isSearchable">
                     <ls-icon name="icon-right" />
                   </span>
                   <span class="ls-input__button" v-else>
-                    <ls-icon name="icon-loading" />
+                    <ls-icon name="icon-search" />
                   </span>
                 </transition>
               </template>
@@ -31,7 +39,7 @@
         </div>
 
         <!--搜索弹出层-->
-        <search-bar-popper />
+        <search-bar-popper ref="popper" />
       </div>
     </ls-affix>
   </div>
@@ -39,6 +47,7 @@
 
 <script>
   import { defineAsyncComponent } from 'vue';
+  //import SearchBarPopper from './search-bar-popper';
 
   export default {
     name: 'home-search-search-bar',
@@ -48,11 +57,22 @@
       LsAffix: defineAsyncComponent(() => import('<components>/common/affix')),
       LsInput: defineAsyncComponent(() => import('<components>/common/input')),
       // views
-      SearchBarPopper: defineAsyncComponent(() => import('./search-bar-popper')),
+      //SearchBarPopper,
+      SearchBarPopper: defineAsyncComponent(() => import('./search-bar-popper'))
+    },
+    provide() {
+      return {
+        searchBar: this,
+      };
     },
     data: () => ({
       form: {
+        type: 'baidu',
         search: '',
+        focus: false,
+      },
+      loadings: {
+        searchList: false,
       },
     }),
     computed: {
@@ -61,7 +81,25 @@
       },
     },
     methods: {
+      setPopperRelativeIndex(index) {
+        console.log(this.$refs.popper);
+        if (this.$refs.popper.$refs.popper) {
+          this.$refs.popper.$refs.popper.setSearchListIndex(index);
+        }
+      },
 
+      onInputFocus() {
+        this.form.focus = true;
+      },
+      onInputBlur() {
+        this.form.focus = false;
+      },
+      onInputKeyUp() {
+        this.setPopperRelativeIndex(-1);
+      },
+      onInputKeyDown() {
+        this.setPopperRelativeIndex(1);
+      },
     },
     mounted() {},
   };

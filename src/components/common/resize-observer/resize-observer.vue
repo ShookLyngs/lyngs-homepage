@@ -1,4 +1,4 @@
-<template ref="target">
+<template>
   <slot />
 </template>
 
@@ -18,6 +18,7 @@
       this.observer = null;
       this.currentElement = null;
       return {
+        token: null,
         width: 0,
         height: 0,
       };
@@ -67,7 +68,8 @@
       }
     },
     mounted() {
-      this.onComponentUpdated();
+      this.token = Math.floor(Math.random() * 10000);
+      this.$nextTick(this.onComponentUpdated);
     },
     updated() {
       this.onComponentUpdated();

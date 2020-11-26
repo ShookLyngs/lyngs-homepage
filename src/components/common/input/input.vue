@@ -10,8 +10,12 @@
         v-model="store.value"
         :type="type"
         :disabled="disabled"
+        @keydown.up="onKeyUp"
+        @keydown.down="onKeyDown"
         @compositionstart="onCompositionStart"
         @compositionend="onCompositionEnd"
+        @focus="onFocus"
+        @blur="onBlur"
       >
     </label>
     <div class="ls-input__suffix" v-if="$slots.suffix || isShowCloseButton">
@@ -56,11 +60,19 @@
         type: Boolean,
         default: false,
       },
+      selectOnFocus: {
+        type: Boolean,
+        default: false,
+      },
     },
     emits: [
       'update:value',
+      'keydown-up',
+      'keydown-down',
       'composition-start',
       'composition-end',
+      'focus',
+      'blur'
     ],
     data: () => ({
       store: {
@@ -85,19 +97,40 @@
       },
     },
     methods: {
+      focus() {
+        if (this.$refs.input) {
+          this.$refs.input.focus();
+        }
+      },
 
       onClickClear() {
         if (this.clearable) {
           this.store.value = '';
+          this.focus();
         }
       },
-      onCompositionStart(event) {
-        console.log('start', event);
+      onKeyUp() {
+        console.log('up');
+        this.$emit('keydown-up');
+      },
+      onKeyDown() {
+        console.log('down');
+        this.$emit('keydown-down');
+      },
+      onCompositionStart() {
         this.$emit('composition-start');
       },
-      onCompositionEnd(event) {
-        console.log('end', event);
+      onCompositionEnd() {
         this.$emit('composition-end');
+      },
+      onFocus(event) {
+        if (this.selectOnFocus) {
+          this.$refs.input.select();
+        }
+        this.$emit('focus', event);
+      },
+      onBlur(event) {
+        this.$emit('blur', event);
       },
     },
     watch: {

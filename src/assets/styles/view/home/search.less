@@ -3,6 +3,9 @@
 @import "index";
 
 @view-main-search-bar-height: 80px;
+@view-search-list-item-height: 50px;
+
+// 主屏搜索框
 .ls-view-home-search {
   position: relative;
 
@@ -46,6 +49,8 @@
     width: 100%;
     left: 0;
     z-index: 10;
+    background-color: @weak[strongest];
+    box-shadow: 0 3px 10px @shadow[default];
 
     &__wrap {
       .ls-transition-fast();
@@ -57,6 +62,48 @@
   }
 }
 
+// 搜索建议/结果列表
 .ls-view-home-search-list {
+  .ls-flex-column();
 
+  & &__item {
+    .ls-flex();
+    .ls-align-center();
+    .ls-transition-fastest();
+    padding: 0 @space[biggest];
+    height: @view-search-list-item-height;
+    user-select: none;
+
+    &__content {
+      .ls-flex-auto();
+      padding: 0 @space[biggest];
+      color: @strong[default];
+    }
+    &__prefix,
+    &__suffix {
+      .ls-flex-static-combo-column();
+      font-size: @size[biggest];
+      color: @strong[default];
+    }
+    &__suffix {
+      font-size: @size[big];
+      opacity: .6;
+    }
+    /*&:not([disabled]):not(.is-disabled):hover {
+      cursor: pointer;
+      background-color: @weak[stronger];
+
+      .ls-view-home-search-list__item__suffix {
+        opacity: 1;
+      }
+    }*/
+    &.is-active {
+      cursor: pointer;
+      background-color: @weak[stronger];
+
+      .ls-view-home-search-list__item__suffix {
+        opacity: 1;
+      }
+    }
+  }
 }

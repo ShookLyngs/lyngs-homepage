@@ -37,13 +37,11 @@
       wrapStyles() {
         const styles = {};
 
-        console.log('style');
-
         if (this.direction === 'vertical') {
-          styles.height = this.show ? `${this.size.height}px` : '0px';
+          styles.height = this.show && this.size.height ? `${this.size.height}px` : '0px';
         }
         if (this.direction === 'horizontal') {
-          styles.width = this.show ? `${this.size.width}px` : '0px';
+          styles.width = this.show && this.size.width ? `${this.size.width}px` : '0px';
         }
 
         return styles;
@@ -52,6 +50,7 @@
     methods: {
       onResize(size) {
         this.size = size;
+        this.$forceUpdate();
       },
     },
   }
