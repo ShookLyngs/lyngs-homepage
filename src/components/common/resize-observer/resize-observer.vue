@@ -34,6 +34,7 @@
         }
 
         const element = findDOMNode(this);
+        console.log(this.token, element);
         if (element !== this.currentElement) {
           this.destroyObserver();
           this.currentElement = element;
@@ -72,6 +73,7 @@
       this.$nextTick(this.onComponentUpdated);
     },
     updated() {
+      console.log('updated', this.token);
       this.onComponentUpdated();
     },
     beforeUnmount() {

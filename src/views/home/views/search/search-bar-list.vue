@@ -70,12 +70,9 @@
         }, 1000);
       },
       setLoading(name, value) {
-        if (this?.searchBar?.loadings?.[name] !== void 0) {
+        if (this.searchBar?.loadings?.[name] !== void 0) {
           this.searchBar.loadings[name] = value;
         }
-      },
-      getContent() {
-        return this.store.content;
       },
       translateContent(content, replaces) {
         for (const key in replaces) {
@@ -85,7 +82,7 @@
         return content;
       },
       translateList(list) {
-        const search = this.getContent();
+        const search = this.store.search;
 
         return list.map((item) => {
           return Object.assign({}, item, {
@@ -122,7 +119,7 @@
     },
     watch: {
       'searchBar.form.search'(value) {
-        this.store.content = value;
+        this.store.search = value;
         this.update();
       },
     },
