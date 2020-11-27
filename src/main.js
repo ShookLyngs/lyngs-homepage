@@ -1,22 +1,26 @@
 import { createApp } from 'vue';
 
-// create instance of App
+// create(instance): vue instance;
 import App from '<views>/layout/app';
 const app = createApp(App);
 
-// import(vue-router): page router
+// import(vue-router): page-router;
 import router from '<provides>/router';
 app.use(router);
 
-// import(vuex): vue state controller
+// import(vuex): state controller for vue;
 import store from '<provides>/store';
 app.use(store);
 
-// import(components): global components
+// import(component): ls-icon;
 import icon from '<components>/common/icon';
 app.use(icon);
 
-// import(ls-ui-styles): styles of the project
+// import(component): ls-loading;
+import loading from '<components>/common/loading';
+app.use(loading);
+
+// import(ls-ui-styles): make sure to put it at the tail;
 import '<assets>/styles/index.less';
 
 // mounting app instance

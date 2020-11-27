@@ -18,7 +18,6 @@
       this.observer = null;
       this.currentElement = null;
       return {
-        token: null,
         width: 0,
         height: 0,
       };
@@ -34,7 +33,6 @@
         }
 
         const element = findDOMNode(this);
-        console.log(this.token, element);
         if (element !== this.currentElement) {
           this.destroyObserver();
           this.currentElement = element;
@@ -47,17 +45,17 @@
       },
       onResize(entries) {
         const { target } = entries[0];
-        const { width, height } = target.getBoundingClientRect();
+        const rect = target.getBoundingClientRect();
 
         const sizes = {
-          width: Math.floor(width),
-          height: Math.floor(height),
+          width: Math.floor(rect.width),
+          height: Math.floor(rect.height),
         };
 
         if (this.width !== sizes.width || this.height !== sizes.height) {
           this.width = sizes.width;
           this.height = sizes.height;
-          this.$emit('resize', sizes);
+          this.$emit('resize', rect);
         }
       },
 
@@ -69,11 +67,9 @@
       }
     },
     mounted() {
-      this.token = Math.floor(Math.random() * 10000);
-      this.$nextTick(this.onComponentUpdated);
+      this.onComponentUpdated();
     },
     updated() {
-      console.log('updated', this.token);
       this.onComponentUpdated();
     },
     beforeUnmount() {

@@ -1,5 +1,5 @@
 <template>
-  <ls-affix :offset-top="25">
+  <ls-affix target=".ls-view-home-scrollbar-wrap" :offset-top="25">
 
     <!--搜索框-->
     <div class="ls-view-home-search">
@@ -11,6 +11,7 @@
           <ls-input
             clearable
             auto-focus
+            select-on-focus
             size="biggest"
             ref="input"
             placeholder="百度搜索"
@@ -25,7 +26,7 @@
                 <span class="ls-input__button" v-if="loadings.searchList">
                   <ls-icon name="icon-loading" />
                 </span>
-                <span class="ls-input__button" v-else-if="isSearchable">
+                <span class="ls-input__button" :class="suffixButtonClasses" v-else-if="isSearchable">
                   <ls-icon name="icon-right" />
                 </span>
                 <span class="ls-input__button" v-else>
@@ -38,7 +39,7 @@
       </div>
 
       <!--搜索弹出层-->
-      <search-bar-popper ref="popper" />
+      <search-bar-popper ref="popper" @update:index="onListIndexUpdate" />
     </div>
   </ls-affix>
 </template>
@@ -68,6 +69,9 @@
         search: '',
         focus: false,
       },
+      store: {
+        index: -1,
+      },
       loadings: {
         searchList: false,
       },
@@ -76,12 +80,21 @@
       isSearchable() {
         return !!this.form.search;
       },
+      suffixButtonClasses() {
+        const classes = [];
+
+        if (this.store.index === -1) {
+          classes.push('is-active');
+        }
+
+        return classes;
+      },
     },
     methods: {
       // proactive
 
       setPopperRelativeIndex(index) {
-        accessRef(this, 'popper')?.setRelativeIndex(index);
+        return accessRef(this, 'popper')?.setRelativeIndex(index);
       },
 
       // passive
@@ -97,6 +110,9 @@
       },
       onInputKeyDown() {
         this.setPopperRelativeIndex(1);
+      },
+      onListIndexUpdate(index) {
+        this.store.index = index;
       },
     },
     mounted() {},

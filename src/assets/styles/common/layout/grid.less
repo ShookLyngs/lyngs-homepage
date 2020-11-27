@@ -93,3 +93,16 @@
   .generate-grid-spans(grid-smaller-, @grid-length);
   .generate-grid-spans(smaller-, 100);
 }
+
+// widths in percentage
+.ls-percentage-width(@length, @i: 1) when (@i <= @length) {
+  .ls-width-@{i} {
+    width: 0% + @i;
+  }
+  .ls-height-@{i} {
+    height: 0% + @i;
+  }
+
+  .ls-percentage-width(@length, @i + 1);
+}
+.ls-percentage-width(100);

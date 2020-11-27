@@ -124,7 +124,7 @@
 <template>
   <div class="ls-grid-column" :class="classes">
     <div class="ls-grid-column-container">
-      <slot></slot>
+      <slot />
     </div>
   </div>
 </template>

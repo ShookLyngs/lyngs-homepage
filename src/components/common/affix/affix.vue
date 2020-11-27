@@ -37,7 +37,7 @@
         default: void 0,
       },
       target: {
-        type: Object,
+        type: [ Object, String ],
         default: void 0,
       },
     },
@@ -68,6 +68,11 @@
       // proactive
 
       getTarget() {
+        const target = this.target;
+
+        if (target && typeof target === 'string') {
+          return document.querySelector(target);
+        }
         return this.target ?? window;
       },
       prepare() {

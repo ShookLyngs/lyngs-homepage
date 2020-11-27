@@ -1,6 +1,6 @@
 <template>
   <transition name="fade" mode="out-in">
-    <icon-wrap></icon-wrap>
+    <icon-wrap />
   </transition>
 </template>
 

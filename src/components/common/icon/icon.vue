@@ -1,11 +1,11 @@
 <template>
   <template v-if="type === 'svg'">
-    <svg class="ls-icon-svg" aria-hidden="true" :class="name + '-svg'">
+    <svg class="ls-icon ls-icon-svg" aria-hidden="true" :class="name + '-svg'">
       <use :xlink:href="'#' + name" />
     </svg>
   </template>
   <template v-else-if="type === 'css'">
-    <span class="iconfont ls-icon-css" :class="name" />
+    <span class="ls-icon iconfont ls-icon-css" :class="name" />
   </template>
 </template>
 

@@ -1,6 +1,6 @@
 <template>
   <div class="ls-app-layout">
-    <router-view/>
+    <router-view />
   </div>
 </template>
 

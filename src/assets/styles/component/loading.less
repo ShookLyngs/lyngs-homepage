@@ -1,0 +1,26 @@
+// component/loading
+
+@import "index";
+
+.ls-loading-wrap {
+  .ls-flex();
+  .ls-justify-center();
+  .ls-align-center();
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  left: 0;
+  top: 0;
+  overflow: hidden;
+  background-color: rgba(255, 255, 255, .7);
+
+  .ls-loading-inner {
+
+    .ls-icon {
+      font-size: @size[bigger];
+    }
+  }
+}
+.ls-loading-edge {
+  overflow: hidden;
+}

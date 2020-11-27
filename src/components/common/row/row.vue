@@ -139,7 +139,7 @@
 <template>
   <div class="ls-grid-row" :class="classes">
     <div class="ls-grid-row-container">
-      <slot></slot>
+      <slot />
     </div>
   </div>
 </template>

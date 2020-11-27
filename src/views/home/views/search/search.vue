@@ -1,7 +1,7 @@
 <template>
   <div class="ls-view-home-card">
     <!--搜索栏/搜索弹出框-->
-    <search-bar></search-bar>
+    <search-bar />
   </div>
 </template>
 

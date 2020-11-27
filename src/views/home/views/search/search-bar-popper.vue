@@ -1,8 +1,8 @@
 <template>
   <div class="ls-view-home-search__popper">
     <ls-collapse class="ls-view-home-search__popper__wrap" :show="show">
-      <div>
-        <search-bar-list ref="search-bar-list" />
+      <div v-loading="searchBar.loadings.searchList">
+        <search-bar-list ref="search-bar-list" @update:index="onListIndexUpdate" />
       </div>
     </ls-collapse>
   </div>
@@ -23,18 +23,33 @@
     inject: [
       'searchBar'
     ],
+    emits: [
+      'update:index',
+    ],
     data: () => ({
       show: true,
+      loadings: {
+        popper: true,
+      },
     }),
     methods: {
       setRelativeIndex(index) {
-        accessRef(this, 'search-bar-list')?.setRelativeIndex(index);
+        return accessRef(this, 'search-bar-list')?.setRelativeIndex(index);
+      },
+
+      onListIndexUpdate(index) {
+        this.$emit('update:index', index);
       },
     },
     watch: {
       'searchBar.form.focus'(value) {
         this.show = value;
       },
+    },
+    mounted() {
+      setTimeout(() => {
+        this.loadings.popper = false;
+      }, 3000);
     },
   }
 </script>
