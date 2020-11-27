@@ -118,7 +118,7 @@
         this.store.index = index;
       },
       onSearchMouseEnter() {
-        this.store.enter = this.store.focus;
+        this.store.enter = true;
       },
       onSearchMouseLeave() {
         this.store.enter = false;
