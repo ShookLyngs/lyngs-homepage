@@ -40,10 +40,10 @@ export const getTargetRect = (target) => {
  * @param target {Object} - listen target
  * @param type {string} - event type
  * @param event {Function} - trigger method
- * @param options {Object} - add listener options
+ * @param options {Object|Boolean} - add listener options
  * @returns {{remove: remove}}
  */
-export const on = (target, type, event, options = void 0) => {
+export const on = (target, type, event, options = false) => {
   if (!target?.addEventListener) {
     throw Error("target is not a listenable object");
   }

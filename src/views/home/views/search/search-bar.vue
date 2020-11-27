@@ -2,7 +2,11 @@
   <ls-affix target=".ls-view-home-scrollbar-wrap" :offset-top="25">
 
     <!--搜索框-->
-    <div class="ls-view-home-search">
+    <div
+      class="ls-view-home-search"
+      @mouseenter="onSearchMouseEnter"
+      @mouseleave="onSearchMouseLeave"
+    >
       <div class="ls-view-home-search__body">
         <div class="ls-view-home-search__item is-static">
           <ls-icon class="ls-view-home-search__type" name="icon-baidu" />
@@ -15,7 +19,7 @@
             size="biggest"
             ref="input"
             placeholder="百度搜索"
-            v-model:value="form.search"
+            v-model:value="store.search"
             @focus="onInputFocus"
             @blur="onInputBlur"
             @keydown-up="onInputKeyUp"
@@ -64,12 +68,11 @@
       };
     },
     data: () => ({
-      form: {
+      store: {
         type: 'baidu',
         search: '',
         focus: false,
-      },
-      store: {
+        enter: false,
         index: -1,
       },
       loadings: {
@@ -78,7 +81,7 @@
     }),
     computed: {
       isSearchable() {
-        return !!this.form.search;
+        return !!this.store.search;
       },
       suffixButtonClasses() {
         const classes = [];
@@ -100,10 +103,10 @@
       // passive
 
       onInputFocus() {
-        this.form.focus = true;
+        this.store.focus = true;
       },
       onInputBlur() {
-        this.form.focus = false;
+        this.store.focus = false;
       },
       onInputKeyUp() {
         this.setPopperRelativeIndex(-1);
@@ -113,6 +116,12 @@
       },
       onListIndexUpdate(index) {
         this.store.index = index;
+      },
+      onSearchMouseEnter() {
+        this.store.enter = this.store.focus;
+      },
+      onSearchMouseLeave() {
+        this.store.enter = false;
       },
     },
     mounted() {},

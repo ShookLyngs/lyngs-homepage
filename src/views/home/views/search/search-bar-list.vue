@@ -191,7 +191,7 @@
       },
     },
     watch: {
-      'searchBar.form.search'(value) {
+      'searchBar.store.search'(value) {
         this.store.search = value;
         this.update();
       },

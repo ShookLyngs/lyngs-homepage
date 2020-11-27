@@ -1,5 +1,5 @@
 <template>
-  <div class="ls-scrollbar">
+  <div class="ls-scrollbar" :class="scrollbarClass">
     <div
       ref="wrap"
       class="ls-scrollbar__wrap"
@@ -22,12 +22,16 @@
       :size="size.height"
       :move="move.y"
       v-if="!disabledVertical"
+      @drag-start="onDragStart"
+      @drag-end="onDragEnd"
     />
     <ls-scrollbar-bar
       direction="horizontal"
       :size="size.width"
       :move="move.x"
       v-if="!disabledHorizontal"
+      @drag-start="onDragStart"
+      @drag-end="onDragEnd"
     />
   </div>
 </template>
@@ -42,6 +46,14 @@
     components: {
       LsResizeObserver: defineAsyncComponent(() => import('<components>/common/resize-observer')),
       LsScrollbarBar: defineAsyncComponent(() => import('./scrollbar-bar')),
+    },
+    emits: [
+      'scroll'
+    ],
+    provide() {
+      return {
+        scrollbar: this,
+      };
     },
     props: {
       disabledVertical: {
@@ -79,6 +91,7 @@
     },
     data: () => ({
       store: {
+        dragging: false,
         gutter: null,
         wrapSize: {},
         wrapStyle: {},
@@ -92,15 +105,21 @@
         y: 0,
       },
     }),
-    emits: [
-      'scroll'
-    ],
     computed: {
       wrap() {
         return this.$refs.wrap;
       },
       gutterWithUnit() {
         return this.store.gutter ? `-${this.store.gutter}px` : null;
+      },
+      scrollbarClass() {
+        const classes = [];
+
+        if (this.store.dragging) {
+          classes.push('is-dragging');
+        }
+
+        return classes;
       },
       mergedWrapStyle() {
         if (!this.gutterWithUnit) return this.wrapStyle;
@@ -174,6 +193,12 @@
       },
       onResize() {
         this.update();
+      },
+      onDragStart() {
+        this.store.dragging = true;
+      },
+      onDragEnd() {
+        this.store.dragging = false;
       },
     },
     mounted() {

@@ -40,10 +40,16 @@
       onListIndexUpdate(index) {
         this.$emit('update:index', index);
       },
+      onVisibleStateChange() {
+        this.show = this.searchBar.store.focus || this.searchBar.store.enter;
+      },
     },
     watch: {
-      'searchBar.form.focus'(value) {
-        this.show = value;
+      'searchBar.store.focus'() {
+        this.onVisibleStateChange();
+      },
+      'searchBar.store.enter'() {
+        this.onVisibleStateChange();
       },
     },
     mounted() {
