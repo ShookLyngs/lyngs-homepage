@@ -30,7 +30,12 @@
                 <span class="ls-input__button" v-if="loadings.searchList">
                   <ls-icon name="icon-loading" />
                 </span>
-                <span class="ls-input__button" :class="suffixButtonClasses" v-else-if="isSearchable">
+                <span
+                  class="ls-input__button"
+                  :class="suffixButtonClasses"
+                  v-else-if="isSearchable"
+                  @click="compile"
+                >
                   <ls-icon name="icon-right" />
                 </span>
                 <span class="ls-input__button" v-else>
@@ -51,6 +56,7 @@
 <script>
   import { defineAsyncComponent } from 'vue';
   import { accessRef } from '<util>/common/dom';
+  import { compileFunction } from '<util>/common/eval';
 
   export default {
     name: 'home-search-search-bar',
@@ -95,7 +101,14 @@
     },
     methods: {
       // proactive
-
+      compile() {
+        try {
+          console.log(compileFunction({}, `return ${this.store.search};`));
+        } catch(error) {
+          console.log(error);
+          return false;
+        }
+      },
       setPopperRelativeIndex(index) {
         return accessRef(this, 'popper')?.setRelativeIndex(index);
       },
@@ -124,7 +137,39 @@
         this.store.enter = false;
       },
     },
-    mounted() {},
+    mounted() {
+      /*const codeProxies = new WeakMap();
+      const compile = (content) => {
+        const code = new Function('context', `
+          with(context) {
+            return (function() { ${content} }).call({});
+          }
+        `);
+
+        return (data) => {
+          if (!codeProxies.has(data)) {
+            codeProxies.set(data, new Proxy(data, {
+              has: () => true,
+              get: (target, key) => key === Symbol.unscopables ? void 0 : target[key],
+            }));
+          }
+          return code(codeProxies.get(data));
+        };
+      };
+
+      const result = compile(`
+        console.log(this, window, process, document);
+        console.log(name, compile);
+        return function() {
+          console.log(window);
+        };
+      `)({
+        name: 'shook',
+        console,
+      });
+
+      console.log(result());*/
+    },
   };
 
 </script>
