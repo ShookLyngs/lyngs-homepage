@@ -1,3 +1,5 @@
+const HTMLWebpackPlguin = require('html-webpack-plugin');
+
 const path = require('path');
 const resolve = (...paths) => path.join(__dirname, ...paths);
 

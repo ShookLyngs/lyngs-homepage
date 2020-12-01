@@ -56,7 +56,9 @@
 <script>
   import { defineAsyncComponent } from 'vue';
   import { accessRef } from '<util>/common/dom';
-  import { compileFunction } from '<util>/common/eval';
+  //import { compileFunction } from '<util>/common/eval';
+  //import { evaluate } from 'mathjs';
+  import sandbox from '<scripts>/sandbox';
 
   export default {
     name: 'home-search-search-bar',
@@ -101,12 +103,20 @@
     },
     methods: {
       // proactive
-      compile() {
+      async compile() {
+
+        console.log(sandbox);
+        //const result = await new Promise(resolve => resolve(evaluate(this.store.search)));
+        //console.log(result);
+
         try {
-          console.log(compileFunction({}, `return ${this.store.search};`));
+          //console.log(evaluate(this.store.search));
+          //compileFunction({}, `(()=>{}).constructor('return eval')()('prompt()')`);
+          //compileFunction({ console }, "console.log(this.constructor.constructor('return top')().close())")
+          //compileFunction({ console }, "console.log(this.constructor.constructor(\"return process\")())");
+          //console.log(compileFunction({}, `return ${this.store.search};`));
         } catch(error) {
           console.log(error);
-          return false;
         }
       },
       setPopperRelativeIndex(index) {

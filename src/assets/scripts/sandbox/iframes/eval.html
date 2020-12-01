@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title>Eval</title>
+    <script>
+      window.addEventListener('message', function(event) {
+        var data   = event.data,
+            result = void 0,
+            error  = void 0;
+
+        try {
+          result = new Function('code', 'return code;')(data.code);
+        } catch(error) {
+          error = 'catches error in eval() process:' + error.message;
+        }
+
+        postMessage({
+          result: result,
+          error: error,
+        }, event.origin);
+      });
+    </script>
+  </head>
+</html>

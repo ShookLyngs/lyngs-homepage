@@ -1,3 +1,4 @@
+import mathjs from 'mathjs';
 
 const name = 'translator';
 const matcher = /^[a-zA-Z\s]+\s+翻译$/;
