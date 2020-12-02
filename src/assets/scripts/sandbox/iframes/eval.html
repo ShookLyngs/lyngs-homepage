@@ -10,12 +10,15 @@
             error  = void 0;
 
         try {
-          result = new Function('code', 'return code;')(data.code);
+          result = new Function(`
+            'use strict';
+            return ${data.code};
+          `)();
         } catch(error) {
           error = 'catches error in eval() process:' + error.message;
         }
 
-        postMessage({
+        event.source.postMessage({
           result: result,
           error: error,
         }, event.origin);

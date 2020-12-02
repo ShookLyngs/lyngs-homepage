@@ -58,7 +58,7 @@
   import { accessRef } from '<util>/common/dom';
   //import { compileFunction } from '<util>/common/eval';
   //import { evaluate } from 'mathjs';
-  import sandbox from '<scripts>/sandbox';
+  //import sandbox from '<scripts>/sandbox';
 
   export default {
     name: 'home-search-search-bar',
@@ -86,6 +86,7 @@
       loadings: {
         searchList: false,
       },
+      //iframe: require('<scripts>/sandbox/iframes/eval.html'),
     }),
     computed: {
       isSearchable() {
@@ -105,7 +106,14 @@
       // proactive
       async compile() {
 
-        console.log(sandbox);
+        /*console.log(sandbox);
+
+        sandbox.postMessage({
+          code: this.store.search,
+        }).then((data) => {
+          console.log(data);
+        });*/
+
         //const result = await new Promise(resolve => resolve(evaluate(this.store.search)));
         //console.log(result);
 

@@ -1,9 +1,21 @@
-const HTMLWebpackPlguin = require('html-webpack-plugin');
-
 const path = require('path');
 const resolve = (...paths) => path.join(__dirname, ...paths);
 
 module.exports = {
+  publicPath: './',
+  /*configureWebpack: {
+    module: {
+      rules: [
+        {
+          test: /\.(html)$/,
+          exclude: /index\.html/i,
+          use: {
+            loader: 'html-loader',
+          }
+        },
+      ],
+    }
+  },*/
   // 扩展 webpack 配置，使 packages 加入编译
   chainWebpack: (config) => {
     // 路径映射
