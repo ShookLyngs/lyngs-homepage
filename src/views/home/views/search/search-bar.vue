@@ -56,9 +56,7 @@
 <script>
   import { defineAsyncComponent } from 'vue';
   import { accessRef } from '<util>/common/dom';
-  //import { compileFunction } from '<util>/common/eval';
-  //import { evaluate } from 'mathjs';
-  //import sandbox from '<scripts>/sandbox';
+  import { createSandbox } from '<scripts>/sandbox';
 
   export default {
     name: 'home-search-search-bar',
@@ -68,7 +66,7 @@
       LsAffix: defineAsyncComponent(() => import('<components>/common/affix')),
       LsInput: defineAsyncComponent(() => import('<components>/common/input')),
       // views
-      SearchBarPopper: defineAsyncComponent(() => import('./search-bar-popper'))
+      SearchBarPopper: defineAsyncComponent(() => import('./search-bar-popper')),
     },
     provide() {
       return {
@@ -86,6 +84,7 @@
       loadings: {
         searchList: false,
       },
+      sandbox: createSandbox('function'),
       //iframe: require('<scripts>/sandbox/iframes/eval.html'),
     }),
     computed: {
@@ -105,26 +104,13 @@
     methods: {
       // proactive
       async compile() {
-
-        /*console.log(sandbox);
-
-        sandbox.postMessage({
-          code: this.store.search,
-        }).then((data) => {
-          console.log(data);
-        });*/
-
-        //const result = await new Promise(resolve => resolve(evaluate(this.store.search)));
-        //console.log(result);
-
         try {
-          //console.log(evaluate(this.store.search));
-          //compileFunction({}, `(()=>{}).constructor('return eval')()('prompt()')`);
-          //compileFunction({ console }, "console.log(this.constructor.constructor('return top')().close())")
-          //compileFunction({ console }, "console.log(this.constructor.constructor(\"return process\")())");
-          //console.log(compileFunction({}, `return ${this.store.search};`));
+          const data = await this.sandbox.postMessage({
+            code: this.store.search,
+          });
+          console.log(data);
         } catch(error) {
-          console.log(error);
+          console.error(error);
         }
       },
       setPopperRelativeIndex(index) {
@@ -154,39 +140,6 @@
       onSearchMouseLeave() {
         this.store.enter = false;
       },
-    },
-    mounted() {
-      /*const codeProxies = new WeakMap();
-      const compile = (content) => {
-        const code = new Function('context', `
-          with(context) {
-            return (function() { ${content} }).call({});
-          }
-        `);
-
-        return (data) => {
-          if (!codeProxies.has(data)) {
-            codeProxies.set(data, new Proxy(data, {
-              has: () => true,
-              get: (target, key) => key === Symbol.unscopables ? void 0 : target[key],
-            }));
-          }
-          return code(codeProxies.get(data));
-        };
-      };
-
-      const result = compile(`
-        console.log(this, window, process, document);
-        console.log(name, compile);
-        return function() {
-          console.log(window);
-        };
-      `)({
-        name: 'shook',
-        console,
-      });
-
-      console.log(result());*/
     },
   };
 

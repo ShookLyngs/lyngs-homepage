@@ -3,7 +3,7 @@ const resolve = (...paths) => path.join(__dirname, ...paths);
 
 module.exports = {
   publicPath: './',
-  /*configureWebpack: {
+  configureWebpack: {
     module: {
       rules: [
         {
@@ -15,7 +15,7 @@ module.exports = {
         },
       ],
     }
-  },*/
+  },
   // 扩展 webpack 配置，使 packages 加入编译
   chainWebpack: (config) => {
     // 路径映射
