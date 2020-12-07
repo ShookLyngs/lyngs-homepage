@@ -1,10 +1,10 @@
 import { createResult } from '../../../body';
 
-export default ({ input, result }) => createResult({
+const createListItem = ({ input, result }) => createResult({
   prefix: {
     icon: 'icon-calculator',
     onClick() {
-      // TODO: set calculator as default searcher
+      // TODO: set calculator as the default searcher
     },
   },
   content: {
@@ -24,3 +24,8 @@ export default ({ input, result }) => createResult({
     ],
   },
 });
+
+export default createListItem;
+export {
+  createListItem,
+};
