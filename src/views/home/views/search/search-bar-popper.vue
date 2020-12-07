@@ -1,9 +1,11 @@
 <template>
   <div class="ls-view-home-search__popper">
     <ls-collapse class="ls-view-home-search__popper__wrap" :show="show">
-      <div v-loading="searchBar.loadings.searchList">
-        <search-bar-list ref="search-bar-list" @update:index="onListIndexUpdate" />
-      </div>
+      <search-bar-list
+        ref="search-bar-list"
+        @update:index="onListIndexUpdate"
+        v-loading="searchBar.loadings.searchList"
+      />
     </ls-collapse>
   </div>
 </template>

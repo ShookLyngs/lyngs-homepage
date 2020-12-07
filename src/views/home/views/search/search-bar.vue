@@ -85,7 +85,6 @@
         searchList: false,
       },
       sandbox: createSandbox('function'),
-      //iframe: require('<scripts>/sandbox/iframes/eval.html'),
     }),
     computed: {
       isSearchable() {
