@@ -14,18 +14,22 @@ export default {
     'input',
   ],
   async handler({ input }) {
-    let result;
+    let message;
 
     try {
-      result = await sandbox.postMessage({
+      message = await sandbox.postMessage({
         code: input,
-      })?.result;
+      });
     } catch(error) {
       return createFalse({
         error,
         message: `计算错误: ${error.message}`,
       });
     }
+
+    const { result } = message;
+
+    console.log(sandbox, input, result);
 
     if (Number.isNaN(Number(result)) || result === null) {
       return createFalse({

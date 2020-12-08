@@ -1,3 +1,3 @@
-export createFalse from './false';
-export createSwitch from './switch';
-export createResult from './result';
+export { default as createFalse } from './false';
+export { default as createSwitch } from './switch';
+export { default as createResult } from './result';

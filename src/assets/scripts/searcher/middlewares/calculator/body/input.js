@@ -1,6 +1,6 @@
 import { createResult } from '../../../body';
 
-const input = ({ input, result }) => createResult({
+const createInput = ({ input, result }) => createResult({
   prefix: {
     icon: 'icon-calculator',
   },
@@ -23,7 +23,7 @@ const input = ({ input, result }) => createResult({
   },
 });
 
-export default input;
+export default createInput;
 export {
-  input,
+  createInput,
 };

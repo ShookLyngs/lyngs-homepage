@@ -56,7 +56,8 @@
 <script>
   import { defineAsyncComponent } from 'vue';
   import { accessRef } from '<util>/common/dom';
-  import { createSandbox } from '<scripts>/sandbox';
+  //import { createSandbox } from '<scripts>/sandbox';
+  import { createSearcherList } from '<scripts>/searcher';
 
   export default {
     name: 'home-search-search-bar',
@@ -84,7 +85,7 @@
       loadings: {
         searchList: false,
       },
-      sandbox: createSandbox('function'),
+      //sandbox: createSandbox('function'),
     }),
     computed: {
       isSearchable() {
@@ -103,14 +104,18 @@
     methods: {
       // proactive
       async compile() {
-        try {
+        const list = await createSearcherList({ input: this.store.search });
+        console.log(list);
+
+
+        /*try {
           const data = await this.sandbox.postMessage({
             code: this.store.search,
           });
           console.log(data);
         } catch(error) {
           console.error(error);
-        }
+        }*/
       },
       setPopperRelativeIndex(index) {
         return accessRef(this, 'popper')?.setRelativeIndex(index);
