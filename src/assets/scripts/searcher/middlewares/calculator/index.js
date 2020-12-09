@@ -1,6 +1,6 @@
 import { createSandbox } from '<scripts>/sandbox';
 import { createFalse, createSwitch } from '../../body';
-import { createListItem, createInput } from './body';
+import { createListItem, createInput, formatInput } from './body';
 
 // global sandbox-instance
 const sandbox = createSandbox('function');
@@ -18,7 +18,7 @@ export default {
 
     try {
       message = await sandbox.postMessage({
-        code: input,
+        code: formatInput(input),
       });
     } catch(error) {
       return createFalse({

@@ -1,36 +1,13 @@
 <template>
   <ls-scrollbar disabled-horizontal view-max-height="200px">
     <div class="ls-view-home-search-list" @mouseleave="setIndex(-1)">
-      <div
-        class="ls-view-home-search-list__item"
+      <search-bar-list-item
         v-for="(item, index) in result.list"
         :key="index"
-        :class="listItemClasses(item, index)"
-        @mouseenter="setIndex(index)"
-      >
-        <div class="ls-view-home-search-list__item__prefix">
-          <slot name="prefix" :item="item">
-            <div class="ls-view-home-search-list__button is-prefix">
-              <ls-icon :name="item.prefix" />
-            </div>
-          </slot>
-        </div>
-        <div class="ls-view-home-search-list__item__content">
-          <slot :item="item">
-            {{ item.content }}
-          </slot>
-        </div>
-        <div class="ls-view-home-search-list__item__suffix">
-          <slot name="suffix" :item="item">
-            <div class="ls-view-home-search-list__button">
-              <ls-icon name="icon-setting" />
-            </div>
-            <div class="ls-view-home-search-list__button">
-              <ls-icon name="icon-right" />
-            </div>
-          </slot>
-        </div>
-      </div>
+        :item="item"
+        :active="result.index === index"
+        @mouse-enter="setIndex(index)"
+      />
     </div>
   </ls-scrollbar>
 </template>
@@ -38,12 +15,16 @@
 <script>
   import { defineAsyncComponent } from 'vue';
   import { delayThrottle } from '<util>/common/event';
+  import { createSearcherList } from '<scripts>/searcher';
 
   export default {
     name: 'search-bar-list',
     components: {
-      LsIcon: defineAsyncComponent(() => import('<components>/common/icon')),
+      // components
+      //LsIcon: defineAsyncComponent(() => import('<components>/common/icon')),
       LsScrollbar: defineAsyncComponent(() => import('<components>/common/scrollbar')),
+      // views
+      SearchBarListItem: defineAsyncComponent(() => import('./search-bar-list-item')),
     },
     inject: [
       'searchBar'
@@ -123,17 +104,22 @@
           this.result.list = [];
         }
       },
-      fetchList() {
+      async fetchList() {
         this.setLoading('searchList', true);
-        const search = this.store.search;
-        setTimeout(() => {
+
+        this.result.list = await createSearcherList({ input: this.store.search });
+        console.log(this.result.list);
+
+        this.setLoading('searchList', false);
+
+        /*setTimeout(() => {
           this.setLoading('searchList', false);
           if (search) {
             this.result.list = this.translateList([].concat(this.format.list), search);
           } else {
             this.result.list = [];
           }
-        }, 500);
+        }, 500);*/
       },
       setLoadingList() {
         this.result.list = this.translateList([].concat(this.format.list), '...');

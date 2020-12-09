@@ -8,10 +8,8 @@ const createSearcherList = async ({ input = '', sort = true }) => {
     const middleware = middlewares[i];
     const result = await getMiddlewareResult('list', input, middleware);
 
-    console.log(result);
-
     if (isMiddlewareUsable(result)) {
-      collection.push(result);
+      collection.push(result.get());
     }
   }
 
@@ -50,7 +48,13 @@ const createMiddleware = async ({ name, type = 'input', input = '' }) => {
 
 const getMiddlewareResult = async (type, input, middleware) => {
   if (middleware.supportTypes.includes(type)) {
-    return await middleware.handler({ type, input });
+    const result = await middleware.handler({ input });
+
+    if (result.type === 'switch') {
+      return result.get(type)();
+    } else {
+      return result;
+    }
   } else {
     return createFalse({
       message: '中间件不支持该类型',

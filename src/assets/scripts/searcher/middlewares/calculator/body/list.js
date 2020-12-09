@@ -1,4 +1,5 @@
 import { createResult } from '../../../body';
+import { formatInput } from './util';
 
 const createListItem = ({ input, result }) => createResult({
   prefix: {
@@ -9,8 +10,8 @@ const createListItem = ({ input, result }) => createResult({
   },
   content: {
     primaryText: () => {
-      const math = input.replace(/(=|\s+?)/g, '');
-      return `计算 ${math} = 「${result}」`;
+      const math = formatInput(input);
+      return `计算 ${math} =「${result}」`;
     },
   },
   suffix: {
