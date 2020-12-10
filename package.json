@@ -11,6 +11,7 @@
     "@babel/polyfill": "^7.12.1",
     "@lyngs/digger": "^1.0.5",
     "@lyngs/merge": "^1.0.6",
+    "@popperjs/core": "^2.5.4",
     "@rollup/plugin-babel": "^5.2.1",
     "@rollup/plugin-node-resolve": "^10.0.0",
     "axios": "^0.21.0",

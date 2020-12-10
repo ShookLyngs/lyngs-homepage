@@ -33,6 +33,7 @@
         }
 
         const element = findDOMNode(this);
+
         if (element !== this.currentElement) {
           this.destroyObserver();
           this.currentElement = element;

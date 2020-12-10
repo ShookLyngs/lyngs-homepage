@@ -9,41 +9,46 @@
     >
       <div class="ls-view-home-search__body">
         <div class="ls-view-home-search__item is-static">
-          <ls-icon class="ls-view-home-search__type" name="icon-baidu" />
+          <ls-popper text="popper text">
+            <ls-icon class="ls-view-home-search__type" name="icon-baidu" />
+          </ls-popper>
         </div>
         <div class="ls-view-home-search__item is-no-space">
-          <ls-input
-            clearable
-            auto-focus
-            select-on-focus
-            size="biggest"
-            ref="input"
-            placeholder="百度搜索"
-            v-model:value="store.search"
-            @focus="onInputFocus"
-            @blur="onInputBlur"
-            @keydown-up="onInputKeyUp"
-            @keydown-down="onInputKeyDown"
-          >
-            <template #suffix>
-              <transition name="fade" mode="out-in">
+          <ls-popper text="popper text">
+            <ls-input
+              clearable
+              auto-focus
+              select-on-focus
+              size="biggest"
+              ref="input"
+              placeholder="百度搜索"
+              v-model:value="store.search"
+              @focus="onInputFocus"
+              @blur="onInputBlur"
+              @keydown-up="onInputKeyUp"
+              @keydown-down="onInputKeyDown"
+            >
+              <template #suffix>
+                <transition name="fade" mode="out-in">
                 <span class="ls-input__button" v-if="loadings.searchList">
                   <ls-icon name="icon-loading" />
                 </span>
-                <span
-                  class="ls-input__button"
-                  :class="suffixButtonClasses"
-                  v-else-if="isSearchable"
-                  @click="compile"
-                >
+                  <span
+                    class="ls-input__button"
+                    :class="suffixButtonClasses"
+                    v-else-if="isSearchable"
+                    @click="compile"
+                  >
                   <ls-icon name="icon-right" />
                 </span>
-                <span class="ls-input__button" v-else>
+                  <span class="ls-input__button" v-else>
                   <ls-icon name="icon-search" />
                 </span>
-              </transition>
-            </template>
-          </ls-input>
+                </transition>
+              </template>
+            </ls-input>
+          </ls-popper>
+
         </div>
       </div>
 
@@ -65,6 +70,7 @@
       // common-components
       LsAffix: defineAsyncComponent(() => import('<components>/common/affix')),
       LsInput: defineAsyncComponent(() => import('<components>/common/input')),
+      LsPopper: defineAsyncComponent(() => import('<components>/common/popper')),
       // views
       SearchBarPopper: defineAsyncComponent(() => import('./search-bar-popper')),
     },
