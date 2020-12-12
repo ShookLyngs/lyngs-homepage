@@ -1,7 +1,7 @@
 <template>
   <!-- default slot, preventing lose sight of async-component -->
   <component
-    tabindex="0"
+    tabindex=""
     ref="target"
     :is="defaultSlot"
     @click="$emit('click')"
@@ -12,7 +12,7 @@
   />
 
   <!-- teleport the popper to body -->
-  <teleport to="body">
+  <teleport :to="teleport">
     <div
       class="ls-popper"
       ref="popper"
@@ -35,16 +35,16 @@
   export default {
     name: "ls-popper",
     props: {
+      text: {
+        type: String,
+        default: void 0,
+      },
       trigger: {
         type: String,
         default: 'hover',
         validator: value => [
           'hover', 'focus', 'manual'
         ].includes(value),
-      },
-      text: {
-        type: String,
-        default: void 0,
       },
       offset: {
         type: [ Number, Array, Function ],
@@ -58,6 +58,10 @@
           }
           return typeof offset === 'number';
         },
+      },
+      teleport: {
+        type: String,
+        default: '#app',
       },
     },
     emits: [

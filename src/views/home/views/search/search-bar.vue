@@ -7,14 +7,14 @@
       @mouseenter="onSearchMouseEnter"
       @mouseleave="onSearchMouseLeave"
     >
-      <div class="ls-view-home-search__body">
-        <div class="ls-view-home-search__item is-static">
-          <ls-popper text="popper text">
-            <ls-icon class="ls-view-home-search__type" name="icon-baidu" />
-          </ls-popper>
-        </div>
-        <div class="ls-view-home-search__item is-no-space">
-          <ls-popper text="popper text">
+      <ls-popper teleport=".ls-view-home-container" text="popper text">
+        <div class="ls-view-home-search__body">
+          <div class="ls-view-home-search__item is-static">
+            <ls-popper teleport=".ls-view-home-container" text="popper text">
+              <ls-icon class="ls-view-home-search__type" name="icon-baidu" />
+            </ls-popper>
+          </div>
+          <div class="ls-view-home-search__item is-no-space">
             <ls-input
               clearable
               auto-focus
@@ -47,10 +47,10 @@
                 </transition>
               </template>
             </ls-input>
-          </ls-popper>
-
+          </div>
         </div>
-      </div>
+      </ls-popper>
+
 
       <!--搜索弹出层-->
       <search-bar-popper ref="popper" @update:index="onListIndexUpdate" />
