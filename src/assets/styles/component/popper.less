@@ -3,10 +3,21 @@
 @import "index";
 
 .ls-popper {
+  .ls-transition-fast();
+  position: absolute;
   background: #333;
   color: white;
   font-weight: bold;
   padding: 4px 8px;
   font-size: 13px;
   border-radius: 4px;
+  visibility: hidden;
+  opacity: 0;
+  z-index: -1;
+
+  &.is-show {
+    visibility: visible;
+    opacity: 1;
+    z-index: 1;
+  }
 }
