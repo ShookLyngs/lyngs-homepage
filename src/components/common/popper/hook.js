@@ -29,9 +29,7 @@ const usePopper = ({ target, popper, props }) => {
         {
           name: 'offset',
           options: {
-            offset: (context) => {
-              return handleOffset(offset, context);
-            },
+            offset: (context) => handleOffset(offset, context),
           },
         },
       ],

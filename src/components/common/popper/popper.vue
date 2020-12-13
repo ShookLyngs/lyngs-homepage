@@ -63,6 +63,10 @@
         type: String,
         default: '#app',
       },
+      popperClass: {
+        type: [ String, Array, Object ],
+        default: void 0,
+      },
     },
     emits: [
       'mouse-enter',

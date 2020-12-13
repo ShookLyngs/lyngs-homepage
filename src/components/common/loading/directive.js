@@ -8,12 +8,15 @@ import { setParentClass } from '<util>/common/dom';
  * @param vue {App}
  */
 const install = (vue) => {
-  const app = createInstance();
-  let   instance,
-        element;
+  let app, instance, element;
 
   vue.directive('loading', {
     mounted(root, binding) {
+      if (instance) {
+        remove(root, element, app);
+      }
+
+      app = createInstance();
       element = createElement();
       instance = append(root, element, app);
 
@@ -39,7 +42,9 @@ const append = (root, element, app) => {
 
 const remove = (root, element, app) => {
   app.unmount(element);
-  root.removeChild(element);
+  if (root.contains(element)) {
+    root.removeChild(element);
+  }
 };
 
 const update = (root, instance, binding) => {
