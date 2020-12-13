@@ -12,3 +12,6 @@ export const formatInput = (input) => {
     input
   );
 };
+
+export const isCalculation = (input) =>
+  /^((\d+)|((-?\d+)(\.\d+)))[+\-*/%]((\d+)|((-?\d+)(\.\d+)))([+\-*/%]((\d+)|((-?\d+)(\.\d+))))*(=?)$/.test(input);

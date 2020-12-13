@@ -1,6 +1,6 @@
 import { createSandbox } from '<scripts>/sandbox';
 import { createFalse, createSwitch } from '../../body';
-import { createListItem, createInput, formatInput } from './body';
+import { createListItem, createInput, formatInput, isCalculation } from './body';
 
 // global sandbox-instance
 const sandbox = createSandbox('function');
@@ -14,6 +14,12 @@ export default {
     'input',
   ],
   async handler({ input }) {
+    if (!isCalculation(input)) {
+      return createFalse({
+        message: '输入内容不是有效的算式',
+      });
+    }
+
     let message;
 
     try {
@@ -28,8 +34,6 @@ export default {
     }
 
     const { result } = message;
-
-    console.log(sandbox, input, result);
 
     if (Number.isNaN(Number(result)) || result === null) {
       return createFalse({

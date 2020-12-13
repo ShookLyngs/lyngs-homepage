@@ -14,10 +14,11 @@
   visibility: hidden;
   opacity: 0;
   z-index: -1;
+  transition-property: visibility opacity transform;
 
   &.is-show {
     visibility: visible;
     opacity: 1;
-    z-index: 1;
+    z-index: 10;
   }
 }
