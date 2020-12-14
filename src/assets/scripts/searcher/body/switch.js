@@ -10,5 +10,14 @@ export default (context) => {
     error: false,
     has: key => Reflect.has(context, key),
     get: key => Reflect.get(context, key),
+    create: key => {
+      const result = Reflect.get(context, key);
+
+      if (!result) {
+        throw new Error(`Cannot find property in Searcher.Result: ${key}`);
+      }
+
+      return result instanceof Function ? result() : result;
+    },
   };
 };

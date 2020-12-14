@@ -1,6 +1,6 @@
 import { createSandbox } from '<scripts>/sandbox';
 import { createFalse, createSwitch } from '../../body';
-import { createListItem, createInput, formatInput, isCalculation } from './body';
+import { createListItem, createInput, formatInput, isFormula } from './body';
 
 // global sandbox-instance
 const sandbox = createSandbox('function');
@@ -14,7 +14,7 @@ export default {
     'input',
   ],
   async handler({ input }) {
-    if (!isCalculation(input)) {
+    if (!isFormula(input)) {
       return createFalse({
         message: '输入内容不是有效的算式',
       });

@@ -9,7 +9,7 @@ const createSearcherList = async ({ input = '', sort = true }) => {
     const result = await getMiddlewareResult('list', input, middleware);
 
     if (isMiddlewareUsable(result)) {
-      collection.push(result.get());
+      collection.push(result.data);
     }
   }
 
@@ -51,7 +51,13 @@ const getMiddlewareResult = async (type, input, middleware) => {
     const result = await middleware.handler({ input });
 
     if (result.type === 'switch') {
-      return result.get(type)();
+      if (result.has(type)) {
+        return result.create(type);
+      } else {
+        return createFalse({
+          message: '无法找到对应中间件实例',
+        });
+      }
     } else {
       return result;
     }

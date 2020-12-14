@@ -1,3 +1,8 @@
+/**
+ * replace input content, to make eval() run normally.
+ * @param {string} input
+ * @returns {string}
+ */
 export const formatInput = (input) => {
   const replaces = [
     { target: /(=|\s+?)/g, replacement: '' },
@@ -13,5 +18,11 @@ export const formatInput = (input) => {
   );
 };
 
-export const isCalculation = (input) =>
-  /^((\d+)|((-?\d+)(\.\d+)))[+\-*/%]((\d+)|((-?\d+)(\.\d+)))([+\-*/%]((\d+)|((-?\d+)(\.\d+))))*(=?)$/.test(input);
+/**
+ * check if input content is a formula
+ * @param {string} input
+ * @returns {boolean}
+ */
+export const isFormula = (input) =>
+  /^((\d+)|((-?\d+)(\.\d+)))[+\-*/%]((\d+)|((-?\d+)(\.\d+)))([+\-*/%]((\d+)|((-?\d+)(\.\d+))))*(=?)$/
+  .test(input);
