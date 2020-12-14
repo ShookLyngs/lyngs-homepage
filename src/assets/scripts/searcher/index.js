@@ -6,10 +6,12 @@ const createSearcherList = async ({ input = '', sort = true }) => {
 
   for (let i = 0; i < middlewares.length; i++) {
     const middleware = middlewares[i];
-    const result = await getMiddlewareResult('list', input, middleware);
+    const { usable, result } = await getMiddlewareResult('list', input, middleware);
 
-    if (isMiddlewareUsable(result)) {
-      collection.push(result.data);
+    if (usable) {
+      collection.push(
+        filterMiddleware({ ...middleware, result })
+      );
     }
   }
 
@@ -68,8 +70,6 @@ const getMiddlewareResult = async (type, input, middleware) => {
   }
 };
 
-const isMiddlewareUsable = result => !!result.usable;
-
 const sortMiddlewareList = (middlewares) => middlewares.sort(
   (a, b) => {
     const aListIndex       = getMiddlewareIndex(a),
@@ -86,6 +86,19 @@ const sortMiddlewareList = (middlewares) => middlewares.sort(
 
 const getMiddlewareIndex = middleware => middlewares.indexOf(middleware);
 
+const filterMiddleware = middleware => {
+  const keys     = Reflect.ownKeys(middleware),
+        excludes = [ 'handler' ],
+        result   = {};
+
+  keys.forEach(key => {
+    if (!excludes.includes(key)) {
+      result[key] = Reflect.get(middleware, key);
+    }
+  });
+
+  return result;
+};
 
 export {
   createSearcherList,

@@ -3,6 +3,6 @@ export default (context) => {
   return {
     type: 'result',
     usable: true,
-    data: merge({}, context),
+    result: merge({}, context),
   };
 };

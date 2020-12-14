@@ -57,7 +57,7 @@
 <script>
   import { defineAsyncComponent } from 'vue';
   import { accessRef } from '<util>/common/dom';
-  import { createSearcherList } from '<scripts>/searcher';
+  //import { createSearcherList } from '<scripts>/searcher';
 
   export default {
     name: 'home-search-search-bar',
@@ -103,8 +103,8 @@
     methods: {
       // proactive
       async compile() {
-        const list = await createSearcherList({ input: this.store.search });
-        console.log(list);
+        //const list = await createSearcherList({ input: this.store.search });
+        //console.log(list);
       },
       setPopperRelativeIndex(index) {
         return accessRef(this, 'popper')?.setRelativeIndex(index);
