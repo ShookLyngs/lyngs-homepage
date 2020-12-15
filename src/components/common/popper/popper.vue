@@ -39,6 +39,10 @@
         type: String,
         default: void 0,
       },
+      placement: {
+        type: String,
+        default: 'bottom',
+      },
       trigger: {
         type: String,
         default: 'hover',

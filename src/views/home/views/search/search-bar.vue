@@ -27,20 +27,26 @@
           >
             <template #suffix>
               <transition name="fade" mode="out-in">
-                <span class="ls-input__button" v-if="loadings.searchList">
+                <button class="ls-input__button" v-if="loadings.searchList">
                   <ls-icon name="icon-loading" />
-                </span>
-                <span
+                </button>
+                <button
                   class="ls-input__button"
                   :class="suffixButtonClasses"
                   v-else-if="isSearchable"
                   @click="compile"
                 >
                   <ls-icon name="icon-right" />
-                </span>
-                <span class="ls-input__button" v-else>
-                  <ls-icon name="icon-search" />
-                </span>
+                </button>
+                <template v-else>
+                  <div>
+                    <ls-popper text="跳转到 百度" placement="left">
+                      <button class="ls-input__button">
+                        <ls-icon name="icon-search" />
+                      </button>
+                    </ls-popper>
+                  </div>
+                </template>
               </transition>
             </template>
           </ls-input>
@@ -66,6 +72,7 @@
       // common-components
       LsAffix: defineAsyncComponent(() => import('<components>/common/affix')),
       LsInput: defineAsyncComponent(() => import('<components>/common/input')),
+      LsPopper: defineAsyncComponent(() => import('<components>/common/popper')),
       // views
       SearchBarPopper: defineAsyncComponent(() => import('./search-bar-popper')),
     },

@@ -17,14 +17,14 @@ const usePopper = ({ target, popper, props }) => {
 
   let instance;
 
-  const rebindPopper = ({ offset }) => {
+  const rebindPopper = ({ offset, placement }) => {
     if (instance) {
       instance.destroy();
       instance = null;
     }
 
     const options = {
-      placement: 'bottom',
+      placement,
       modifiers: [
         {
           name: 'offset',

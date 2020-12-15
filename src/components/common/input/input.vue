@@ -19,14 +19,11 @@
       >
     </label>
     <div class="ls-input__suffix" v-if="$slots.suffix || isShowCloseButton">
-      <span class="ls-input__button" @click="onClickClear">
-        <transition name="fade">
-          <ls-icon
-            name="icon-no"
-            v-if="isShowCloseButton"
-          />
-        </transition>
-      </span>
+      <transition name="fade">
+        <button class="ls-input__button" v-if="isShowCloseButton" @click="onClickClear">
+          <ls-icon name="icon-no" />
+        </button>
+      </transition>
       <slot name="suffix" />
     </div>
   </div>
