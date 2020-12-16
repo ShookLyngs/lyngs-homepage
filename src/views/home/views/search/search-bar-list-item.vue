@@ -78,7 +78,7 @@
     },
     computed: {
       result() {
-        console.log(this.item);
+        //console.log(this.item);
         return merge(defaultItem, this.item.result);
       },
     },

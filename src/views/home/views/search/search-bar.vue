@@ -9,7 +9,15 @@
     >
       <div class="ls-view-home-search__body">
         <div class="ls-view-home-search__item is-static">
-          <ls-icon class="ls-view-home-search__type" name="icon-baidu" />
+          <ls-popper text="在百度搜索" placement="top">
+            <button
+              class="ls-input__button"
+              :class="suffixButtonClasses"
+              @click="compile"
+            >
+              <ls-icon class="ls-view-home-search__type" name="icon-baidu" />
+            </button>
+          </ls-popper>
         </div>
         <div class="ls-view-home-search__item is-no-space">
           <ls-input
@@ -27,26 +35,29 @@
           >
             <template #suffix>
               <transition name="fade" mode="out-in">
-                <button class="ls-input__button" v-if="loadings.searchList">
-                  <ls-icon name="icon-loading" />
-                </button>
-                <button
-                  class="ls-input__button"
-                  :class="suffixButtonClasses"
-                  v-else-if="isSearchable"
-                  @click="compile"
-                >
-                  <ls-icon name="icon-right" />
-                </button>
-                <template v-else>
-                  <div>
-                    <ls-popper text="跳转到 百度" placement="left">
-                      <button class="ls-input__button">
-                        <ls-icon name="icon-search" />
-                      </button>
-                    </ls-popper>
-                  </div>
-                </template>
+                <div v-if="loadings.searchList">
+                  <button class="ls-input__button">
+                    <ls-icon name="icon-loading" />
+                  </button>
+                </div>
+                <div v-else-if="isSearchable">
+                  <ls-popper text="在百度搜索" placement="top">
+                    <button
+                      class="ls-input__button"
+                      :class="suffixButtonClasses"
+                      @click="compile"
+                    >
+                      <ls-icon name="icon-right" />
+                    </button>
+                  </ls-popper>
+                </div>
+                <div v-else>
+                  <ls-popper text="前往百度" placement="top">
+                    <button tabindex="0" class="ls-input__button">
+                      <ls-icon name="icon-search" />
+                    </button>
+                  </ls-popper>
+                </div>
               </transition>
             </template>
           </ls-input>

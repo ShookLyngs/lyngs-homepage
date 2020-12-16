@@ -1,6 +1,6 @@
 import { createPopper } from '@popperjs/core';
 import { findDOMNode } from '<util>/common/dom';
-import { watchEffect, nextTick } from 'vue';
+import { watchEffect, nextTick, onBeforeUnmount } from 'vue';
 
 const handleOffset = (offset, ...params) => {
   if (typeof offset === 'number') {
@@ -11,8 +11,8 @@ const handleOffset = (offset, ...params) => {
 };
 
 const usePopper = ({ target, popper, props }) => {
-  if (!target || !popper) {
-    throw new Error('Missing property: target|popper');
+  if (!target || !popper || !props) {
+    throw new Error('Missing property: target|popper|props');
   }
 
   let instance;
@@ -35,6 +35,8 @@ const usePopper = ({ target, popper, props }) => {
       ],
     };
 
+    console.log(findDOMNode(target.value),
+      findDOMNode(popper.value));
     instance = createPopper(
       findDOMNode(target.value),
       findDOMNode(popper.value),
@@ -51,7 +53,13 @@ const usePopper = ({ target, popper, props }) => {
       if (target.value !== record.target || popper.value !== record.target) {
         record.target = target.value;
         record.popper = popper.value;
-        nextTick().then(() => rebindPopper(props));
+
+        // Only rebind popper when target and popper both exists
+        nextTick().then(() => {
+          if (findDOMNode(target.value) && findDOMNode(popper.value)) {
+            rebindPopper(props);
+          }
+        });
       }
     }
   });
@@ -59,6 +67,13 @@ const usePopper = ({ target, popper, props }) => {
   const updatePopper = () => {
     return instance ? instance.update() : void 0;
   };
+
+  onBeforeUnmount(() => {
+    if (instance) {
+      instance.destroy();
+      instance = null;
+    }
+  });
 
   return {
     instance,

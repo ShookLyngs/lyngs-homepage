@@ -1,16 +1,4 @@
 <template>
-  <!-- default slot, preventing lose sight of async-component -->
-  <component
-    tabindex="0"
-    ref="target"
-    :is="defaultSlot"
-    @click="$emit('click')"
-    @focus="conditionAction('focus', true, 'focus')"
-    @blur="conditionAction('focus', false, 'blur')"
-    @mouseenter="conditionAction('hover', true, 'mouse-enter')"
-    @mouseleave="conditionAction('hover', false, 'mouse-leave')"
-  />
-
   <!-- teleport the popper to body -->
   <teleport :to="teleport">
     <div
@@ -30,10 +18,10 @@
 <script>
   import { ref, watch, nextTick } from 'vue';
   import { delayThrottle } from '<util>/common/event';
-  import { usePopper } from './hook';
+  import { useVirtualPopper } from './hook';
 
   export default {
-    name: "ls-popper",
+    name: "ls-virtual-popper",
     props: {
       text: {
         type: String,
@@ -41,18 +29,11 @@
       },
       placement: {
         type: String,
-        default: 'bottom',
-      },
-      trigger: {
-        type: String,
-        default: 'hover',
-        validator: value => [
-          'hover', 'focus', 'manual'
-        ].includes(value),
+        default: 'bottom-start',
       },
       offset: {
         type: [ Number, Array, Function ],
-        default: () => [ 0, 10 ],
+        default: () => [ 12, 12 ],
         validator: offset => {
           if (offset instanceof Function) {
             return true;
@@ -71,10 +52,6 @@
         type: Boolean,
         default: false,
       },
-      popperClass: {
-        type: [ String, Array, Object ],
-        default: void 0,
-      },
     },
     emits: [
       'mouse-enter',
@@ -83,13 +60,8 @@
       'blur',
       'click',
     ],
-    setup(props, { slots, emit }) {
-      // Default slot, only accept single element.
-      // Or won't be able to get ref: <target>.
-      const [ defaultSlot ] = slots.default();
-
+    setup(props, { emit }) {
       // Binding element refs.
-      const target = ref(null);
       const popper = ref(null);
 
       // Using popper hook, To Generate instance of popper.
@@ -97,10 +69,10 @@
         instance,
         rebindPopper,
         updatePopper,
-      } = usePopper({ target, popper, props });
+      } = useVirtualPopper({ popper, props });
 
       // Visibility of popper
-      const isShowPopper = ref(false);
+      const isShowPopper = ref(true);
 
       // If visibility changes, update popper
       watch(() => isShowPopper.value, (value) => {
@@ -126,8 +98,6 @@
       };
 
       return {
-        defaultSlot,
-        target,
         popper,
         instance,
         isShowPopper,
