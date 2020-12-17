@@ -23,7 +23,8 @@
         default: 'vertical',
         validator: value => [
           'vertical',
-          'horizontal'
+          'horizontal',
+          'both',
         ].includes(value),
       },
     },
@@ -35,13 +36,16 @@
     }),
     computed: {
       wrapStyles() {
-        const styles = {};
+        const styles    = {};
+        const size      = this.size;
+        const show      = this.show;
+        const direction = this.direction;
 
-        if (this.direction === 'vertical') {
-          styles.height = this.show && this.size.height ? `${this.size.height}px` : '0px';
+        if (direction === 'vertical' || direction === 'both') {
+          styles.height = show && size.height ? `${size.height}px` : '0px';
         }
-        if (this.direction === 'horizontal') {
-          styles.width = this.show && this.size.width ? `${this.size.width}px` : '0px';
+        if (direction === 'horizontal' || direction === 'both') {
+          styles.width = show && size.width ? `${size.width}px` : '0px';
         }
 
         return styles;

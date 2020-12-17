@@ -27,6 +27,7 @@
             size="biggest"
             ref="input"
             placeholder="百度搜索"
+            v-virtual="popperContent"
             v-model:value="store.search"
             @focus="onInputFocus"
             @blur="onInputBlur"
@@ -103,6 +104,7 @@
       loadings: {
         searchList: false,
       },
+      popperContent: h => h('div', {}, '百度搜索'),
     }),
     computed: {
       isSearchable() {

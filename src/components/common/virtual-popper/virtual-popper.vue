@@ -1,30 +1,37 @@
 <template>
-  <!-- teleport the popper to body -->
-  <teleport :to="teleport">
-    <div
-      class="ls-popper"
-      ref="popper"
-      role="tooltip"
-      :class="{ 'is-show': isShowPopper, 'is-transform': transformTransition }"
-    >
-      <slot name="content">
-        {{ text }}
-      </slot>
-      <div class="ls-popper-arrow" data-popper-arrow />
+  <div
+    class="ls-popper"
+    ref="popper"
+    role="tooltip"
+    :class="{ 'is-show': isShowPopper, 'is-transform': transformTransition }"
+  >
+    <div class="ls-popper__wrapper">
+      <ls-collapse direction="both" :show="isShowPopper">
+        <div class="ls-popper-inner">
+          <slot name="content">
+            {{ actualContent }}
+          </slot>
+        </div>
+      </ls-collapse>
     </div>
-  </teleport>
+  </div>
 </template>
 
 <script>
-  import { ref, watch, nextTick } from 'vue';
+  import { ref, watch, nextTick, watchEffect } from 'vue';
   import { delayThrottle } from '<util>/common/event';
   import { useVirtualPopper } from './hook';
 
+  import LsCollapse from '<components>/common/collapse';
+
   export default {
     name: "ls-virtual-popper",
+    components: {
+      LsCollapse,
+    },
     props: {
-      text: {
-        type: String,
+      content: {
+        type: [ String, Object ],
         default: void 0,
       },
       placement: {
@@ -43,10 +50,6 @@
           }
           return typeof offset === 'number';
         },
-      },
-      teleport: {
-        type: String,
-        default: '#app',
       },
       transformTransition: {
         type: Boolean,
@@ -97,6 +100,16 @@
         if (eventType) emit(eventType, ...params);
       };
 
+      const content = ref(null);
+      const setContent = (value) => {
+        content.value = value;
+      };
+      watchEffect(() => {
+        if (props.content) {
+          content.value = props.content;
+        }
+      });
+
       return {
         popper,
         instance,
@@ -104,7 +117,43 @@
         rebindPopper,
         updatePopper,
         conditionAction,
+
+        actualContent: content,
+        setVisible: setPopperVisible,
+        setContent,
       };
+    },
+    render(h) {
+      return h(
+        'div',
+        {
+          ref: 'popper',
+          role: 'popper',
+          class: {
+            'ls-popper': true,
+            'is-show': this.isShowPopper,
+            'is-transform': this.transformTransition
+          },
+        },
+        h(
+          'div',
+          {
+            class: 'ls-popper__wrapper',
+          },
+          h(
+            'ls-collapse',
+            {
+              direction: 'both',
+              show: this.isShowPopper,
+            },
+            h(
+              'div',
+              { class: 'ls-popper-inner', },
+              this.actualContent,
+            )
+          )
+        )
+      );
     },
   }
 </script>

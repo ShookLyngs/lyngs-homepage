@@ -20,6 +20,11 @@ app.use(icon);
 import loading from '<components>/common/loading';
 app.use(loading);
 
+import LsVirtualPopper from '<components>/common/virtual-popper';
+app.use(LsVirtualPopper);
+
+console.log(app);
+
 // import(ls-ui-styles): make sure to put it at the tail;
 import '<assets>/styles/index.less';
 
