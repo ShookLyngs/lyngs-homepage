@@ -1,4 +1,4 @@
-import component from './virtual-popper.js';
+import component from './virtual-popper';
 import { createApp } from 'vue';
 
 const append = () => {

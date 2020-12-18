@@ -104,7 +104,7 @@
       loadings: {
         searchList: false,
       },
-      popperContent: h => h('div', {}, '百度搜索'),
+      popperContent: (h) => h('i', null, '百度搜索'),
     }),
     computed: {
       isSearchable() {

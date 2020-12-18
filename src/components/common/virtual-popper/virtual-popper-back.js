@@ -1,18 +1,18 @@
-import { h, ref, watch, nextTick, watchEffect } from 'vue';
+import { h, ref, watch, nextTick, watchEffect, defineAsyncComponent, resolveComponent } from 'vue';
 import { delayThrottle } from '<util>/common/event';
 import { useVirtualPopper } from './hook';
 
-import LsCollapse from '<components>/common/collapse';
+//import LsCollapse from '<components>/common/collapse';
 
 export default {
   name: "ls-virtual-popper",
   components: {
-    LsCollapse,
+    LsCollapse: defineAsyncComponent(() => import('<components>/common/collapse')),
   },
   props: {
     content: {
-      type: [ String, Object, Array ],
-      default: void 0,
+      type: [ String, Object, Array, Function ],
+      default: () => h => h('i', null, 'hello'),
     },
     placement: {
       type: String,
@@ -104,7 +104,9 @@ export default {
     };
   },
   render() {
-    return h('div',
+    const content = typeof this.actualContent === 'function' ? this.actualContent : () => this.actualContent;
+    const result = h(
+      'div',
       {
         ref: 'popper',
         role: 'popper',
@@ -114,27 +116,27 @@ export default {
           'is-transform': this.transformTransition
         },
       },
-      [
-        h('div',
+      h(
+        'div',
+        {
+          class: 'ls-popper__wrapper',
+        },
+        h(
+          resolveComponent('LsCollapse'),
           {
-            class: 'ls-popper__wrapper',
+            direction: 'both',
+            show: this.isShowPopper,
           },
-          [
-            h(LsCollapse,
-              {
-                direction: 'both',
-                show: this.isShowPopper,
-              },
-              h('div',
-                { class: 'ls-popper-inner' },
-                [
-                  this.actualContent ? this.actualContent(h) : ''
-                ]
-              )
-            )
-          ]
+          h('div',
+            { class: 'ls-popper-inner' },
+            content(h)
+          )
         )
-      ]
-    );
+      )
+    )
+
+    console.log(result);
+
+    return result;
   },
 };

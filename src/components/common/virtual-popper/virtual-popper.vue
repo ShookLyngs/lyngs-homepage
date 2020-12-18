@@ -7,18 +7,14 @@
   >
     <div class="ls-popper__wrapper">
       <ls-collapse direction="both" :show="isShowPopper">
-        <div class="ls-popper-inner">
-          <slot name="content">
-            {{ actualContent }}
-          </slot>
-        </div>
+        <div class="ls-popper-inner" v-html="actualContent()" />
       </ls-collapse>
     </div>
   </div>
 </template>
 
 <script>
-  import { ref, watch, nextTick, watchEffect } from 'vue';
+  import { ref, watch, nextTick, watchEffect, h } from 'vue';
   import { delayThrottle } from '<util>/common/event';
   import { useVirtualPopper } from './hook';
 
@@ -31,8 +27,8 @@
     },
     props: {
       content: {
-        type: [ String, Object ],
-        default: void 0,
+        type: [ String, Function ],
+        default: () => () => ((h) => h('i', null, 'content'))(h),
       },
       placement: {
         type: String,
@@ -102,12 +98,17 @@
 
       const content = ref(null);
       const setContent = (value) => {
-        content.value = value;
+        content.value = typeof value === 'function'
+          ? () => (((h) => value(h))(h))
+          : () => value;
       };
       watchEffect(() => {
         if (props.content) {
           content.value = props.content;
         }
+      });
+      watchEffect(() => {
+        console.log(content.value);
       });
 
       return {
@@ -122,38 +123,6 @@
         setVisible: setPopperVisible,
         setContent,
       };
-    },
-    render(h) {
-      return h(
-        'div',
-        {
-          ref: 'popper',
-          role: 'popper',
-          class: {
-            'ls-popper': true,
-            'is-show': this.isShowPopper,
-            'is-transform': this.transformTransition
-          },
-        },
-        h(
-          'div',
-          {
-            class: 'ls-popper__wrapper',
-          },
-          h(
-            'ls-collapse',
-            {
-              direction: 'both',
-              show: this.isShowPopper,
-            },
-            h(
-              'div',
-              { class: 'ls-popper-inner', },
-              this.actualContent,
-            )
-          )
-        )
-      );
-    },
+    }
   }
 </script>

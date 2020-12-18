@@ -7,11 +7,13 @@
 </template>
 
 <script>
-  import { defineAsyncComponent } from 'vue';
+  //import { defineAsyncComponent } from 'vue';
+  import LsResizeObserver from '<components>/common/resize-observer';
   export default {
     name: 'collapse',
     components: {
-      LsResizeObserver: defineAsyncComponent(() => import('<components>/common/resize-observer')),
+      LsResizeObserver,
+      //LsResizeObserver: defineAsyncComponent(() => import('<components>/common/resize-observer')),
     },
     props: {
       show: {
