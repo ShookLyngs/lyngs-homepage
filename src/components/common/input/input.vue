@@ -21,9 +21,9 @@
     <div class="ls-input__suffix" v-if="$slots.suffix || isShowCloseButton">
       <transition name="fade">
         <button
-          v-tooltip="'清空输入框'"
           class="ls-input__button"
           v-if="isShowCloseButton"
+          v-tooltip="'清空'"
           @click="onClickClear"
         >
           <ls-icon name="icon-no" />

@@ -2,7 +2,7 @@ import LsCollapse from '<components>/common/collapse';
 
 import { h, ref, watch, nextTick, watchEffect, computed } from 'vue';
 import { delayThrottle } from '<util>/common/event';
-import { useVirtualPopper } from './body';
+import { useVirtualPopper } from './use-virtual-popper';
 
 export default {
   name: "ls-virtual-popper",
@@ -13,7 +13,7 @@ export default {
     },
     offset: {
       type: [ Number, Array, Function ],
-      default: () => [ 12, 12 ],
+      default: () => [ 14, 14 ],
       validator: offset => {
         if (offset instanceof Function) {
           return true;
@@ -89,9 +89,9 @@ export default {
     // Add content to store list.
     // <id> is a unique key for a content, use Element as id for example.
     const addContent = (id, value) => {
-      const row = store.value.find(row => row['id'] === id);
-      if (row) {
-        store.value = value;
+      const index = store.value.findIndex(row => row['id'] === id);
+      if (index > -1) {
+        store.value[index].value = value;
       } else {
         store.value.push({ id, value });
       }
@@ -105,7 +105,12 @@ export default {
     // If allow auto toggling visibility, then toggle it when <actual> changes.
     watchEffect(() => {
       if (autoToggleVisible.value) {
-        isShowPopper.value = !!actual.value();
+        if (actual.value()) {
+          setVisible(true);
+        } else {
+          isShowPopper.value = false;
+          setVisible(false);
+        }
       }
     });
 
@@ -146,11 +151,12 @@ export default {
       {
         ref: 'popper',
         role: 'popper',
-        class: {
-          'ls-popper': true,
-          'is-show': this.isShowPopper,
-          'is-transform': this.transformTransition
-        },
+        class: [
+          'ls-popper',
+          'is-virtual',
+          this.isShowPopper ? 'is-show' : '',
+          this.transformTransition ? 'is-transform' : '',
+        ],
       },
       h('div', { class: 'ls-popper__wrapper' }, [
         collapse

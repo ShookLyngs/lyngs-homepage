@@ -5,9 +5,10 @@
 .ls-popper {
   .ls-transition-fast();
   position: absolute;
-  padding: 4px 8px;
-  background: #333;
-  color: white;
+  /*background: #333;
+  color: white;*/
+  color: #ffffff;
+  background: rgba(42, 42, 42, .8);
   font-weight: bold;
   font-size: 13px;
   border-radius: @radius[small];
@@ -15,15 +16,19 @@
   opacity: 0;
   z-index: 100;
   overflow: hidden;
-  transition-property: visibility, opacity, z-index;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, .1);
+  transition-property: padding, visibility, opacity, z-index;
 
   &.is-show {
     visibility: visible;
     opacity: 1;
     z-index: 100;
   }
+  &.is-virtual {
+    border-radius: 0 @radius[small] @radius[small] @radius[small];
+  }
   &.is-transform {
-    transition-property: visibility, opacity, z-index, transform;
+    transition-property: padding, visibility, opacity, z-index, transform;
   }
 
   & &__wrapper {
@@ -31,6 +36,7 @@
   }
   & &-inner {
     position: absolute;
+    padding: 4px 8px;
     min-width: 0;
     max-width: 340px;
     white-space: nowrap;

@@ -26,6 +26,7 @@ const listen = (root, value) => {
   });
 };
 
+// Update value in listener, value was saved in Ref, so less job to do.
 const update = (root, value) => {
   if (listeners.has(root)) {
     listeners.get(root).value.value = value;
