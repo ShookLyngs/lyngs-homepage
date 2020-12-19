@@ -41,7 +41,7 @@ export const getTargetRect = (target) => {
  * @param type {string} - event type
  * @param event {Function} - trigger method
  * @param options {Object|Boolean} - add listener options
- * @returns {{remove: remove}}
+ * @returns {{remove: Function}}
  */
 export const on = (target, type, event, options = false) => {
   if (!target?.addEventListener) {

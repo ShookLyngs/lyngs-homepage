@@ -27,7 +27,7 @@
             size="biggest"
             ref="input"
             placeholder="百度搜索"
-            v-virtual="'百度搜索'"
+            v-tooltip="store.search"
             v-model:value="store.search"
             @focus="onInputFocus"
             @blur="onInputBlur"
@@ -37,7 +37,7 @@
             <template #suffix>
               <transition name="fade" mode="out-in">
                 <div v-if="loadings.searchList">
-                  <button class="ls-input__button">
+                  <button class="ls-input__button" v-tooltip="'加载中'">
                     <ls-icon name="icon-loading" />
                   </button>
                 </div>
@@ -45,7 +45,7 @@
                   <ls-popper text="在百度搜索" placement="top">
                     <button
                       class="ls-input__button"
-                      v-virtual="'在百度搜索'"
+                      v-tooltip="'在百度搜索'"
                       :class="suffixButtonClasses"
                       @click="compile"
                     >
@@ -55,7 +55,7 @@
                 </div>
                 <div v-else>
                   <ls-popper text="前往百度" placement="top">
-                    <button tabindex="0" class="ls-input__button">
+                    <button tabindex="0" class="ls-input__button" v-tooltip="'前往百度'">
                       <ls-icon name="icon-search" />
                     </button>
                   </ls-popper>

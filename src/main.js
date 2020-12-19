@@ -20,6 +20,7 @@ app.use(icon);
 import loading from '<components>/common/loading';
 app.use(loading);
 
+// import(component): ls-virtual-popper;
 import LsVirtualPopper from '<components>/common/virtual-popper';
 app.use(LsVirtualPopper);
 

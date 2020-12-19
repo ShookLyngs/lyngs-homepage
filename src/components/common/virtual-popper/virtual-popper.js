@@ -1,16 +1,12 @@
 import LsCollapse from '<components>/common/collapse';
 
-import { h, ref, watch, nextTick, watchEffect } from 'vue';
+import { h, ref, watch, nextTick, watchEffect, computed } from 'vue';
 import { delayThrottle } from '<util>/common/event';
 import { useVirtualPopper } from './body';
 
 export default {
   name: "ls-virtual-popper",
   props: {
-    content: {
-      type: [ String, Object, Array, Function ],
-      default: null,
-    },
     placement: {
       type: String,
       default: 'bottom-start',
@@ -51,8 +47,11 @@ export default {
       updatePopper,
     } = useVirtualPopper({ popper, props });
 
-    // Visibility of popper
-    const isShowPopper = ref(true);
+    // Visibility of popper.
+    const isShowPopper = ref(false);
+
+    // Decide whether to toggle visibility automatically or not.
+    const autoToggleVisible = ref(true);
 
     // If visibility changes, update popper
     watch(() => isShowPopper.value, (value) => {
@@ -77,35 +76,44 @@ export default {
       if (eventType) emit(eventType, ...params);
     };
 
-    // Content that will actually display on popper.
-    const actual = ref(null);
+    // Store contents.
     const store  = ref([]);
-    const setContent = (value) => {
-      actual.value = typeof value === 'function' ? () => value(h) : () => value;
-      setVisible(!!value);
-    };
-    const addContent = (id, value) => {
-      removeContent(id, false);
-      store.value.push({ id, value });
-      setContent(value);
-    };
-    const removeContent = (id, reset = true) => {
-      store.value = store.value.filter(row => row.id !== id);
 
-      if (reset) {
-        if (store.value.length) {
-          setContent(store.value[store.value.length - 1].value);
-        } else {
-          setContent(null);
-        }
+    // Content that will actually display on popper.
+    // Always display the last content in <store>.
+    const actual = computed(() => {
+      const row = store.value.length ? store.value[store.value.length - 1].value : null;
+      return typeof row === 'function' ? () => row(h) : () => row;
+    });
+
+    // Add content to store list.
+    // <id> is a unique key for a content, use Element as id for example.
+    const addContent = (id, value) => {
+      const row = store.value.find(row => row['id'] === id);
+      if (row) {
+        store.value = value;
+      } else {
+        store.value.push({ id, value });
       }
     };
-    watchEffect(() => setContent(props.content));
+
+    // Remove a content from store list, based on content id.
+    const removeContent = (id) => {
+      store.value = store.value.filter(row => row['id'] !== id);
+    };
+
+    // If allow auto toggling visibility, then toggle it when <actual> changes.
+    watchEffect(() => {
+      if (autoToggleVisible.value) {
+        isShowPopper.value = !!actual.value();
+      }
+    });
 
     return {
       popper,
       instance,
       isShowPopper,
+      autoToggleVisible,
       rebindPopper,
       updatePopper,
       conditionAction,
@@ -114,10 +122,11 @@ export default {
       setVisible,
       addContent,
       removeContent,
-      setContent,
     };
   },
   render() {
+    // Collapse component.
+    // Come along with content inside.
     const collapse = h(
       LsCollapse,
       {
@@ -131,6 +140,7 @@ export default {
       }
     );
 
+    // Outer wrapper on the VirtualPopper component.
     return h(
       'div',
       {
