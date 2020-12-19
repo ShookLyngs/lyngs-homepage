@@ -1,32 +1,41 @@
 import { useGlobalVirtualPopper } from './use-global';
 import { on } from "<util>/common/dom";
 
-const {
-  /*app,
-  element,*/
-  instance,
-} = useGlobalVirtualPopper();
+const { instance } = useGlobalVirtualPopper();
+const listeners = new Map();
 
-const listen = (listeners, root, value) => {
-  listeners.push(on(root, 'mouseenter', () => {
-    instance.setContent(value);
-    instance.setVisible(true);
-  }));
-  listeners.push(on(root, 'mouseleave', () => {
-    instance.setContent(null);
-    instance.setVisible(false);
-  }));
+const listen = (root, value) => {
+  listeners.set(root, [
+    on(root, 'mouseenter', () => {
+      instance.addContent(root, value);
+    }),
+    on(root, 'mouseleave', () => {
+      instance.removeContent(root);
+    }),
+  ]);
+};
+const remove = (root, removeContent = true) => {
+  if (removeContent) {
+    instance.removeContent(root);
+  }
+  if (listeners.has(root)) {
+    listeners.get(root).forEach(listener => {
+      listener.remove();
+    });
+  }
 };
 
 const install = (vue) => {
-  const listeners = [];
-
   vue.directive('virtual', {
     mounted(root, { value }) {
-      listen(listeners, root, value);
+      listen(root, value);
     },
-    beforeUnMount() {
-      listeners.forEach(listener => listener.remove());
+    updated(root, { value }) {
+      remove(root, false);
+      listen(root, value);
+    },
+    beforeUnMount(root) {
+      remove(root);
     },
   });
 };

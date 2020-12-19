@@ -35,8 +35,6 @@ const usePopper = ({ target, popper, props }) => {
       ],
     };
 
-    console.log(findDOMNode(target.value),
-      findDOMNode(popper.value));
     instance = createPopper(
       findDOMNode(target.value),
       findDOMNode(popper.value),

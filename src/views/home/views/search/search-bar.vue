@@ -27,7 +27,7 @@
             size="biggest"
             ref="input"
             placeholder="百度搜索"
-            v-virtual="popperContent"
+            v-virtual="'百度搜索'"
             v-model:value="store.search"
             @focus="onInputFocus"
             @blur="onInputBlur"
@@ -45,6 +45,7 @@
                   <ls-popper text="在百度搜索" placement="top">
                     <button
                       class="ls-input__button"
+                      v-virtual="'在百度搜索'"
                       :class="suffixButtonClasses"
                       @click="compile"
                     >

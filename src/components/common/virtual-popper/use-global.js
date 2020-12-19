@@ -21,17 +21,6 @@ const remove = (app, element) => {
   }
 };
 
-const useGlobalVirtualPopper = () => {
-  const { app, element, instance } = append();
-  return {
-    app,
-    element,
-    instance,
-  };
-};
-
-export default useGlobalVirtualPopper;
-export {
-  useGlobalVirtualPopper,
-  remove,
-};
+export default append;
+export const useGlobalVirtualPopper = append;
+export const removeGlobalVirtualPopper = remove;
