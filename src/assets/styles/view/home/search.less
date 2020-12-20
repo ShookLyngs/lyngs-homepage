@@ -3,7 +3,7 @@
 @import "index";
 
 @view-main-search-bar-height: 80px;
-@view-search-list-item-height: 50px;
+@view-search-list-item-height: 60px;
 
 // 主屏搜索框
 .ls-view-home-search {
@@ -21,10 +21,10 @@
     padding: @space[middle];
 
     &:first-child {
-      padding-left: @space[biggest];
+      padding-left: @space[middle];
     }
     &:last-child {
-      padding-right: @space[biggest];
+      padding-right: @space[middle];
     }
 
     // status
@@ -70,7 +70,7 @@
     .ls-flex-static-combo();
     .ls-align-center();
     .ls-transition-fastest();
-    padding: 0 @space[biggest];
+    padding: 0 @space[big];
     height: @view-search-list-item-height;
     user-select: none;
 
@@ -99,18 +99,16 @@
 }
 
 .ls-view-home-search-list__button {
-  .ls-transition-fastest();
-  opacity: .3;
+  .ls-input__button();
+  font-size: @size[middle];
+  width: 44px;
+  height: 44px;
 
   &.is-prefix {
-    opacity: 1;
-  }
-  &:not(:first-child) {
-    margin-left: @space[biggest];
+    color: @strong[strong];
   }
   &:hover {
     color: @strong[strongest];
-    opacity: 1;
   }
 }
 .ls-view-home-search-list__item.is-active {

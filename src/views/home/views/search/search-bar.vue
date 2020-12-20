@@ -9,15 +9,14 @@
     >
       <div class="ls-view-home-search__body">
         <div class="ls-view-home-search__item is-static">
-          <ls-popper text="在百度搜索" placement="top">
-            <button
-              class="ls-input__button"
-              :class="suffixButtonClasses"
-              @click="compile"
-            >
-              <ls-icon class="ls-view-home-search__type" name="icon-baidu" />
-            </button>
-          </ls-popper>
+          <button
+            class="ls-input__button"
+            v-tooltip="popperContent"
+            :class="suffixButtonClasses"
+            @click="compile"
+          >
+            <ls-icon class="ls-view-home-search__type" name="icon-baidu" />
+          </button>
         </div>
         <div class="ls-view-home-search__item is-no-space">
           <ls-input
@@ -86,7 +85,6 @@
       // common-components
       LsAffix: defineAsyncComponent(() => import('<components>/common/affix')),
       LsInput: defineAsyncComponent(() => import('<components>/common/input')),
-      LsPopper: defineAsyncComponent(() => import('<components>/common/popper')),
       // views
       SearchBarPopper: defineAsyncComponent(() => import('./search-bar-popper')),
     },

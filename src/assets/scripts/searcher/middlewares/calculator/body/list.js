@@ -17,9 +17,19 @@ const createListItem = ({ input, result }) => createResult({
   suffix: {
     buttons: [
       {
+        icon: 'icon-no',
+        tooltip: '禁用',
+      },
+      {
         icon: 'icon-copy',
-        onClick() {
-          // TODO: copy result to the clipboard
+        tooltip: '复制到剪切板',
+        async onClick() {
+          try {
+            await this.$copyText(result);
+            // TODO: notice user that the copy action has finished.
+          } catch(error) {
+            console.error(error);
+          }
         },
       },
     ],

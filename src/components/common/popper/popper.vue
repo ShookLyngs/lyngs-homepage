@@ -19,9 +19,11 @@
       role="tooltip"
       :class="{ 'is-show': isShowPopper, 'is-transform': transformTransition }"
     >
-      <slot name="content">
-        {{ text }}
-      </slot>
+      <div class="ls-popper-inner">
+        <slot name="content">
+          {{ text }}
+        </slot>
+      </div>
       <div class="ls-popper-arrow" data-popper-arrow />
     </div>
   </teleport>

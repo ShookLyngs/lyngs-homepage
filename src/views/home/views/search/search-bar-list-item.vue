@@ -7,12 +7,12 @@
     <!-- prefix -->
     <div class="ls-view-home-search-list__item__prefix">
       <slot name="prefix" :item="result">
-        <div
+        <button
           class="ls-view-home-search-list__button is-prefix"
           @click="handleProperty(result, 'prefix.onClick')"
         >
           <ls-icon :name="handleProperty(result, 'prefix.icon')" />
-        </div>
+        </button>
       </slot>
     </div>
 
@@ -26,14 +26,15 @@
     <!-- suffix -->
     <div class="ls-view-home-search-list__item__suffix">
       <slot name="suffix" :item="result">
-        <div
+        <button
           class="ls-view-home-search-list__button"
           v-for="(button, index) in handleProperty(result, 'suffix.buttons')"
+          v-tooltip="handleProperty(button, 'tooltip')"
           :key="index"
           @click="handleProperty(button, 'onClick')"
         >
           <ls-icon :name="handleProperty(button, 'icon')" />
-        </div>
+        </button>
       </slot>
     </div>
 
@@ -78,20 +79,19 @@
     },
     computed: {
       result() {
-        //console.log(this.item);
         return merge(defaultItem, this.item.result);
       },
     },
     methods: {
       handleProperty(target, dig, untie = true, context = void 0) {
         if (!context) {
-          context = this.result;
+          context = this.item;
         }
 
         const result = digger(target, dig);
 
         if (result instanceof Function && untie) {
-          return result(context);
+          return result.call(this, context);
         } else {
           return result;
         }

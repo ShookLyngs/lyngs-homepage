@@ -138,7 +138,7 @@ export default {
         show={this.isShowPopper}
         v-slots={{
           default: () => (
-            <div className='ls-popper-inner'>
+            <div className='ls-popper__inner'>
               { this.actual() }
             </div>
           )
