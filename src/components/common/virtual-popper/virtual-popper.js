@@ -131,36 +131,36 @@ export default {
   },
   render() {
     // Collapse component.
-    // Come along with content inside.
-    const collapse = h(
-      LsCollapse,
-      {
-        direction: 'both',
-        show: this.isShowPopper,
-      },
-      {
-        default: () => h('div', { class: 'ls-popper-inner' }, [
-          this.actual()
-        ])
-      }
+    // Come along with actual content inside.
+    const collapse = (
+      <LsCollapse
+        direction='both'
+        show={this.isShowPopper}
+        v-slots={{
+          default: () => (
+            <div className='ls-popper-inner'>
+              { this.actual() }
+            </div>
+          )
+        }}
+      />
     );
 
-    // Outer wrapper on the VirtualPopper component.
-    return h(
-      'div',
-      {
-        ref: 'popper',
-        role: 'popper',
-        class: [
+    return (
+      <div
+        ref='popper'
+        role='popper'
+        class={[
           'ls-popper',
           'is-virtual',
           this.isShowPopper ? 'is-show' : '',
           this.transformTransition ? 'is-transform' : '',
-        ],
-      },
-      h('div', { class: 'ls-popper__wrapper' }, [
-        collapse
-      ])
+        ]}
+      >
+        <div class='ls-popper__wrapper'>
+          { collapse }
+        </div>
+      </div>
     );
   },
 };

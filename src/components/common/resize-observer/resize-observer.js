@@ -1,6 +1,5 @@
 import ResizeObserver from 'resize-observer-polyfill';
 import { findDOMNode } from '<util>/common/dom';
-import { h } from 'vue';
 
 export default {
   name: "ls-resize-observer",
@@ -73,7 +72,8 @@ export default {
     this.destroyObserver();
   },
   render() {
-    console.log('resize-observer', this, this.$slots.default);
-    return h(this.$slots.default);
+    return (
+      this.$slots.default()
+    );
   },
 };

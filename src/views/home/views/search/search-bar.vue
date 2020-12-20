@@ -106,10 +106,12 @@
       loadings: {
         searchList: false,
       },
-      popperContent: (h) => h(WebsiteCard, null, {
-        title: () => h('b', null, 'Baidu'),
-        content: () => h('i', null, 'Description here, to tell you what Baidu can offer.'),
-      }),
+      popperContent: () => (
+        <WebsiteCard v-slots={{
+          title: () => <b>Baidu</b>,
+          content: () => <i>Description here, to tell you what Baidu can offer.</i>,
+        }}/>
+      ),
     }),
     computed: {
       isSearchable() {
