@@ -9,6 +9,7 @@
       <slot name="prefix" :item="result">
         <button
           class="ls-view-home-search-list__button is-prefix"
+          v-tooltip="handleProperty(result, 'prefix.tooltip')"
           @click="handleProperty(result, 'prefix.onClick')"
         >
           <ls-icon :name="handleProperty(result, 'prefix.icon')" />
@@ -17,7 +18,7 @@
     </div>
 
     <!-- content -->
-    <div class="ls-view-home-search-list__item__content">
+    <div class="ls-view-home-search-list__item__content" v-tooltip="handleProperty(result, 'content.tooltip')">
       <slot :item="result">
         {{ handleProperty(result, 'content.primaryText') }}
       </slot>

@@ -1,4 +1,5 @@
 import calculator from './calculator';
+import google from './google';
 
 // - Index of defaultSorts
 // Index of items will effect how list eventually display.
@@ -10,10 +11,12 @@ import calculator from './calculator';
 
 const defaultSorts = [
   calculator,
+  google,
 ];
 
 export default defaultSorts;
 export {
   defaultSorts as middlewares,
   calculator,
+  google,
 };

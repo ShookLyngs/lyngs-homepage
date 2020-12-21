@@ -21,7 +21,6 @@
     name: 'search-bar-list',
     components: {
       // components
-      //LsIcon: defineAsyncComponent(() => import('<components>/common/icon')),
       LsScrollbar: defineAsyncComponent(() => import('<components>/common/scrollbar')),
       // views
       SearchBarListItem: defineAsyncComponent(() => import('./search-bar-list-item')),
@@ -36,60 +35,6 @@
       store: {
         search: '',
       },
-      format: {
-        list: [
-          {
-            prefix: 'icon-guge',
-            content: '谷歌搜索 「{content}」',
-            href: 'https://www.baidu.com/s?wd={content}'
-          },
-          {
-            prefix: 'icon-juejin',
-            content: '掘金搜索 「{content}」',
-            href: 'https://www.baidu.com/s?wd={content}'
-          },
-          {
-            prefix: 'icon-guge',
-            content: '谷歌搜索 「{content}」',
-            href: 'https://www.baidu.com/s?wd={content}'
-          },
-          {
-            prefix: 'icon-juejin',
-            content: '掘金搜索 「{content}」',
-            href: 'https://www.baidu.com/s?wd={content}'
-          },
-          {
-            prefix: 'icon-guge',
-            content: '谷歌搜索 「{content}」',
-            href: 'https://www.baidu.com/s?wd={content}'
-          },
-          {
-            prefix: 'icon-juejin',
-            content: '掘金搜索 「{content}」',
-            href: 'https://www.baidu.com/s?wd={content}'
-          },
-          {
-            prefix: 'icon-guge',
-            content: '谷歌搜索 「{content}」',
-            href: 'https://www.baidu.com/s?wd={content}'
-          },
-          {
-            prefix: 'icon-juejin',
-            content: '掘金搜索 「{content}」',
-            href: 'https://www.baidu.com/s?wd={content}'
-          },
-          {
-            prefix: 'icon-guge',
-            content: '谷歌搜索 「{content}」',
-            href: 'https://www.baidu.com/s?wd={content}'
-          },
-          {
-            prefix: 'icon-juejin',
-            content: '掘金搜索 「{content}」',
-            href: 'https://www.baidu.com/s?wd={content}'
-          },
-        ],
-      },
       result: {
         index: -1,
         list: [],
@@ -98,7 +43,6 @@
     methods: {
       update() {
         if (this.store.search) {
-          this.setLoadingList();
           this.fetchList();
         } else {
           this.result.list = [];
@@ -108,21 +52,8 @@
         this.setLoading('searchList', true);
 
         this.result.list = await createSearcherList({ input: this.store.search });
-        console.log(this.result.list);
 
         this.setLoading('searchList', false);
-
-        /*setTimeout(() => {
-          this.setLoading('searchList', false);
-          if (search) {
-            this.result.list = this.translateList([].concat(this.format.list), search);
-          } else {
-            this.result.list = [];
-          }
-        }, 500);*/
-      },
-      setLoadingList() {
-        this.result.list = this.translateList([].concat(this.format.list), '...');
       },
 
       setLoading(name, value) {

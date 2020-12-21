@@ -4,6 +4,7 @@ import { formatInput } from './util';
 const createListItem = ({ input, result }) => createResult({
   prefix: {
     icon: 'icon-calculator',
+    tooltip: () => (<i>设置为默认引擎</i>),
     onClick() {
       // TODO: set calculator as the default searcher
     },
