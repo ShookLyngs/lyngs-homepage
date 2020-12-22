@@ -6,13 +6,15 @@ const createListItem = ({ input, result }) => createResult({
     icon: 'icon-calculator',
     tooltip: () => (<i>设置为默认引擎</i>),
     onClick() {
+      console.log('click');
       // TODO: set calculator as the default searcher
     },
+    render: () => (<div>icon</div>)
   },
   content: {
     primaryText: () => {
       const math = formatInput(input);
-      return `计算 ${math} =「${result}」`;
+      return `${math} =「${result}」`;
     },
   },
   suffix: {

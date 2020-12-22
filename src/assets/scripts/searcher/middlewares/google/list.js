@@ -3,7 +3,7 @@ import { createResult } from '../../body';
 const createListItem = ({ input }) => createResult({
   prefix: {
     icon: 'icon-guge',
-    tooltip: () => (<i>设置为默认引擎</i>),
+    tooltip: () => (<i>设置谷歌为默认引擎</i>),
     onClick() {
       // TODO: set calculator as the default searcher
     },
@@ -12,8 +12,8 @@ const createListItem = ({ input }) => createResult({
     primaryText: () => `在谷歌搜索「${input}」`,
     tooltip: () => (
       <div>
-        <div>在谷歌搜索</div>
-        <i>「{input}」</i>
+        <div>谷歌搜索</div>
+        <div>「{input}」</div>
       </div>
     ),
   },

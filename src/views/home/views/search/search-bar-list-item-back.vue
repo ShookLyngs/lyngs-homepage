@@ -44,8 +44,8 @@
 
 <script>
   import { defineAsyncComponent } from 'vue';
-  import merge from "@lyngs/merge";
   import digger from "@lyngs/digger";
+  import merge from "@lyngs/merge";
 
   const defaultItem = {
     prefix: {
@@ -101,6 +101,9 @@
       onMouseEnter() {
         this.$emit('mouse-enter');
       },
+    },
+    render() {
+      return (<div>1</div>);
     },
   }
 </script>

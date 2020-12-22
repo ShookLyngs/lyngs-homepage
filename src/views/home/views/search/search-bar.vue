@@ -8,7 +8,7 @@
       @mouseleave="onSearchMouseLeave"
     >
       <div class="ls-view-home-search__body">
-        <div class="ls-view-home-search__item is-static">
+        <div class="ls-view-home-search__item is-static is-prefix">
           <button
             class="ls-input__button"
             v-tooltip="popperContent"
