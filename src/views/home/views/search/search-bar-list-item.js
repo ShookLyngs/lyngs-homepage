@@ -58,24 +58,53 @@ export default {
     },
   },
   render() {
-    const prefixRender         = this.handleProperty(this.result, 'prefix.render', false);
-    const isPrefixRenderUsable = typeof prefixRender === 'function';
-
+    // prefix
+    const prefixRender = this.handleProperty(this.result, 'prefix.render', false);
+    const prefixDefault = () => (
+      <button
+        className='ls-view-home-search-list__button is-prefix'
+        v-tooltip={this.handleProperty(this.result, 'prefix.tooltip')}
+        onClick={this.handleProperty(this.result, 'prefix.onClick', false)}
+      >
+        <ls-icon name={this.handleProperty(this.result, 'prefix.icon')}/>
+      </button>
+    );
     const prefix = (
       <div class='ls-view-home-search-list__item__prefix'>
-        { isPrefixRenderUsable ? prefixRender() : void 0 }
-        {
-          !isPrefixRenderUsable &&
-          (
-            <button
-              className='ls-view-home-search-list__button is-prefix'
-              v-tooltip={this.handleProperty(this.result, 'prefix.tooltip')}
-              onClick={this.handleProperty(this.result, 'prefix.onClick', false)}
-            >
-              <ls-icon name={this.handleProperty(this.result, 'prefix.icon')}/>
-            </button>
-          )
-        }
+        {prefixRender instanceof Function ? prefixRender() : prefixDefault()}
+      </div>
+    );
+
+    // content
+    const contentRender = this.handleProperty(this.result, 'content.render', false);
+    const contentDefault = () => this.handleProperty(this.result, 'content.primaryText');
+    const content = (
+      <div
+        class='ls-view-home-search-list__item__content'
+        v-tooltip={this.handleProperty(this.result, 'content.tooltip')}
+      >
+        {contentRender instanceof Function ? contentRender() : contentDefault()}
+      </div>
+    );
+
+    // suffix
+    const suffixRender = this.handleProperty(this.result, 'content.render', false);
+    const suffixDefault = () => {
+      const buttons = this.handleProperty(this.result, 'suffix.buttons');
+      return buttons.map((button, index) => (
+        <button
+          className='ls-view-home-search-list__button'
+          key={index}
+          v-tooltip={this.handleProperty(button, 'tooltip')}
+          onClick={this.handleProperty(button, 'onClick', false)}
+        >
+          <ls-icon name={this.handleProperty(button, 'icon')} />
+        </button>
+      ));
+    };
+    const suffix = (
+      <div class='ls-view-home-search-list__item__suffix'>
+        {suffixRender instanceof Function ? suffixRender() : suffixDefault()}
       </div>
     );
 
@@ -86,6 +115,8 @@ export default {
         onMouseenter={this.onMouseEnter}
       >
         {prefix}
+        {content}
+        {suffix}
       </div>
     );
   },
