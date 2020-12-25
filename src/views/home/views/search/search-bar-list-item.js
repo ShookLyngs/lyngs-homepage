@@ -39,7 +39,7 @@ export default {
     },
   },
   methods: {
-    handleProperty(target, dig, untie = true, context = void 0) {
+    access(target, dig, untie = true, context = void 0) {
       if (!context) {
         context = this.item;
       }
@@ -59,54 +59,63 @@ export default {
   },
   render() {
     // prefix
-    const prefixRender = this.handleProperty(this.result, 'prefix.render', false);
-    const prefixDefault = () => (
-      <button
-        className='ls-view-home-search-list__button is-prefix'
-        v-tooltip={this.handleProperty(this.result, 'prefix.tooltip')}
-        onClick={this.handleProperty(this.result, 'prefix.onClick', false)}
-      >
-        <ls-icon name={this.handleProperty(this.result, 'prefix.icon')}/>
-      </button>
-    );
-    const prefix = (
-      <div class='ls-view-home-search-list__item__prefix'>
-        {prefixRender instanceof Function ? prefixRender() : prefixDefault()}
-      </div>
-    );
+    const prefix = () => {
+      const render   = this.access(this.result, 'prefix.render', false);
+      const template = () => (
+        <button
+          className='ls-view-home-search-list__button is-prefix'
+          v-tooltip={this.access(this.result, 'prefix.tooltip')}
+          onClick={this.access(this.result, 'prefix.onClick', false)}
+        >
+          <ls-icon name={this.access(this.result, 'prefix.icon')}/>
+        </button>
+      );
+
+      return (
+        <div className='ls-view-home-search-list__item__prefix'>
+          {render instanceof Function ? render() : template()}
+        </div>
+      );
+    };
 
     // content
-    const contentRender = this.handleProperty(this.result, 'content.render', false);
-    const contentDefault = () => this.handleProperty(this.result, 'content.primaryText');
-    const content = (
-      <div
-        class='ls-view-home-search-list__item__content'
-        v-tooltip={this.handleProperty(this.result, 'content.tooltip')}
-      >
-        {contentRender instanceof Function ? contentRender() : contentDefault()}
-      </div>
-    );
+    const content = () => {
+      const render   = this.access(this.result, 'content.render', false);
+      const template = () => this.access(this.result, 'content.primaryText');
+
+      return (
+        <div
+          className='ls-view-home-search-list__item__content'
+          v-tooltip={this.access(this.result, 'content.tooltip')}
+        >
+          {render instanceof Function ? render() : template()}
+        </div>
+      );
+    };
 
     // suffix
-    const suffixRender = this.handleProperty(this.result, 'content.render', false);
-    const suffixDefault = () => {
-      const buttons = this.handleProperty(this.result, 'suffix.buttons');
-      return buttons.map((button, index) => (
-        <button
-          className='ls-view-home-search-list__button'
-          key={index}
-          v-tooltip={this.handleProperty(button, 'tooltip')}
-          onClick={this.handleProperty(button, 'onClick', false)}
-        >
-          <ls-icon name={this.handleProperty(button, 'icon')} />
-        </button>
-      ));
+    const suffix = () => {
+      const render   = this.access(this.result, 'content.render', false);
+      const template = () => {
+        const buttons = this.access(this.result, 'suffix.buttons');
+        return buttons.map((button, index) => (
+          <button
+            className='ls-view-home-search-list__button'
+            key={index}
+            v-tooltip={this.access(button, 'tooltip')}
+            onClick={this.access(button, 'onClick', false)}
+          >
+            <ls-icon name={this.access(button, 'icon')} />
+          </button>
+        ));
+      };
+
+      return (
+        <div className='ls-view-home-search-list__item__suffix'>
+          {render instanceof Function ? render() : template()}
+        </div>
+      );
     };
-    const suffix = (
-      <div class='ls-view-home-search-list__item__suffix'>
-        {suffixRender instanceof Function ? suffixRender() : suffixDefault()}
-      </div>
-    );
 
     return (
       <div
@@ -114,9 +123,7 @@ export default {
         class={this.active ? 'is-active' : ''}
         onMouseenter={this.onMouseEnter}
       >
-        {prefix}
-        {content}
-        {suffix}
+        {[ prefix(), content(), suffix() ]}
       </div>
     );
   },
