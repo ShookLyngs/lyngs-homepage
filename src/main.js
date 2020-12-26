@@ -24,7 +24,7 @@ app.use(loading);
 import LsVirtualPopper from '<components>/common/virtual-popper';
 app.use(LsVirtualPopper);
 
-import LsClipboardGlobal from '<components>/common/clipboard/global';
+import LsClipboardGlobal from '<components>/common/clipboard';
 app.use(LsClipboardGlobal);
 
 // import(ls-ui-styles): make sure to put it at the tail;

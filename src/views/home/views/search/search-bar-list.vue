@@ -1,6 +1,10 @@
 <template>
   <ls-scrollbar disabled-horizontal view-max-height="200px">
-    <div class="ls-view-home-search-list" @mouseleave="setIndex(-1)">
+    <div
+      class="ls-view-home-search-list"
+      v-loading="searchBar.loadings.searchList"
+      @mouseleave="setIndex(-1)"
+    >
       <search-bar-list-item
         v-for="(item, index) in result.list"
         :key="index"

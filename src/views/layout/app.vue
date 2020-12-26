@@ -8,8 +8,5 @@
   export default {
     name: 'app',
     description: '标签页-主页',
-    data() {
-      return {};
-    },
   };
 </script>

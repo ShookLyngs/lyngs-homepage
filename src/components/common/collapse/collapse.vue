@@ -7,13 +7,12 @@
 </template>
 
 <script>
-  //import { defineAsyncComponent } from 'vue';
+  import { reactive, ref, computed } from 'vue';
   import LsResizeObserver from '<components>/common/resize-observer';
   export default {
     name: 'collapse',
     components: {
       LsResizeObserver,
-      //LsResizeObserver: defineAsyncComponent(() => import('<components>/common/resize-observer')),
     },
     props: {
       show: {
@@ -30,18 +29,20 @@
         ].includes(value),
       },
     },
-    data: () => ({
-      size: {
-        width: void 0,
-        height: void 0,
-      },
-    }),
-    computed: {
-      wrapStyles() {
+    setup(props) {
+      const size = reactive({
+        width: ref(void 0),
+        height: ref(void 0),
+      });
+      const onResize = (newSize) => {
+        size.width = newSize.width;
+        size.height = newSize.height;
+      };
+
+      const wrapStyles = computed(() => {
         const styles    = {};
-        const size      = this.size;
-        const show      = this.show;
-        const direction = this.direction;
+        const show      = props.show;
+        const direction = props.direction;
 
         if (direction === 'vertical' || direction === 'both') {
           styles.height = show && size.height ? `${size.height}px` : '0px';
@@ -51,13 +52,13 @@
         }
 
         return styles;
-      },
-    },
-    methods: {
-      onResize(size) {
-        this.size = size;
-        this.$forceUpdate();
-      },
+      });
+
+      return {
+        size,
+        wrapStyles,
+        onResize,
+      };
     },
   }
 </script>
