@@ -74,13 +74,13 @@ const sortMiddlewareList = (middlewares) => middlewares.sort(
   (a, b) => {
     const aListIndex       = getMiddlewareIndex(a),
           bListIndex       = getMiddlewareIndex(b),
-          aMiddlewareIndex = a?.index ?? 0,
-          bMiddlewareIndex = b?.index ?? 0;
+          aMiddlewareIndex = a?.result?.priority?.() ?? 0,
+          bMiddlewareIndex = b?.result?.priority?.() ?? 0;
 
     const compareListIndex       = Math.sign(aListIndex - bListIndex),
-          compareMiddlewareIndex = Math.sign(aMiddlewareIndex - bMiddlewareIndex);
+          compareMiddlewareIndex = Math.sign(aMiddlewareIndex - bMiddlewareIndex) * -1;
 
-    return compareMiddlewareIndex !== 0 ? compareMiddlewareIndex : compareListIndex;
+    return Math.sign(compareListIndex + compareMiddlewareIndex);
   }
 );
 

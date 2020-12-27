@@ -1,18 +1,23 @@
 import { createResult } from '../../body';
 
+const matchContent = input => {
+  const matchName = (/^(?:百度|baidu)(?:(?:\s+)(.+))$/i).exec(input);
+  return matchName && matchName[1] || input;
+};
+
 const createListItem = ({ input }) => createResult({
   prefix: {
-    icon: 'icon-guge',
-    tooltip: () => (<i>设置谷歌为默认引擎</i>),
+    icon: 'icon-baidu',
+    tooltip: () => (<i>设置百度为默认引擎</i>),
     onClick() {
       // TODO: set calculator as the default searcher
     },
   },
   content: {
-    primaryText: () => `在谷歌搜索「${input}」`,
+    primaryText: () => `在百度搜索「${matchContent(input)}」`,
     tooltip: () => (
       <div>
-        <div>谷歌搜索</div>
+        <div>百度搜索</div>
         <div>「{input}」</div>
       </div>
     ),
@@ -25,17 +30,17 @@ const createListItem = ({ input }) => createResult({
       },
       {
         icon: 'icon-right',
-        tooltip: '在谷歌搜索',
+        tooltip: '在百度搜索',
         async onClick() {
-          const params = new URLSearchParams();
-          params.set('q', input);
-          window.open(`https://google.com/search?${params.toString()}`);
+          const params = new URLSearchParams({ wd: input });
+          window.open(`https://baidu.com/s?${params.toString()}`);
         },
       },
     ],
   },
   priority() {
-    const matchGrammar = /(谷歌|google)\s(.+)$/i.test(input);
+    const matchGrammar = /(百度|baidu)(\s(.+)?)$/i.test(input);
+    console.log(matchGrammar);
     return matchGrammar ? 50 : 0;
   },
 });

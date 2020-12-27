@@ -1,5 +1,6 @@
 import calculator from './calculator';
 import google from './google';
+import baidu from './baidu';
 
 // - Index of defaultSorts
 // Index of items will effect how list eventually display.
@@ -12,6 +13,7 @@ import google from './google';
 const defaultSorts = [
   calculator,
   google,
+  baidu,
 ];
 
 export default defaultSorts;
