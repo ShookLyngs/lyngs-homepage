@@ -6,6 +6,7 @@ export default {
   name: 'baidu',
   description: 'Straight link to google, and do nothing else.',
   version: '0.1.0',
+  identifies: [ 'baidu', '百度' ],
   supportTypes: [
     'list',
     'input',
@@ -18,8 +19,8 @@ export default {
     }
 
     return createSwitch({
-      list: () => createListItem({ input }),
-      input: () => createInput({ input }),
+      list: () => createListItem({ ...this, input }),
+      input: () => createInput({ ...this, input }),
     });
   }
 };
