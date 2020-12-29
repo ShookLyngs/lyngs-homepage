@@ -16,7 +16,7 @@ const defaultItem = {
 };
 
 export default {
-  name: 'search-bar-list-item',
+  name: 'home-search-suggest-list-item',
   components: {
     LsIcon: defineAsyncComponent(() => import('<components>/common/icon')),
   },
@@ -87,9 +87,11 @@ export default {
         <div
           className='ls-view-home-search-list__item__content'
           v-tooltip={this.access(this.result, 'content.tooltip')}
-        >
-          {render instanceof Function ? render() : template()}
-        </div>
+        >{
+          render instanceof Function
+            ? render()
+            : <div>{template()}</div>
+        }</div>
       );
     };
 

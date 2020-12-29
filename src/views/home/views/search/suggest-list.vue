@@ -1,19 +1,23 @@
 <template>
-  <ls-scrollbar disabled-horizontal view-max-height="200px">
-    <div
-      class="ls-view-home-search-list"
-      v-loading="searchBar.loadings.searchList"
-      @mouseleave="setIndex(-1)"
-    >
-      <search-bar-list-item
-        v-for="(item, index) in result.list"
-        :key="index"
-        :item="item"
-        :active="result.index === index"
-        @mouse-enter="setIndex(index)"
-      />
-    </div>
-  </ls-scrollbar>
+  <div class="ls-view-home-search__popper">
+    <ls-collapse class="ls-view-home-search__popper__wrap" :show="show">
+      <ls-scrollbar disabled-horizontal view-max-height="200px">
+        <div
+          class="ls-view-home-search-list"
+          v-loading="searchBar.loadings.searchList"
+          @mouseleave="setIndex(-1)"
+        >
+          <search-bar-list-item
+            v-for="(item, index) in result.list"
+            :key="index"
+            :item="item"
+            :active="result.index === index"
+            @mouse-enter="setIndex(index)"
+          />
+        </div>
+      </ls-scrollbar>
+    </ls-collapse>
+  </div>
 </template>
 
 <script>
@@ -22,12 +26,13 @@
   import { createSearcherList } from '<scripts>/searcher';
 
   export default {
-    name: 'search-bar-list',
+    name: 'home-search-suggest-list',
     components: {
       // components
+      LsCollapse: defineAsyncComponent(() => import('<components>/common/collapse')),
       LsScrollbar: defineAsyncComponent(() => import('<components>/common/scrollbar')),
       // views
-      SearchBarListItem: defineAsyncComponent(() => import('./search-bar-list-item')),
+      SearchBarListItem: defineAsyncComponent(() => import('./suggest-list-item')),
     },
     inject: [
       'searchBar'

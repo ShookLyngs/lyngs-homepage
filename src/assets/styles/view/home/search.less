@@ -77,10 +77,16 @@
     user-select: none;
 
     &__content {
-      .ls-flex-auto();
-      .ls-text-overflow-hidden();
+      .ls-flex-combo-column();
+      .ls-justify-center();
       padding: 0 @space[middle];
       color: @strong[default];
+      min-height: 100%;
+      box-sizing: border-box;
+
+      > div {
+        .ls-text-overflow-hidden();
+      }
     }
     &__prefix,
     &__suffix {

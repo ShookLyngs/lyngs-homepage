@@ -2,7 +2,7 @@
   <div class="ls-view-home-search__popper">
     <ls-collapse class="ls-view-home-search__popper__wrap" :show="show">
       <div>
-        <search-bar-list
+        <suggest-list
           ref="search-bar-list"
           @update:index="onListIndexUpdate"
         />
@@ -16,12 +16,12 @@
   import { accessRef } from '<util>/common/dom';
 
   export default {
-    name: 'search-bar-popper',
+    name: 'home-search-suggest',
     components: {
       // components
       LsCollapse: defineAsyncComponent(() => import('<components>/common/collapse')),
       // views
-      SearchBarList: defineAsyncComponent(() => import('./search-bar-list')),
+      SuggestList: defineAsyncComponent(() => import('./suggest-list')),
     },
     inject: [
       'searchBar'
