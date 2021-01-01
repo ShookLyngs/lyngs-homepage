@@ -41,8 +41,8 @@ export default {
     LsColumn: defineAsyncComponent(() => import('<components>/common/column')),
     LsScrollbar: defineAsyncComponent(() => import('<components>/common/scrollbar')),
     // views
-    Search: defineAsyncComponent(() => import('./views/search')),
-    UsualSites: defineAsyncComponent(() => import('./views/usual-sites/usual-sites')),
+    Search: defineAsyncComponent(() => import('./search')),
+    UsualSites: defineAsyncComponent(() => import('./usual-sites')),
   },
 }
 </script>

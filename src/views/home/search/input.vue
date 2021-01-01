@@ -4,7 +4,6 @@
     <div class="ls-view-home-search__item is-static is-prefix">
       <button
         class="ls-input__button"
-        v-tooltip="popperContent"
         :class="suffixButtonClasses"
         @click="compile"
       >
@@ -19,8 +18,8 @@
         ref="input"
         size="biggest"
         placeholder="百度搜索"
-        v-tooltip="store.search"
-        v-model:value="store.search"
+        v-tooltip="store.input.search"
+        v-model:value="store.input.search"
         @focus="onInputFocus"
         @blur="onInputBlur"
         @keydown-up="onInputKeyUp"
@@ -31,7 +30,7 @@
             <button
               class="ls-input__button"
               v-tooltip="'加载中'"
-              v-if="loadings.searchList"
+              v-if="store.loadings.searchList"
             >
               <ls-icon name="icon-loading" />
             </button>
@@ -39,7 +38,7 @@
               class="ls-input__button"
               :class="suffixButtonClasses"
               v-tooltip="'在百度搜索'"
-              v-else-if="isSearchable"
+              v-else-if="!!store.input.search"
               @click="compile"
             >
               <ls-icon name="icon-right" />
@@ -47,7 +46,6 @@
             <button
               tabindex="0"
               class="ls-input__button"
-              v-tooltip="popperContent"
               v-else
             >
               <ls-icon name="icon-search" />
@@ -61,8 +59,7 @@
 
 <script>
   import { defineAsyncComponent } from 'vue';
-  import { accessRef } from '<util>/common/dom';
-  import WebsiteCard from '<components>/business/website-card';
+  // import WebsiteCard from '<components>/business/website-card';
 
   export default {
     name: 'home-search-input',
@@ -71,37 +68,20 @@
       // common-components
       LsInput: defineAsyncComponent(() => import('<components>/common/input')),
     },
-    provide() {
-      return {
-        searchBar: this,
-      };
-    },
     data: () => ({
-      store: {
-        type: 'baidu',
-        search: '',
-        focus: false,
-        enter: false,
-        index: -1,
-      },
       loadings: {
         searchList: false,
       },
-      popperContent: () => (
-        <WebsiteCard v-slots={{
-          title: () => <b>Baidu</b>,
-          content: () => <i>Description here, to tell you what Baidu can offer.</i>,
-        }}/>
-      ),
     }),
     computed: {
-      isSearchable() {
-        return !!this.store.search;
+      store() {
+        console.log(this.$store.state);
+        return this.$store.state.home.search;
       },
       suffixButtonClasses() {
         const classes = [];
 
-        if (this.store.index === -1) {
+        if (this.store.suggest.index === -1) {
           classes.push('is-active');
         }
 
@@ -113,30 +93,26 @@
         //const list = await createSearcherList({ input: this.store.search });
         //console.log(list);
       },
-      setPopperRelativeIndex(index) {
-        return accessRef(this, 'popper')?.setRelativeIndex(index);
-      },
 
       onInputFocus() {
-        this.store.focus = true;
+        this.$store.commit('home/search/setInputState', {
+          focus: true
+        });
       },
       onInputBlur() {
-        this.store.focus = false;
+        this.$store.commit('home/search/setInputState', {
+          focus: false
+        });
       },
       onInputKeyUp() {
-        this.setPopperRelativeIndex(-1);
+        this.$store.commit('home/search/setSuggestIndex', {
+          relativeIndex: -1
+        });
       },
       onInputKeyDown() {
-        this.setPopperRelativeIndex(1);
-      },
-      onListIndexUpdate(index) {
-        this.store.index = index;
-      },
-      onSearchMouseEnter() {
-        this.store.enter = true;
-      },
-      onSearchMouseLeave() {
-        this.store.enter = false;
+        this.$store.commit('home/search/setSuggestIndex', {
+          relativeIndex: 1
+        });
       },
     },
   };
