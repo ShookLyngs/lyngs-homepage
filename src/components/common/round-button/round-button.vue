@@ -1,5 +1,9 @@
 <template>
-  <button class="ls-view-round-button" v-tooltip="tooltip">
+  <button
+    class="ls-view-round-button"
+    :class="{ 'is-active': active }"
+    v-tooltip="tooltip"
+  >
     <slot>
       <ls-icon :name="icon" v-if="icon" />
       <slot name="text">
@@ -28,6 +32,10 @@
       size: {
         type: String,
         default: 'normal',
+      },
+      active: {
+        type: Boolean,
+        default: false,
       },
     },
   }

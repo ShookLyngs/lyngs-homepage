@@ -1,5 +1,5 @@
 <template>
-  <div class="ls-collapse" :style="wrapStyles">
+  <div class="ls-collapse" :class="wrapClasses" :style="wrapStyles">
     <ls-resize-observer @resize="onResize">
       <slot />
     </ls-resize-observer>
@@ -39,6 +39,15 @@
         size.height = newSize.height;
       };
 
+      const wrapClasses = computed(() => {
+        const classes = [];
+
+        if (props.show) {
+          classes.push('is-show');
+        }
+
+        return classes;
+      });
       const wrapStyles = computed(() => {
         const styles    = {};
         const show      = props.show;
@@ -56,6 +65,7 @@
 
       return {
         size,
+        wrapClasses,
         wrapStyles,
         onResize,
       };

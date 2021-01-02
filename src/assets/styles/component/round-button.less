@@ -33,6 +33,9 @@
     transform: scale3d(.7, .7, 1);
   }
 
+  &.is-active {
+    color: @strong[default];
+  }
   &:hover {
     opacity: 1;
     color: @strong[strong];
@@ -52,8 +55,5 @@
       transform: scale3d(.9, .9, 1);
       background-color: @strong[placeholder];
     }
-  }
-  &.is-active {
-    color: @strong[default];
   }
 }

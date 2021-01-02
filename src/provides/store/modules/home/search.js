@@ -73,6 +73,6 @@ export default () => ({
  * @param {object} state
  */
 const fixSuggestIndex = (state) => {
-  if (state.suggest.index < -1) state.suggest.index = state.suggest.list.length;
-  if (state.suggest.index > state.suggest.list.length) state.suggest.index = -1;
+  if (state.suggest.index < -1) state.suggest.index = state.suggest.list.length - 1;
+  if (state.suggest.index >= state.suggest.list.length) state.suggest.index = -1;
 };

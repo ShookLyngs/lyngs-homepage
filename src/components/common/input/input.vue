@@ -4,6 +4,9 @@
       <slot name="prefix" />
     </div>
     <label class="ls-input__inner">
+      <ls-collapse :show="!!store.value">
+        <div class="label">百度搜索</div>
+      </ls-collapse>
       <input
         ref="input"
         v-bind="$attrs"
@@ -39,6 +42,7 @@
     name: 'ls-input',
     components: {
       LsRoundButton: defineAsyncComponent(() => import('<components>/common/round-button')),
+      LsCollapse: defineAsyncComponent(() => import('<components>/common/collapse')),
     },
     props: {
       value: {
@@ -80,6 +84,7 @@
       'blur'
     ],
     data: () => ({
+      focusing: false,
       store: {
         value: '',
       },
@@ -93,6 +98,9 @@
         }
         if (this.disabled) {
           classes.push('is-disabled');
+        }
+        if (this.focusing) {
+          classes.push('is-focus');
         }
 
         return classes;
@@ -129,12 +137,14 @@
         this.$emit('composition-end');
       },
       onFocus(event) {
+        this.focusing = true;
         if (this.selectOnFocus) {
           this.$refs.input.select();
         }
         this.$emit('focus', event);
       },
       onBlur(event) {
+        this.focusing = false;
         this.$emit('blur', event);
       },
     },

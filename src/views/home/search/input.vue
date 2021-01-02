@@ -34,6 +34,7 @@
             <ls-round-button
               icon="icon-right"
               tooltip="在百度搜索"
+              :active="store.suggest.index === -1"
               v-else-if="!!store.input.search"
               @click="compile"
             />
