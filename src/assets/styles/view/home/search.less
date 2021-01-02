@@ -5,47 +5,33 @@
 @view-main-search-bar-height: 80px;
 @view-search-list-item-height: 60px;
 
-// 主屏搜索框
+// main search of home
 .ls-view-home-search {
   position: relative;
 
-  & &__body {
+  // main input
+  & &__input {
     .ls-flex();
-
     height: @view-main-search-bar-height;
     background-color: @weak[strongest];
-  }
-  & &__item {
-    .ls-flex-combo();
-    .ls-align-center();
 
-    &:first-child {
+    > .prefix {
+      .ls-flex-static-combo();
+      .ls-align-center();
       padding-left: @space[middle];
-    }
-    &:last-child {
-      padding-right: @space[middle];
-    }
 
-    // status
-    &.is-static {
-      .ls-flex-static();
+      .icon {
+        color: @strong[strong];
+        font-size: @size[huger];
+      }
     }
-    &.is-no-space {
-      padding: 0;
+    > .input {
+      .ls-flex-combo();
+      .ls-align-center();
     }
-    &.is-prefix {
-      padding-left: @space[middle];
-    }
-  }
-  & &__type {
-    color: @strong[strong];
-    font-size: @size[huger];
-  }
-  & &__icon-button {
-    color: @strong[strong];
-    font-size: @size[big];
   }
 
+  // suggest popper
   & &__popper {
     position: absolute;
     width: 100%;
@@ -64,7 +50,7 @@
   }
 }
 
-// 搜索建议/结果列表
+// suggest list of search
 .ls-view-home-search-list {
   .ls-flex-column();
 
@@ -106,6 +92,7 @@
   }
 }
 
+/*
 .ls-view-home-search-list__button {
   .ls-input__button();
   font-size: @size[middle];
@@ -123,4 +110,4 @@
   .ls-view-home-search-list__button {
     opacity: 1;
   }
-}
+}*/

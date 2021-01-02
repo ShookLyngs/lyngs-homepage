@@ -1,10 +1,11 @@
+import { createSearcherList } from '<scripts>/searcher';
+
 export default () => ({
   name: 'search',
   store: {
     namespaced: true,
     state: {
       loadings: {
-        suggest: false,
         suggestList: false,
       },
       input: {
@@ -43,6 +44,25 @@ export default () => ({
       },
       setSuggestList(state, list) {
         state.suggest.list = list;
+        fixSuggestIndex(state);
+      },
+    },
+    actions: {
+      async updateSuggestList({ state, commit }) {
+        if (state.loadings.suggestList) return;
+        state.loadings.suggestList = true;
+
+        let list;
+        try {
+          list = await createSearcherList({
+            input: state.input.search,
+          });
+        } catch {
+          list = [];
+        }
+
+        commit('setSuggestList', list);
+        state.loadings.suggestList = false;
       },
     },
   },

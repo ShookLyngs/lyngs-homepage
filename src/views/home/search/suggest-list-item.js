@@ -125,7 +125,11 @@ export default {
         class={this.active ? 'is-active' : ''}
         onMouseenter={this.onMouseEnter}
       >
-        {[ prefix(), content(), suffix() ]}
+        {[
+          prefix(),
+          content(),
+          suffix()
+        ]}
       </div>
     );
   },

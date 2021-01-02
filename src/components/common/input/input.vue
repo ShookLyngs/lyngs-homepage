@@ -20,14 +20,12 @@
     </label>
     <div class="ls-input__suffix" v-if="$slots.suffix || isShowCloseButton">
       <transition name="fade">
-        <button
-          class="ls-input__button"
+        <ls-round-button
+          icon="icon-no"
+          tooltip="清空"
           v-if="isShowCloseButton"
-          v-tooltip="'清空'"
           @click="onClickClear"
-        >
-          <ls-icon name="icon-no" />
-        </button>
+        />
       </transition>
       <slot name="suffix" />
     </div>
@@ -35,8 +33,13 @@
 </template>
 
 <script>
+  import { defineAsyncComponent } from "vue";
+
   export default {
     name: 'ls-input',
+    components: {
+      LsRoundButton: defineAsyncComponent(() => import('<components>/common/round-button')),
+    },
     props: {
       value: {
         type: String,

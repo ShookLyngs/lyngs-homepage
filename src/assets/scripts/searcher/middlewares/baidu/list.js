@@ -1,7 +1,7 @@
 import { createResult } from '<scripts>/searcher/body';
 import { createBangContent, isBangInput } from '<scripts>/searcher/util/bang';
 import { createLink } from '<scripts>/searcher/util/link';
-import PeekSite from '<components>/business/peek-site';
+import PeekSite from '<components>/view/peek-site';
 
 const createListItem = ({ identifies, input }) => {
   const isBang = isBangInput(input, identifies);

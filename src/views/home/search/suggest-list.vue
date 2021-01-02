@@ -18,7 +18,6 @@
 <script>
   import { defineAsyncComponent } from 'vue';
   import { delayThrottle } from '<util>/common/event';
-  import { createSearcherList } from '<scripts>/searcher';
 
   export default {
     name: 'home-search-suggest-list',
@@ -34,32 +33,12 @@
       },
     },
     methods: {
+      update() {
+        this.$store.dispatch('home/search/updateSuggestList');
+      },
       setIndex(index) {
         this.$store.commit('home/search/setSuggestIndex', {
           index,
-        });
-      },
-      update() {
-        if (this.store.input.search) {
-          this.fetchList();
-        } else {
-          this.$store.commit('home/search/setSuggestList', []);
-        }
-      },
-      async fetchList() {
-        this.$store.commit('home/search/setLoading', {
-          name: 'suggestList',
-          value: true,
-        });
-        this.$store.commit(
-          'home/search/setSuggestList',
-          await createSearcherList({
-            input: this.store.input.search
-          })
-        );
-        this.$store.commit('home/search/setLoading', {
-          name: 'suggestList',
-          value: false,
         });
       },
     },

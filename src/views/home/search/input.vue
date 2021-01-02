@@ -1,16 +1,15 @@
 <template>
   <!--搜索框-->
-  <div class="ls-view-home-search__body">
-    <div class="ls-view-home-search__item is-static is-prefix">
-      <button
-        class="ls-input__button"
-        :class="suffixButtonClasses"
-        @click="compile"
-      >
-        <ls-icon class="ls-view-home-search__type" name="icon-baidu" />
-      </button>
+  <div class="ls-view-home-search__input" :class="classes">
+    <div class="prefix">
+      <ls-round-button
+        class="icon"
+        icon="icon-baidu"
+        tooltip="设置默认搜索引擎"
+        @click="openEnginePicker"
+      />
     </div>
-    <div class="ls-view-home-search__item is-no-space">
+    <div class="input">
       <ls-input
         clearable
         auto-focus
@@ -27,29 +26,23 @@
       >
         <template #suffix>
           <transition name="fade" mode="out-in">
-            <button
-              class="ls-input__button"
-              v-tooltip="'加载中'"
-              v-if="store.loadings.searchList"
-            >
-              <ls-icon name="icon-loading" />
-            </button>
-            <button
-              class="ls-input__button"
-              :class="suffixButtonClasses"
-              v-tooltip="'在百度搜索'"
+            <ls-round-button
+              icon="icon-loading"
+              tooltip="加载中"
+              v-if="store.loadings.suggestList"
+            />
+            <ls-round-button
+              icon="icon-right"
+              tooltip="在百度搜索"
               v-else-if="!!store.input.search"
               @click="compile"
-            >
-              <ls-icon name="icon-right" />
-            </button>
-            <button
+            />
+            <ls-round-button
               tabindex="0"
-              class="ls-input__button"
+              icon="icon-search"
+              tooltip="在百度搜索"
               v-else
-            >
-              <ls-icon name="icon-search" />
-            </button>
+            />
           </transition>
         </template>
       </ls-input>
@@ -59,7 +52,6 @@
 
 <script>
   import { defineAsyncComponent } from 'vue';
-  // import WebsiteCard from '<components>/business/website-card';
 
   export default {
     name: 'home-search-input',
@@ -67,18 +59,13 @@
     components: {
       // common-components
       LsInput: defineAsyncComponent(() => import('<components>/common/input')),
+      LsRoundButton: defineAsyncComponent(() => import('<components>/common/round-button')),
     },
-    data: () => ({
-      loadings: {
-        searchList: false,
-      },
-    }),
     computed: {
       store() {
-        console.log(this.$store.state);
         return this.$store.state.home.search;
       },
-      suffixButtonClasses() {
+      classes() {
         const classes = [];
 
         if (this.store.suggest.index === -1) {
@@ -89,10 +76,8 @@
       },
     },
     methods: {
-      async compile() {
-        //const list = await createSearcherList({ input: this.store.search });
-        //console.log(list);
-      },
+      compile() {},
+      openEnginePicker() {},
 
       onInputFocus() {
         this.$store.commit('home/search/setInputState', {
