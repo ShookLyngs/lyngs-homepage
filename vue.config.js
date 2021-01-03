@@ -29,7 +29,6 @@ module.exports = {
       ]
     }
   },
-  // 扩展 webpack 配置，使 packages 加入编译
   chainWebpack: (config) => {
     // 配置路由别名
     const alias = aliasMap();
@@ -37,8 +36,8 @@ module.exports = {
       key => config.resolve.alias.set(key, alias[key])
     );
 
-    // 使得 html 文件可被 webpack 编译
-    // 用于 Module<sandbox> 的 html文件
+    // 使得 HTML 文件可被 webpack 编译
+    // 用于 Module<sandbox> 的 HTML 沙盒文件
     config.module
       .rule('html')
       .test(/\.(html)$/)
