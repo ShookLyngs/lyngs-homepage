@@ -1,5 +1,5 @@
 <template>
-  <div class="about" >
+  <div class="about">
     <h1 v-loading="true">
       This is an about page
     </h1>

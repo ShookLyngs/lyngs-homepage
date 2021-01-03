@@ -102,5 +102,10 @@
       },
     },
   };
-
 </script>
+
+<style lang="less">
+  .input {
+    .ls-flex();
+  }
+</style>
