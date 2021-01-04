@@ -6,21 +6,21 @@
     view-class="ls-view-home-layout"
     view-max-height="100%"
   >
-    <div class="ls-view-home-container">
+    <div class="ls-view-home-container container">
       <ls-row row-gutter="bigger">
-        <div class="lg:w-3/12 lg:order-1 sm:w-full sm:order-2">
+        <div class="md:w-3/12 xl:order-1 lg w-full order-2">
           <div class="ls-view-home-card" style="height: 2000px;">
             left
           </div>
         </div>
-        <div class="lg:w-6/12 lg:order-2 sm:w-full sm:order-1">
+        <div class="xl:w-6/12 xl:order-2 w-full order-1">
           <search />
           <usual-sites />
           <div class="ls-view-home-card">
             center
           </div>
         </div>
-        <div class="lg:w-3/12 lg:order-3 sm:w-full sm:order-3">
+        <div class="md:w-3/12 w-full order-3">
           <div class="ls-view-home-card">
             right
           </div>
