@@ -24,10 +24,12 @@ app.use(loading);
 import LsVirtualPopper from '<components>/common/virtual-popper';
 app.use(LsVirtualPopper);
 
-import LsClipboardGlobal from '<components>/common/clipboard';
-app.use(LsClipboardGlobal);
+// import(component): ls-clipboard;
+import LsClipboard from '<components>/common/clipboard';
+app.use(LsClipboard);
 
 // import(ls-ui-styles): make sure to put it at the tail;
+// import '<assets>/styles/tailwind.css';
 import '<assets>/styles/index.less';
 
 // mounting app instance
