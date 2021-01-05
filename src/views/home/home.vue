@@ -6,21 +6,21 @@
     view-class="ls-view-home-layout"
     view-max-height="100%"
   >
-    <div class="ls-view-home-container container">
+    <div class="ls-view-home-container">
       <ls-row row-gutter="bigger">
-        <div class="md:w-3/12 xl:order-1 lg w-full order-2">
+        <div class="md:w-3/12 xl:order-1 w-full order-2 px-3 box-border">
           <div class="ls-view-home-card" style="height: 2000px;">
             left
           </div>
         </div>
-        <div class="xl:w-6/12 xl:order-2 w-full order-1">
+        <div class="xl:w-6/12 xl:order-2 w-full order-1 px-3 box-border">
           <search />
           <usual-sites />
           <div class="ls-view-home-card">
             center
           </div>
         </div>
-        <div class="md:w-3/12 w-full order-3">
+        <div class="md:w-3/12 w-full order-3 px-3 box-border">
           <div class="ls-view-home-card">
             right
           </div>
@@ -46,3 +46,21 @@ export default {
   },
 }
 </script>
+
+<style lang="less">
+  .ls-view-home-scrollbar {
+    .ls-flex-combo-column();
+  }
+  .ls-view-home-layout {
+    .ls-flex-combo-column();
+    .ls-align-center();
+
+    .ls-view-home-container {
+      @apply container 2xl:max-w-screen-xl;
+      padding: 75px 0;
+    }
+  }
+  .ls-view-home-card {
+    @apply bg-white dark:bg-black;
+  }
+</style>
