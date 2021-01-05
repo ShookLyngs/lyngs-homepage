@@ -48,19 +48,20 @@ export default {
 </script>
 
 <style lang="less">
-  .ls-view-home-scrollbar {
-    .ls-flex-combo-column();
-  }
-  .ls-view-home-layout {
-    .ls-flex-combo-column();
-    .ls-align-center();
-
-    .ls-view-home-container {
+  .ls-view-home {
+    &-scrollbar {
+      .ls-flex-combo-column();
+    }
+    &-layout {
+      .ls-flex-combo-column();
+      .ls-align-center();
+    }
+    &-container {
       @apply container 2xl:max-w-screen-xl;
       padding: 75px 0;
     }
-  }
-  .ls-view-home-card {
-    @apply bg-white dark:bg-black;
+    &-card {
+      @apply bg-white dark:bg-black;
+    }
   }
 </style>
