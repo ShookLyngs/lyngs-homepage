@@ -8,7 +8,7 @@
   >
     <div class="ls-view-home-container">
       <ls-row row-gutter="bigger">
-        <div class="md:w-3/12 xl:order-1 w-full order-2 px-3 box-border">
+        <div class="xl:w-3/12 xl:order-1 md:w-1/2 w-full order-2 px-3 box-border">
           <div class="ls-view-home-card" style="height: 2000px;">
             left
           </div>
@@ -20,7 +20,7 @@
             center
           </div>
         </div>
-        <div class="md:w-3/12 w-full order-3 px-3 box-border">
+        <div class="xl:w-3/12 md:w-1/2 w-full order-3 px-3 box-border">
           <div class="ls-view-home-card">
             right
           </div>
