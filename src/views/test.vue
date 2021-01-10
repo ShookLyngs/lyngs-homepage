@@ -1,35 +1,37 @@
 <template>
-  <div class="about">
-    <h1 v-loading="true">
+  <div class="test">
+    <h1>
       This is an about page
     </h1>
-    <h2 v-loading="loading1">
-      {{ loading1 }}
-    </h2>
+    <div v-loading="true">
+      <button @click="switchTheme">
+        switch
+      </button>
+    </div>
   </div>
 </template>
 
 <script>
-  import { ref, onMounted } from 'vue';
+  import { useTheme } from "<provides>/theme";
+
   export default {
     data: () =>({
-      loading2: true,
+      loading: true,
     }),
     setup() {
-      const loading1 = ref(false);
-
-      onMounted(() => {
-        setTimeout(() => {
-          loading1.value = true;
-
-          setTimeout(() => loading1.value = false, 1500);
-        }, 500);
-
-      });
+      const switchTheme = () => {
+        useTheme('dark');
+      };
 
       return {
-        loading1,
+        switchTheme,
       };
     },
   };
 </script>
+
+<style lang="less" scoped>
+  .test {
+    @apply bg-negative-900;
+  }
+</style>

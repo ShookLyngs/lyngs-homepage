@@ -17,12 +17,16 @@ module.exports = {
           600: 'var(--positive-600)',
           500: 'var(--positive-500)',
           400: 'var(--positive-400)',
+
+          DEFAULT: 'var(--positive-600)',
         },
         negative: {
           900: 'var(--negative-900)',
           800: 'var(--negative-800)',
           600: 'var(--negative-600)',
           500: 'var(--negative-500)',
+
+          DEFAULT: 'var(--negative-600)',
         },
       },
     },

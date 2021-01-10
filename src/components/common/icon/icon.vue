@@ -12,6 +12,7 @@
 <script>
   import './src/iconfont.js';
   import './src/iconfont.css';
+
   export default {
     name: 'ls-icon',
     props: {

@@ -12,24 +12,16 @@ app.use(router);
 import store from '<provides>/store';
 app.use(store);
 
-// import(component): ls-icon;
-import Icon from '<components>/common/icon';
-app.use(Icon);
+// import(components): all global vue components;
+import components from '<provides>/components';
+app.use(components);
 
-// import(component): ls-loading;
-import loading from '<components>/common/loading';
-app.use(loading);
-
-// import(component): ls-virtual-popper;
-import LsVirtualPopper from '<components>/common/virtual-popper';
-app.use(LsVirtualPopper);
-
-// import(component): ls-clipboard;
-import LsClipboard from '<components>/common/clipboard';
-app.use(LsClipboard);
-
-// import(tailwind-css): base css framework;
+// import(tailwindcss): develop base css-framework;
 import 'tailwindcss/tailwind.css';
+
+// import(theme): theme data initialized;
+import setupTheme from '<provides>/theme';
+setupTheme();
 
 // mounting app instance
 app.mount('#app');
