@@ -15,3 +15,14 @@
     },
   }
 </script>
+
+<style lang="less" scoped>
+  .bc-peek-site {
+
+    iframe {
+      width: 320px;
+      height: 180px;
+      overflow: initial;
+    }
+  }
+</style>

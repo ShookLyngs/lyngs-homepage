@@ -84,3 +84,29 @@
     },
   };
 </script>
+
+<style lang="less" scoped>
+  .ls-loading-wrap {
+    @apply flex justify-center items-center;
+    /*.ls-flex();
+    .ls-justify-center();
+    .ls-align-center();*/
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+    z-index: 10;
+    overflow: hidden;
+    background-color: rgba(255, 255, 255, .7);
+
+    .ls-loading-inner {
+      .ls-icon {
+        font-size: @size[bigger];
+      }
+    }
+  }
+  .ls-loading-edge {
+    overflow: hidden;
+  }
+</style>

@@ -72,3 +72,9 @@
     },
   }
 </script>
+
+<style lang="less" scoped>
+  .ls-collapse {
+    @apply overflow-hidden transition-all;
+  }
+</style>

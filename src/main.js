@@ -13,8 +13,12 @@ import store from '<provides>/store';
 app.use(store);
 
 // import(component): ls-icon;
-import icon from '<components>/common/icon';
-app.use(icon);
+import Icon from '<components>/common/icon';
+app.use(Icon);
+
+// import(component): ls-icon;
+import Popper from '<components>/common/popper';
+app.use(Popper);
 
 // import(component): ls-loading;
 import loading from '<components>/common/loading';
@@ -28,9 +32,8 @@ app.use(LsVirtualPopper);
 import LsClipboard from '<components>/common/clipboard';
 app.use(LsClipboard);
 
-// import(ls-ui-styles): make sure to put it at the tail;
-// import '<assets>/styles/tailwind.css';
-import '<assets>/styles/index.less';
+// import(tailwind-css): base css framework;
+import 'tailwindcss/tailwind.css';
 
 // mounting app instance
 app.mount('#app');

@@ -26,3 +26,22 @@
     },
   };
 </script>
+
+<style lang="less" scoped>
+  .ls-icon-svg {
+    width: 1em;
+    height: 1em;
+    vertical-align: -0.15em;
+    fill: currentColor;
+    overflow: hidden;
+  }
+  .iconfont {
+    font-size: inherit;
+  }
+
+  .icon-loading:before,
+  .icon-loading,
+  .icon-loading-svg {
+    animation: ls-rotate 2s infinite linear;
+  }
+</style>

@@ -31,3 +31,10 @@
     },
   }
 </script>
+
+<style lang="less" scoped>
+  .bc-website-card {
+    width: 140px;
+    white-space: normal;
+  }
+</style>

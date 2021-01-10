@@ -169,6 +169,61 @@
   };
 </script>
 
-<style scoped>
+<style lang="less" scoped>
+  .ls-input {
+    @apply flex-combo items-center px-3 w-full h-full text-positive-700;
 
+    & &__inner {
+      @apply flex-combo-col justify-center h-full;
+
+      .label {
+        @apply transition-all opacity-0 text-sm text-positive-500 select-none;
+        line-height: 1.6;
+      }
+      .is-show {
+        .label {
+          @apply opacity-100;
+        }
+      }
+      & > input {
+        @apply w-full text-base;
+        border: none;
+        outline: none;
+
+        &::placeholder {
+          @apply text-positive-400;
+        }
+        &[disabled] {
+          opacity: .7;
+          cursor: not-allowed;
+          background-color: transparent;
+        }
+      }
+    }
+    & &__prefix,
+    & &__suffix {
+      @apply flex-static-combo h-full;
+    }
+    & &__prefix {
+      @apply pr-3;
+
+    }
+    & &__suffix {
+      @apply pl-3;
+    }
+
+    // sizes
+    &.is-size-biggest {
+
+      .ls-input__inner {
+
+        & > input {
+          @apply text-2xl font-bold;
+        }
+      }
+      .ls-input__suffix {
+        @apply items-center;
+      }
+    }
+  }
 </style>

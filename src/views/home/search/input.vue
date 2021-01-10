@@ -106,6 +106,6 @@
 
 <style scoped lang="less">
   .input {
-    .ls-flex();
+    @apply flex;
   }
 </style>
