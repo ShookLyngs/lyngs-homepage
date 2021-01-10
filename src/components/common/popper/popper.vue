@@ -143,7 +143,7 @@
 
 <style lang="less">
   .ls-popper {
-    .ls-transition-fast();
+    @apply transition-fast;
     position: absolute;
     padding: 4px 8px;
     color: @weak[strongest];

@@ -45,10 +45,8 @@
   @view-round-button-size--normal: 50px;
 
   .ls-view-round-button {
+    @apply button-text transition-fastest;
     @apply flex flex-col justify-center items-center;
-    @apply transition-all;
-    .ls-button-text();
-    .ls-transition-fastest();
     position: relative;
     width: @view-round-button-size--normal;
     height: @view-round-button-size--normal;

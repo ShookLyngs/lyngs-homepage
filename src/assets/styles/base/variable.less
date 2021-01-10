@@ -1,10 +1,10 @@
-// basics
-.create-var(@object, @name) {
-  :root {
-    each(@object, {
-      --@{name}-@{key}: @value;
-    });
-  }
+.create-map-var(@object, @name) {
+  each(@object, {
+    --@{name}-@{key}: @value;
+  });
+}
+.create-var(@name, @value) {
+  --@{name}: @value;
 }
 
 @theme: {
@@ -35,21 +35,23 @@
   500: #a1a1a1;
   400: #c4c4c4;
 }
-.create-var(@positive, positive);
-
 @negative: {
   900: #ffffff;
   800: #fbfbfb;
   600: #f2f2f2;
   500: #ececec;
 }
-.create-var(@negative, negative);
 
 // status
 @success: {}
 @warn: {}
 @error: {}
 @info: {}
+
+:root {
+  .create-map-var(@positive, positive);
+  .create-map-var(@negative, negative);
+}
 
 // sizes
 @space: {

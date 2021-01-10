@@ -16,10 +16,6 @@ app.use(store);
 import Icon from '<components>/common/icon';
 app.use(Icon);
 
-// import(component): ls-icon;
-import Popper from '<components>/common/popper';
-app.use(Popper);
-
 // import(component): ls-loading;
 import loading from '<components>/common/loading';
 app.use(loading);

@@ -1,18 +1,16 @@
-.ls-button-text {
-  .ls-transition-fastest();
-  color: @strong[strong];
-  user-select: none;
+@layer components {
+  .button-text {
+    @apply text-positive-700 transition-faster select-none;
 
-  &:hover {
-    opacity: .5;
-    cursor: pointer;
-  }
-  &:active {
-    opacity: .3;
-  }
-  &[disabled],
-  &.is-disabled {
-    opacity: .5;
-    cursor: not-allowed;
+    &:hover {
+      @apply opacity-50 cursor-pointer;
+    }
+    &:active {
+      @apply opacity-30;
+    }
+    &[disabled],
+    &.is-disabled {
+      @apply opacity-50 cursor-not-allowed;
+    }
   }
 }

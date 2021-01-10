@@ -75,6 +75,6 @@
 
 <style lang="less" scoped>
   .ls-collapse {
-    @apply overflow-hidden transition-all;
+    @apply overflow-hidden transition-faster;
   }
 </style>

@@ -8,6 +8,21 @@
   transition: .3s ease;
 }
 
+@layer base {
+  .transition-fastest {
+    @apply transition-all;
+    transition-duration: 150ms;
+  }
+  .transition-faster {
+    @apply transition-all;
+    transition-duration: 200ms;
+  }
+  .transition-fast {
+    @apply transition-all;
+    transition-duration: 300ms;
+  }
+}
+
 
 // transition 组件
 
