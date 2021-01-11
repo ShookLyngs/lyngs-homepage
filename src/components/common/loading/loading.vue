@@ -8,9 +8,7 @@
         @click.stop="onClickWrap"
       >
         <div class="ls-loading-inner">
-          <svg class="ls-loading-progress">
-            <circle cx="70" cy="70" r="70" />
-          </svg>
+          <loading-circle />
         </div>
       </div>
     </transition>
@@ -19,12 +17,12 @@
 
 <script>
   import { ref, computed } from 'vue';
-  //import LsIcon from '<components>/common/icon';
+  import LoadingCircle from './loading-circle';
 
   export default {
     name: 'ls-loading',
     components: {
-      //LsIcon,
+      LoadingCircle,
     },
     emits: [
       'after-leave',
@@ -103,23 +101,5 @@
   }
   .ls-loading-edge {
     @apply overflow-hidden;
-  }
-  .ls-loading-progress {
-    @apply relative;
-    width: 160px;
-    height: 160px;
-    animation: ls-rotate 2s linear infinite;
-
-    circle {
-      @apply w-full h-full;
-      fill: none;
-      stroke: theme('colors.positive[600]');
-      stroke-width: 20;
-      stroke-linecap: round;
-      stroke-dasharray: 440;
-      stroke-dashoffset: 440;
-      transform: translate3d(10px, 10px, 0);
-      animation: ls-loading-infinite 4s linear infinite;
-    }
   }
 </style>

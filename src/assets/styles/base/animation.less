@@ -8,13 +8,16 @@
 }
 
 @keyframes ls-loading-infinite {
-  0%, 100% {
-    stroke-dashoffset: 440;
-  }
-  50% {
+  0% {
+    stroke-dasharray: 1, 200;
     stroke-dashoffset: 0;
   }
-  50.1% {
-    stroke-dashoffset: 880;
+  50% {
+    stroke-dasharray: 100, 200;
+    stroke-dashoffset: -15px;
+  }
+  100% {
+    stroke-dasharray: 100, 200;
+    stroke-dashoffset: -125px;
   }
 }
