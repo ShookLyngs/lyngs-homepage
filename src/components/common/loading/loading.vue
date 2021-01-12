@@ -3,7 +3,7 @@
     <transition name="fade" @after-leave="onAfterLeave">
       <div
         class="ls-loading-wrap"
-        v-show="visible"
+        v-if="visible"
         :class="wrapClasses"
         @click.stop="onClickWrap"
       >

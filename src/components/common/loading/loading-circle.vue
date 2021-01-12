@@ -5,6 +5,16 @@
       :viewBox="viewBox"
     >
       <circle
+        class="circle-background"
+        fill="transparent"
+        :cx="2 * viewBoxSize"
+        :cy="2 * viewBoxSize"
+        :r="radius"
+        :stroke-width="strokeWidth"
+        :stroke-dasharray="strokeDashArray"
+        :stroke-dashOffset="strokeDashOffset"
+      />
+      <circle
         class="circle-bar"
         fill="transparent"
         :cx="2 * viewBoxSize"
@@ -82,10 +92,14 @@
       @apply transition-fast absolute w-full h-full m-auto top-0 bottom-0 left-0 right-0 z-0;
       animation: ls-rotate 1.4s linear infinite;
 
+      > .circle-background {
+        @apply transition-fast;
+        stroke: rgba(0, 0, 0, .1);
+        z-index: 2;
+      }
       > .circle-bar {
         @apply transition-fast;
         stroke: currentColor;
-        stroke-linecap: round;
         stroke-dashoffset: 0;
         stroke-dasharray: 80, 200;
         z-index: 2;

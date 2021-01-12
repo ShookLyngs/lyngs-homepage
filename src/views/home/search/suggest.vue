@@ -1,7 +1,7 @@
 <template>
   <div class="ls-view-home-search__popper">
     <ls-collapse class="ls-view-home-search__popper__wrap" :show="isShowSuggest">
-      <div v-loading="isSuggestLoading">
+      <div class="relative" v-loading="isSuggestLoading">
         <suggest-list ref="search-bar-list" />
       </div>
     </ls-collapse>

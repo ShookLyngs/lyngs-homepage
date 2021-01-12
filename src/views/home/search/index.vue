@@ -25,12 +25,13 @@
     name: 'home-search',
     description: 'the main search-bar.',
     components: {
-      // common-components
+      // components
       LsAffix: defineAsyncComponent(() => import('<components>/common/affix')),
       // views
       SearchInput: defineAsyncComponent(() => import('./input')),
       SearchSuggest: defineAsyncComponent(() => import('./suggest')),
     },
+    data: () => ({ loading: false }),
     methods: {
       onSearchMouseEnter() {
         this.$store.commit('home/search/setInputState', {
@@ -42,6 +43,10 @@
           enter: false
         });
       },
+    },
+    mounted() {
+      setTimeout(() => this.loading = true, 200);
+      setTimeout(() => this.loading = false, 1500);
     },
   };
 </script>

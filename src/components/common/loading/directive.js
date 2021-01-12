@@ -54,6 +54,7 @@ const updateStore = (root, binding) => {
 const install = (vue) => {
   vue.directive('loading', {
     mounted(root, binding) {
+      console.log(root);
       if (store.has(root)) {
         unmountStore(root);
       }

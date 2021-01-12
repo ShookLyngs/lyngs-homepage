@@ -1,5 +1,9 @@
 <template>
-  <div class="ls-collapse" :class="wrapClasses" :style="wrapStyles">
+  <div
+    class="ls-collapse"
+    :class="wrapClasses"
+    :style="wrapStyles"
+  >
     <ls-resize-observer @resize="onResize">
       <slot />
     </ls-resize-observer>
