@@ -10,7 +10,6 @@
 
 <script>
   import { defineAsyncComponent } from 'vue';
-
   export default {
     name: 'home-search-suggest',
     components: {

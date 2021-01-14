@@ -1,9 +1,14 @@
 <template>
   <teleport to="body" :disabled="!fullscreen">
-    <transition name="fade" @after-leave="onAfterLeave">
+    <transition
+      name="fade"
+      mode="in-out"
+      :duration="300"
+      @after-leave="onAfterLeave"
+    >
       <div
         class="ls-loading-wrap"
-        v-if="visible"
+        v-show="visible"
         :class="wrapClasses"
         @click.stop="onClickWrap"
       >
@@ -18,6 +23,7 @@
 <script>
   import { ref, computed } from 'vue';
   import LoadingCircle from './loading-circle';
+  import { delayThrottle } from '<util>/common/event';
 
   export default {
     name: 'ls-loading',
@@ -57,8 +63,15 @@
         theme.value = value;
       };
       const setVisible = (value) => {
-        visible.value = value;
+        if (value) {
+          visible.value = value;
+        } else {
+          setVisibleAsync(value);
+        }
       };
+      const setVisibleAsync = delayThrottle(value => {
+        visible.value = value
+      }, 300);
       const setFullscreen = (value) => {
         fullscreen.value = value;
       };
@@ -88,9 +101,10 @@
 <style lang="less" scoped>
   .ls-loading-wrap {
     @apply flex justify-center items-center;
-    @apply absolute w-full h-full left-0 top-0;
-    @apply overflow-hidden z-10;
+    @apply absolute w-full h-full left-0 top-0 overflow-hidden select-none;
     background-color: rgba(255, 255, 255, .7);
+    backface-visibility: hidden;
+    z-index: 100;
 
     .ls-loading-inner {
       .ls-icon {
